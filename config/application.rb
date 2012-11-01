@@ -20,11 +20,11 @@ module Gw2AwesomeBuilder
 
     # don't generate RSpec tests for views and helpers
     config.generators do |g|
-      
+
       g.test_framework :rspec, fixture: true
       g.fixture_replacement :factory_girl
-      
-      
+
+
       g.view_specs false
       g.helper_specs false
     end
@@ -57,7 +57,7 @@ module Gw2AwesomeBuilder
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-    config.filter_parameters += [:password, :password_confirmation]
+    config.filter_parameters += [:password, :password_confirmation, :auth_token]
 
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
