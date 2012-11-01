@@ -27,3 +27,4 @@ gem 'quiet_assets', '>= 1.0.1', :group => :development
 gem 'database_cleaner', '>= 0.9.1', :group => [:development, :test]
 gem 'simplecov', '= 0.6.4', :group => [:development, :test]
 gem 'simplecov-sublime-ruby-coverage', '~> 1.0.0', :group => [:development, :test]
+gem 'rabl', '>= 0.7.6'
