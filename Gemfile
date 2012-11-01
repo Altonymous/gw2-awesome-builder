@@ -21,3 +21,4 @@ gem "devise_invitable", ">= 1.1.1"
 gem "cancan", ">= 1.6.8"
 gem "rolify", ">= 3.2.0"
 gem "quiet_assets", ">= 1.0.1", :group => :development
+gem "database_cleaner", ">= 0.9.1", :group => [:development, :test]
