@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @statistic.name
+%p
+  %b Kind:
+  = @statistic.kind
+%p
+  %b Minimum:
+  = @statistic.minimum
+%p
+  %b Maximum:
+  = @statistic.maximum
+%p
+  %b Interval:
+  = @statistic.interval
+
+= link_to 'Edit', edit_statistic_path(@statistic)
+\|
+= link_to 'Back', statistics_path

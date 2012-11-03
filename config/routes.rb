@@ -1,4 +1,6 @@
 Gw2AwesomeBuilder::Application.routes.draw do
+  resources :statistics
+
   authenticated :user do
     root :to => 'home#index'
   end
