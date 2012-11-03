@@ -1,4 +1,8 @@
 Gw2AwesomeBuilder::Application.routes.draw do
+  resources :armors
+
+  resources :enhancements
+
   resources :statistics
 
   authenticated :user do

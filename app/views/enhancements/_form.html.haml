@@ -1,0 +1,19 @@
+= form_for @enhancement do |f|
+  - if @enhancement.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@enhancement.errors.count, "error")} prohibited this enhancement from being saved:"
+      %ul
+        - @enhancement.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :statistic
+    = f.text_field :statistic
+  .field
+    = f.label :multiplier
+    = f.number_field :multiplier
+  .actions
+    = f.submit 'Save'

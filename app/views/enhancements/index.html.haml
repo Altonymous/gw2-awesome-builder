@@ -1,0 +1,23 @@
+%h1 Listing enhancements
+
+%table
+  %tr
+    %th Name
+    %th Statistic
+    %th Multiplier
+    %th
+    %th
+    %th
+
+  - @enhancements.each do |enhancement|
+    %tr
+      %td= enhancement.name
+      %td= enhancement.statistic
+      %td= enhancement.multiplier
+      %td= link_to 'Show', enhancement
+      %td= link_to 'Edit', edit_enhancement_path(enhancement)
+      %td= link_to 'Destroy', enhancement, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Enhancement', new_enhancement_path

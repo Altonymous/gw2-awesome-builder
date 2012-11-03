@@ -11,7 +11,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103025717) do
+ActiveRecord::Schema.define(:version => 20121103054306) do
+
+  create_table "armors_enhancements", :force => true do |t|
+    t.integer  "armor_id"
+    t.integer  "enhancement_id"
+    t.integer  "rating"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "armors_enhancements", ["armor_id"], :name => "index_armors_enhancements_on_armor_id"
+  add_index "armors_enhancements", ["enhancement_id"], :name => "index_armors_enhancements_on_enhancement_id"
+
+  create_table "armors", :force => true do |t|
+    t.string   "name"
+    t.integer  "kind"
+    t.integer  "slot"
+    t.integer  "defense"
+    t.integer  "level"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "enhancements", :force => true do |t|
+    t.string   "name"
+    t.float    "multiplier"
+    t.integer  "statistic_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "enhancements", ["statistic_id"], :name => "index_enhancements_on_statistic_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"

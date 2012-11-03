@@ -1,0 +1,31 @@
+%h1 Listing armors
+
+%table
+  %tr
+    %th Name
+    %th Kind
+    %th Slot
+    %th Defense
+    %th Level
+    %th Armor enhancements
+    %th Enhancements
+    %th
+    %th
+    %th
+
+  - @armors.each do |armor|
+    %tr
+      %td= armor.name
+      %td= armor.kind
+      %td= armor.slot
+      %td= armor.defense
+      %td= armor.level
+      %td= armor.armor_enhancements
+      %td= armor.enhancements
+      %td= link_to 'Show', armor
+      %td= link_to 'Edit', edit_armor_path(armor)
+      %td= link_to 'Destroy', armor, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Armor', new_armor_path

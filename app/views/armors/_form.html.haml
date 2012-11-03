@@ -1,0 +1,31 @@
+= form_for @armor do |f|
+  - if @armor.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@armor.errors.count, "error")} prohibited this armor from being saved:"
+      %ul
+        - @armor.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :name
+    = f.text_field :name
+  .field
+    = f.label :kind
+    = f.number_field :kind
+  .field
+    = f.label :slot
+    = f.number_field :slot
+  .field
+    = f.label :defense
+    = f.text_field :defense
+  .field
+    = f.label :level
+    = f.number_field :level
+  .field
+    = f.label :armor_enhancements
+    = f.text_field :armor_enhancements
+  .field
+    = f.label :enhancements
+    = f.text_field :enhancements
+  .actions
+    = f.submit 'Save'

@@ -1,0 +1,15 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @enhancement.name
+%p
+  %b Statistic:
+  = @enhancement.statistic
+%p
+  %b Multiplier:
+  = @enhancement.multiplier
+
+= link_to 'Edit', edit_enhancement_path(@enhancement)
+\|
+= link_to 'Back', enhancements_path

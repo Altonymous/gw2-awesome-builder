@@ -1,0 +1,27 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @armor.name
+%p
+  %b Kind:
+  = @armor.kind
+%p
+  %b Slot:
+  = @armor.slot
+%p
+  %b Defense:
+  = @armor.defense
+%p
+  %b Level:
+  = @armor.level
+%p
+  %b Armor enhancements:
+  = @armor.armor_enhancements
+%p
+  %b Enhancements:
+  = @armor.enhancements
+
+= link_to 'Edit', edit_armor_path(@armor)
+\|
+= link_to 'Back', armors_path

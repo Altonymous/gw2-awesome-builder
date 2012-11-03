@@ -19,14 +19,6 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe StatisticsController do
-
-  # This should return the minimal set of attributes required to create a valid
-  # Statistic. As you add validations to Statistic, be sure to
-  # update the return value of this method accordingly.
-  def valid_attributes
-    {}
-  end
-
   # This should return the minimal set of values that should be in the session
   # in order to pass any filters (e.g. authentication) defined in
   # StatisticsController. Be sure to keep this updated too.
@@ -36,7 +28,7 @@ describe StatisticsController do
 
   describe "GET index" do
     it "assigns all statistics as @statistics" do
-      statistic = Statistic.create! valid_attributes
+      statistic = create(:statistic)
       get :index, {}, valid_session
       assigns(:statistics).should eq([statistic])
     end
@@ -44,7 +36,7 @@ describe StatisticsController do
 
   describe "GET show" do
     it "assigns the requested statistic as @statistic" do
-      statistic = Statistic.create! valid_attributes
+      statistic = create(:statistic)
       get :show, {:id => statistic.to_param}, valid_session
       assigns(:statistic).should eq(statistic)
     end
@@ -59,7 +51,7 @@ describe StatisticsController do
 
   describe "GET edit" do
     it "assigns the requested statistic as @statistic" do
-      statistic = Statistic.create! valid_attributes
+      statistic = create(:statistic)
       get :edit, {:id => statistic.to_param}, valid_session
       assigns(:statistic).should eq(statistic)
     end
@@ -69,18 +61,18 @@ describe StatisticsController do
     describe "with valid params" do
       it "creates a new Statistic" do
         expect {
-          post :create, {:statistic => valid_attributes}, valid_session
+          post :create, {:statistic => attributes_for(:statistic)}, valid_session
         }.to change(Statistic, :count).by(1)
       end
 
       it "assigns a newly created statistic as @statistic" do
-        post :create, {:statistic => valid_attributes}, valid_session
+        post :create, {:statistic => attributes_for(:statistic)}, valid_session
         assigns(:statistic).should be_a(Statistic)
         assigns(:statistic).should be_persisted
       end
 
       it "redirects to the created statistic" do
-        post :create, {:statistic => valid_attributes}, valid_session
+        post :create, {:statistic => attributes_for(:statistic)}, valid_session
         response.should redirect_to(Statistic.last)
       end
     end
@@ -105,7 +97,7 @@ describe StatisticsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested statistic" do
-        statistic = Statistic.create! valid_attributes
+        statistic = create(:statistic)
         # Assuming there are no other statistics in the database, this
         # specifies that the Statistic created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -115,21 +107,21 @@ describe StatisticsController do
       end
 
       it "assigns the requested statistic as @statistic" do
-        statistic = Statistic.create! valid_attributes
-        put :update, {:id => statistic.to_param, :statistic => valid_attributes}, valid_session
+        statistic = create(:statistic)
+        put :update, {:id => statistic.to_param, :statistic => attributes_for(:statistic)}, valid_session
         assigns(:statistic).should eq(statistic)
       end
 
       it "redirects to the statistic" do
-        statistic = Statistic.create! valid_attributes
-        put :update, {:id => statistic.to_param, :statistic => valid_attributes}, valid_session
+        statistic = create(:statistic)
+        put :update, {:id => statistic.to_param, :statistic => attributes_for(:statistic)}, valid_session
         response.should redirect_to(statistic)
       end
     end
 
     describe "with invalid params" do
       it "assigns the statistic as @statistic" do
-        statistic = Statistic.create! valid_attributes
+        statistic = create(:statistic)
         # Trigger the behavior that occurs when invalid params are submitted
         Statistic.any_instance.stub(:save).and_return(false)
         put :update, {:id => statistic.to_param, :statistic => {}}, valid_session
@@ -137,7 +129,7 @@ describe StatisticsController do
       end
 
       it "re-renders the 'edit' template" do
-        statistic = Statistic.create! valid_attributes
+        statistic = create(:statistic)
         # Trigger the behavior that occurs when invalid params are submitted
         Statistic.any_instance.stub(:save).and_return(false)
         put :update, {:id => statistic.to_param, :statistic => {}}, valid_session
@@ -148,14 +140,14 @@ describe StatisticsController do
 
   describe "DELETE destroy" do
     it "destroys the requested statistic" do
-      statistic = Statistic.create! valid_attributes
+      statistic = create(:statistic)
       expect {
         delete :destroy, {:id => statistic.to_param}, valid_session
       }.to change(Statistic, :count).by(-1)
     end
 
     it "redirects to the statistics list" do
-      statistic = Statistic.create! valid_attributes
+      statistic = create(:statistic)
       delete :destroy, {:id => statistic.to_param}, valid_session
       response.should redirect_to(statistics_url)
     end

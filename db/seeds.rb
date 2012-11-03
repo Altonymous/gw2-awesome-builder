@@ -1,22 +1,36 @@
-# This file should contain all the record creation needed to seed the database with its default values.
-# The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+puts 'STARTING SEED'
+
 puts 'CREATING ROLES'
-Role.create([
-  { :name => 'admin' }, 
-  { :name => 'user' }, 
-  { :name => 'VIP' }
-], :without_protection => true)
-puts 'SETTING UP DEFAULT USER LOGIN'
-user = User.create! :name => 'First User', :email => 'user@example.com', :password => 'please', :password_confirmation => 'please'
-user.confirm!
-puts 'New user created: ' << user.name
-user2 = User.create! :name => 'Second User', :email => 'user2@example.com', :password => 'please', :password_confirmation => 'please'
-user2.confirm!
-puts 'New user created: ' << user2.name
-user.add_role :admin
-user2.add_role :VIP
+Role.create!([
+               { name: 'administrator' },
+               { name: 'user' }
+], without_protection: true)
+
+puts 'CREATING STATISTICS'
+Statistic.create!([
+                    { name: 'Armor', kind: 'numeric', minimum: 0, maximum: 3000, interval: 10 },
+                    { name: 'Attack Power', kind: 'numeric', minimum: 0, maximum: 3000, interval: 10 },
+                    { name: 'Hit Points', kind: 'numeric', minimum: 0, maximum: 60000, interval: 100 },
+                    { name: 'Healing Power', kind: 'numeric', minimum: 0, maximum: 3000, interval: 10 },
+                    { name: 'Condition Damage', kind: 'numeric', minimum: 0, maximum: 3000, interval: 10 },
+                    { name: 'Critical Damage', kind: 'numeric', minimum: 0, maximum: 3000, interval: 10 },
+                    { name: 'Critical Chance', kind: 'percentage', minimum: 0, maximum: 100, interval: 1 },
+                    { name: 'Condition Duration', kind: 'percentage', minimum: 0, maximum: 100, interval: 1 },
+                    { name: 'Boon Duration', kind: 'percentage', minimum: 0, maximum: 100, interval: 1 }
+])
+
+puts 'CREATING ENHANCEMENTS'
+Enhancement.create!([
+                      { name: 'Power', multiplier: 1, statistic_id: Statistic.find_by_name('Attack Power').id },
+                      { name: 'Precision', multiplier: 0.04761904761905, statistic_id: Statistic.find_by_name('Critical Chance').id },
+                      { name: 'Toughness', multiplier: 1, statistic_id: Statistic.find_by_name('Armor').id },
+                      { name: 'Defense', multiplier: 1, statistic_id: Statistic.find_by_name('Armor').id },
+                      { name: 'Vitality', multiplier: 10, statistic_id: Statistic.find_by_name('Hit Points').id },
+                      { name: 'Critical Damage', multiplier: 1, statistic_id: Statistic.find_by_name('Critical Damage').id },
+                      { name: 'Condition Damage', multiplier: 1, statistic_id: Statistic.find_by_name('Condition Damage').id },
+                      { name: 'Healing Power', multiplier: 1, statistic_id: Statistic.find_by_name('Healing Power').id },
+                      { name: 'Condition Duraction', multiplier: 1, statistic_id: Statistic.find_by_name('Condition Duration').id },
+                      { name: 'Boon Duration', multiplier: 1, statistic_id: Statistic.find_by_name('Boon Duration').id }
+])
+
+puts 'DONE'
