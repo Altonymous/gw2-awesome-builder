@@ -11,7 +11,17 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103054306) do
+ActiveRecord::Schema.define(:version => 20121103211052) do
+
+  create_table "armors", :force => true do |t|
+    t.string   "name",       :limit => 48
+    t.integer  "defense"
+    t.integer  "level"
+    t.integer  "weight_id"
+    t.integer  "slot_id"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
 
   create_table "armors_enhancements", :force => true do |t|
     t.integer  "armor_id"
@@ -23,16 +33,6 @@ ActiveRecord::Schema.define(:version => 20121103054306) do
 
   add_index "armors_enhancements", ["armor_id"], :name => "index_armors_enhancements_on_armor_id"
   add_index "armors_enhancements", ["enhancement_id"], :name => "index_armors_enhancements_on_enhancement_id"
-
-  create_table "armors", :force => true do |t|
-    t.string   "name"
-    t.integer  "weight"
-    t.integer  "slot"
-    t.integer  "defense"
-    t.integer  "level"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
 
   create_table "enhancements", :force => true do |t|
     t.string   "name"
@@ -54,6 +54,12 @@ ActiveRecord::Schema.define(:version => 20121103054306) do
 
   add_index "roles", ["name", "resource_type", "resource_id"], :name => "index_roles_on_name_and_resource_type_and_resource_id"
   add_index "roles", ["name"], :name => "index_roles_on_name"
+
+  create_table "slots", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
   create_table "statistics", :force => true do |t|
     t.string   "name",       :limit => 36
@@ -102,5 +108,11 @@ ActiveRecord::Schema.define(:version => 20121103054306) do
   end
 
   add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
+
+  create_table "weights", :force => true do |t|
+    t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
 
 end

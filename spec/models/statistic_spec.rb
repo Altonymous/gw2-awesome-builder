@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe Statistic do
-  describe 'mass assignment' do
+  context 'mass assignment' do
     it { should allow_mass_assignment_of :name }
     it { should allow_mass_assignment_of :kind }
     it { should allow_mass_assignment_of :minimum }
@@ -62,16 +62,28 @@ describe Statistic do
       build(:statistic, maximum: 20, interval: 3).should_not be_valid
     end
 
-    it 'minimum is not an integer' do
+    it 'minimum is not an number' do
       build(:statistic, minimum: "Test").should_not be_valid
     end
 
-    it 'maximum is not an integer' do
+    it 'maximum is not an number' do
       build(:statistic, maximum: "Test").should_not be_valid
     end
 
-    it 'interval is not an integer' do
+    it 'interval is not an number' do
       build(:statistic, interval: "Test").should_not be_valid
+    end
+
+    it 'minimum is not an integer' do
+      build(:statistic, minimum: 1.1).should_not be_valid
+    end
+
+    it 'maximum is not an integer' do
+      build(:statistic, maximum: 1.1).should_not be_valid
+    end
+
+    it 'interval is not an integer' do
+      build(:statistic, interval: 1.1).should_not be_valid
     end
   end
 end

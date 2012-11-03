@@ -22,7 +22,7 @@ class Statistic < ActiveRecord::Base
     numericality: { greater_than: lambda { |asset| asset.minimum } }, if: "self.minimum.present? && self.minimum.nonzero?"
   validates :interval,
     presence: true,
-    numericality: { greater_than: 0 }, if: :validate_interval
+    numericality: { only_integer: true, greater_than: 0 }, if: :validate_interval
 
   private
   def validate_interval

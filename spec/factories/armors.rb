@@ -1,13 +1,14 @@
-# Read about factories at https://github.com/thoughtbot/factory_girl
+    # Read about factories at https://github.com/thoughtbot/factory_girl
 
-FactoryGirl.define do
-  sequence(:armor_name) { |n| "Armor Piece ##{n}" }
+    FactoryGirl.define do
+      sequence(:armor_name) { |n| "Armor Piece ##{n}" }
 
-  factory :armor do
-    name "MyString"
-    weight 1
-    slot 1
-    defense 1
-    level 1
-  end
-end
+      factory :armor do
+        name "MyString"
+        defense 1
+        level 1
+
+        weight
+        slot
+      end
+    end
