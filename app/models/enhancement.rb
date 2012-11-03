@@ -3,6 +3,6 @@ class Enhancement < ActiveRecord::Base
 
   belongs_to :statistic
 
-  has_many :armor_enhancements
-  has_many :armors, through: :armor_enhancements
+  has_many :armors_enhancements
+  has_many :armors, through: :armors_enhancements
 end

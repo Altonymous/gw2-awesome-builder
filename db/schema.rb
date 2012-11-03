@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(:version => 20121103054306) do
 
   create_table "armors", :force => true do |t|
     t.string   "name"
-    t.integer  "kind"
+    t.integer  "weight"
     t.integer  "slot"
     t.integer  "defense"
     t.integer  "level"
