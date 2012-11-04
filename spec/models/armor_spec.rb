@@ -56,7 +56,7 @@ describe Armor do
       build(:armor, name: "name".rjust(49, "0")).should_not be_valid
     end
 
-    it 'defense is not an integer' do
+    it 'defense is not a number' do
       build(:armor, defense: "Test").should_not be_valid
     end
 
@@ -64,12 +64,20 @@ describe Armor do
       build(:armor, defense: 0).should_not be_valid
     end
 
-    it 'level is not an integer' do
+    it 'defense is not a integer' do
+      build(:armor, defense: 1.1).should_not be_valid
+    end
+
+    it 'level is not a number' do
       build(:armor, level: "Test").should_not be_valid
     end
 
     it 'level is not greater than zero' do
       build(:armor, level: 0).should_not be_valid
+    end
+
+    it 'level is not an integer' do
+      build(:armor, level: 1.1).should_not be_valid
     end
 
     it 'level is not less than or equal to eighty' do

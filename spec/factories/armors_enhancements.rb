@@ -2,7 +2,9 @@
 
 FactoryGirl.define do
   factory :armors_enhancement do
-    armor nil
-    enhancement nil
+    armor
+    enhancement
+
+    rating 1
   end
 end
