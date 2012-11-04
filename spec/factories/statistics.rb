@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :statistic do
-    name "MyString"
+    sequence(:name) { |n| "Statistic ##{n}" }
     kind "numeric"
     minimum 1
     maximum 3000

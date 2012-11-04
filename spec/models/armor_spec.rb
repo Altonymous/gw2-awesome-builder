@@ -48,7 +48,7 @@ describe Armor do
 
   context 'is invalid if' do
     it 'name already exists' do
-      armor = create(:armor, name: "Armor")
+      create(:armor, name: "Armor")
       build(:armor, name: "Armor").should_not be_valid
     end
 

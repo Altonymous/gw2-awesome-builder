@@ -38,7 +38,7 @@ describe Statistic do
 
   context 'is invalid if' do
     it 'name already exists' do
-      statistic = create(:statistic, name: "Statistic")
+      create(:statistic, name: "Statistic")
       build(:statistic, name: "Statistic").should_not be_valid
     end
 
