@@ -23,9 +23,15 @@ describe ArmorsController do
   # Armor. As you add validations to Armor, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
+    gear_enhancements = []
+    enhancement = create(:enhancement)
+    enhancement2 = create(:enhancement)
+    gear_enhancements << attributes_for(:gear_enhancement).merge({enhancement_id: enhancement.id})
+    gear_enhancements << attributes_for(:gear_enhancement).merge({enhancement_id: enhancement2.id})
     attributes_for(:armor).merge({
                                    weight_id: Weight.create!(attributes_for(:weight)).id,
-                                   slot_id: Slot.create!(attributes_for(:slot)).id
+                                   slot_id: Slot.create!(attributes_for(:slot)).id,
+                                   gear_enhancements: gear_enhancements
     })
   end
 
@@ -38,7 +44,7 @@ describe ArmorsController do
 
   describe "GET index" do
     it "assigns all armors as @armors" do
-      armor = Armor.create!(valid_attributes)
+      armor = create(:armor)
       get :index, {}, valid_session
       assigns(:armors).should eq([armor])
     end
@@ -46,7 +52,7 @@ describe ArmorsController do
 
   describe "GET show" do
     it "assigns the requested armor as @armor" do
-      armor = Armor.create!(valid_attributes)
+      armor = create(:armor)
       get :show, {:id => armor.to_param}, valid_session
       assigns(:armor).should eq(armor)
     end
@@ -61,7 +67,7 @@ describe ArmorsController do
 
   describe "GET edit" do
     it "assigns the requested armor as @armor" do
-      armor = Armor.create!(valid_attributes)
+      armor = create(:armor)
       get :edit, {:id => armor.to_param}, valid_session
       assigns(:armor).should eq(armor)
     end
@@ -107,7 +113,7 @@ describe ArmorsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested armor" do
-        armor = Armor.create!(valid_attributes)
+        armor = create(:armor)
         # Assuming there are no other armors in the database, this
         # specifies that the Armor created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -117,13 +123,13 @@ describe ArmorsController do
       end
 
       it "assigns the requested armor as @armor" do
-        armor = Armor.create!(valid_attributes)
+        armor = create(:armor)
         put :update, {:id => armor.to_param, :armor =>(valid_attributes)}, valid_session
         assigns(:armor).should eq(armor)
       end
 
       it "redirects to the armor" do
-        armor = Armor.create!(valid_attributes)
+        armor = create(:armor)
         put :update, {:id => armor.to_param, :armor =>(valid_attributes)}, valid_session
         response.should redirect_to(armor)
       end
@@ -131,7 +137,7 @@ describe ArmorsController do
 
     describe "with invalid params" do
       it "assigns the armor as @armor" do
-        armor = Armor.create!(valid_attributes)
+        armor = create(:armor)
         # Trigger the behavior that occurs when invalid params are submitted
         Armor.any_instance.stub(:save).and_return(false)
         put :update, {:id => armor.to_param, :armor => {}}, valid_session
@@ -139,7 +145,7 @@ describe ArmorsController do
       end
 
       it "re-renders the 'edit' template" do
-        armor = Armor.create!(valid_attributes)
+        armor = create(:armor)
         # Trigger the behavior that occurs when invalid params are submitted
         Armor.any_instance.stub(:save).and_return(false)
         put :update, {:id => armor.to_param, :armor => {}}, valid_session
@@ -150,14 +156,14 @@ describe ArmorsController do
 
   describe "DELETE destroy" do
     it "destroys the requested armor" do
-      armor = Armor.create!(valid_attributes)
+      armor = create(:armor)
       expect {
         delete :destroy, {:id => armor.to_param}, valid_session
       }.to change(Armor, :count).by(-1)
     end
 
     it "redirects to the armors list" do
-      armor = Armor.create!(valid_attributes)
+      armor = create(:armor)
       delete :destroy, {:id => armor.to_param}, valid_session
       response.should redirect_to(armors_url)
     end

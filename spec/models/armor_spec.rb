@@ -4,7 +4,7 @@ describe Armor do
   context 'associations' do
     it { should belong_to :weight }
     it { should belong_to :slot}
-    it { should have_many :armors_enhancements }
+    it { should have_many :gear_enhancements }
     it { should have_many :enhancements }
   end
 
@@ -43,6 +43,10 @@ describe Armor do
 
     it 'a level' do
       build(:armor, level: nil).should_not be_valid
+    end
+
+    it 'a gear enhancement is not defined' do
+      build(:armor, gear_enhancements: []).should_not be_valid
     end
   end
 

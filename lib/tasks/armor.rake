@@ -26,7 +26,7 @@ namespace :armor do
             offset = rand(Enhancement.count)
           end while old_offset.include?(offset)
 
-          armor.armors_enhancements.build({rating: rand(1..102)}).enhancement = Enhancement.first(offset: offset)
+          armor.gear_enhancements.build({rating: rand(1..102)}).enhancement = Enhancement.first(offset: offset)
           old_offset << offset
         end
 

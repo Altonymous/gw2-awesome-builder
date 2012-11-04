@@ -3,9 +3,12 @@ class Enhancement < ActiveRecord::Base
 
   belongs_to :statistic
 
-  has_many :armors_enhancements
-  has_many :armors, through: :armors_enhancements
+  has_many :gear_enhancements
 
+  # Polymorphic Associations
+  has_many :armors, through: :gear_enhancements, source: :gear, source_type: 'Armor'
+
+  # Validations
   validates :name,
     presence:true,
     uniqueness: true,

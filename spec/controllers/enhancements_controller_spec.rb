@@ -24,7 +24,8 @@ describe EnhancementsController do
   # Enhancement. As you add validations to Enhancement, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    statistic = create(:statistic)
+    attributes_for(:enhancement, statistic_id: statistic.id)
   end
 
   # This should return the minimal set of values that should be in the session

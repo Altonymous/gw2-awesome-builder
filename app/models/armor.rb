@@ -4,9 +4,10 @@ class Armor < ActiveRecord::Base
   belongs_to :weight
   belongs_to :slot
 
-  has_many :armors_enhancements
-  has_many :enhancements, through: :armors_enhancements
+  has_many :gear_enhancements, as: :gear
+  has_many :enhancements, through: :gear_enhancements
 
+  # Validations
   validates :name,
     presence: true,
     uniqueness: true,
@@ -21,4 +22,6 @@ class Armor < ActiveRecord::Base
   validates :level,
     presence: true,
     numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 80 }
+  validates :gear_enhancements,
+    presence: true
 end

@@ -40,7 +40,10 @@ class ArmorsController < ApplicationController
   # POST /armors
   # POST /armors.json
   def create
-    @armor = Armor.new(params[:armor])
+    gear_enhancements = params[:armor].delete(:gear_enhancements)
+    @armor = Armor.new(params[:armor]) do |armor|
+      armor.gear_enhancements.build(gear_enhancements)
+    end
 
     respond_to do |format|
       if @armor.save
@@ -56,7 +59,10 @@ class ArmorsController < ApplicationController
   # PUT /armors/1
   # PUT /armors/1.json
   def update
-    @armor = Armor.find(params[:id])
+    gear_enhancements = params[:armor].delete(:gear_enhancements)
+    @armor = Armor.find(params[:id]) do |armor|
+      armor.gear_enhancements.build(gear_enhancements)
+    end
 
     respond_to do |format|
       if @armor.update_attributes(params[:armor])

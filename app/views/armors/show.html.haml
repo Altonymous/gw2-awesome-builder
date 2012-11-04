@@ -5,10 +5,10 @@
   = @armor.name
 %p
   %b Kind:
-  = @armor.kind
+  = @armor.weight.name
 %p
   %b Slot:
-  = @armor.slot
+  = @armor.slot.name
 %p
   %b Defense:
   = @armor.defense
@@ -17,10 +17,9 @@
   = @armor.level
 %p
   %b Armor enhancements:
-  = @armor.armor_enhancements
-%p
-  %b Enhancements:
-  = @armor.enhancements
+  %ul
+    - @armor.gear_enhancements.each do |gear_enhancement|
+      %li= gear_enhancement.enhancement.name + ': ' + gear_enhancement.rating.to_s
 
 = link_to 'Edit', edit_armor_path(@armor)
 \|

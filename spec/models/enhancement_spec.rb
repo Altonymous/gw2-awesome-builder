@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Enhancement do
   context 'associations' do
-    it { should have_many :armors_enhancements }
+    it { should have_many :gear_enhancements }
     it { should have_many :armors }
     it { should belong_to :statistic }
   end

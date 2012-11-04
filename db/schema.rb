@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121103211052) do
+ActiveRecord::Schema.define(:version => 20121104010337) do
 
   create_table "armors", :force => true do |t|
     t.string   "name",       :limit => 48
@@ -26,17 +26,6 @@ ActiveRecord::Schema.define(:version => 20121103211052) do
   add_index "armors", ["slot_id"], :name => "index_armors_on_slot_id"
   add_index "armors", ["weight_id"], :name => "index_armors_on_weight_id"
 
-  create_table "armors_enhancements", :force => true do |t|
-    t.integer  "armor_id"
-    t.integer  "enhancement_id"
-    t.integer  "rating"
-    t.datetime "created_at",     :null => false
-    t.datetime "updated_at",     :null => false
-  end
-
-  add_index "armors_enhancements", ["armor_id"], :name => "index_armors_enhancements_on_armor_id"
-  add_index "armors_enhancements", ["enhancement_id"], :name => "index_armors_enhancements_on_enhancement_id"
-
   create_table "enhancements", :force => true do |t|
     t.string   "name",         :limit => 24
     t.float    "multiplier"
@@ -46,6 +35,18 @@ ActiveRecord::Schema.define(:version => 20121103211052) do
   end
 
   add_index "enhancements", ["statistic_id"], :name => "index_enhancements_on_statistic_id"
+
+  create_table "gear_enhancements", :force => true do |t|
+    t.integer  "gear_id"
+    t.string   "gear_type"
+    t.integer  "enhancement_id"
+    t.integer  "rating"
+    t.datetime "created_at",     :null => false
+    t.datetime "updated_at",     :null => false
+  end
+
+  add_index "gear_enhancements", ["enhancement_id"], :name => "index_gear_enhancements_on_enhancement_id"
+  add_index "gear_enhancements", ["gear_id"], :name => "index_gear_enhancements_on_gear_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
