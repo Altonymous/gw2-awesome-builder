@@ -10,5 +10,8 @@ class CreateArmors < ActiveRecord::Migration
 
       t.timestamps
     end
+
+    add_index :armors, :weight_id
+    add_index :armors, :slot_id
   end
 end
