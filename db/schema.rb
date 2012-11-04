@@ -56,9 +56,9 @@ ActiveRecord::Schema.define(:version => 20121103211052) do
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "slots", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "name",       :limit => 16
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
   create_table "statistics", :force => true do |t|
@@ -110,9 +110,9 @@ ActiveRecord::Schema.define(:version => 20121103211052) do
   add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
 
   create_table "weights", :force => true do |t|
-    t.string   "name"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.string   "name",       :limit => 16
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
   end
 
 end
