@@ -33,4 +33,21 @@ Enhancement.create!([
                       { name: 'Boon Duration', multiplier: 1, statistic_id: Statistic.find_by_name('Boon Duration').id }
 ])
 
+puts 'CREATING SLOTS'
+Slot.create!([
+               { name: 'Head' },
+               { name: 'Shoulders' },
+               { name: 'Chest' },
+               { name: 'Arms' },
+               { name: 'Legs' },
+               { name: 'Feet' }
+])
+
+puts 'CREATING WEIGHTS'
+Weight.create!([
+  { name: 'Light' },
+  { name: 'Medium' },
+  { name: 'Heavy' }
+  ])
+
 puts 'DONE'
