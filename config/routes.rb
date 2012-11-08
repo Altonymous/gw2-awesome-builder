@@ -1,4 +1,6 @@
 Gw2AwesomeBuilder::Application.routes.draw do
+  resources :trinkets
+
   resources :outfits
 
   resources :armors

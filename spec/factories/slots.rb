@@ -4,14 +4,28 @@ FactoryGirl.define do
   factory :slot do
     sequence(:name) { |n| "Slot ##{n}" }
 
-    factory :slot_with_armors do
-      ignore do
-        armors_count 5
-      end
+    factory :head_slot do
+      name "Head"
+    end
 
-      after(:create) do |slot, evaluator|
-        create_list(:armor, evaluator.armors_count, slot: slot)
-      end
+    factory :shoulders_slot do
+      name "Shoulders"
+    end
+
+    factory :chest_slot do
+      name "Chest"
+    end
+
+    factory :arms_slot do
+      name "Arms"
+    end
+
+    factory :legs_slot do
+      name "Legs"
+    end
+
+    factory :feet_slot do
+      name "Feet"
     end
   end
 end
