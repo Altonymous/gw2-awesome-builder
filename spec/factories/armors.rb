@@ -3,7 +3,6 @@
 FactoryGirl.define do
   factory :armor do
     sequence(:name) { |n| "Armor ##{n}" }
-    defense 1
     level 1
 
     weight

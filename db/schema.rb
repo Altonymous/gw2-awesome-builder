@@ -11,11 +11,10 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121104010337) do
+ActiveRecord::Schema.define(:version => 20121108071042) do
 
   create_table "armors", :force => true do |t|
     t.string   "name",       :limit => 48
-    t.integer  "defense"
     t.integer  "level"
     t.integer  "weight_id"
     t.integer  "slot_id"
@@ -47,6 +46,24 @@ ActiveRecord::Schema.define(:version => 20121104010337) do
 
   add_index "gear_enhancements", ["enhancement_id"], :name => "index_gear_enhancements_on_enhancement_id"
   add_index "gear_enhancements", ["gear_id"], :name => "index_gear_enhancements_on_gear_id"
+
+  create_table "outfits", :force => true do |t|
+    t.integer  "arms_id"
+    t.integer  "chest_id"
+    t.integer  "feet_id"
+    t.integer  "head_id"
+    t.integer  "legs_id"
+    t.integer  "shoulders_id"
+    t.datetime "created_at",   :null => false
+    t.datetime "updated_at",   :null => false
+  end
+
+  add_index "outfits", ["arms_id"], :name => "index_outfits_on_arms_id"
+  add_index "outfits", ["chest_id"], :name => "index_outfits_on_chest_id"
+  add_index "outfits", ["feet_id"], :name => "index_outfits_on_feet_id"
+  add_index "outfits", ["head_id"], :name => "index_outfits_on_head_id"
+  add_index "outfits", ["legs_id"], :name => "index_outfits_on_legs_id"
+  add_index "outfits", ["shoulders_id"], :name => "index_outfits_on_shoulders_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"

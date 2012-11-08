@@ -12,7 +12,6 @@ describe Armor do
     it { should allow_mass_assignment_of :name }
     it { should allow_mass_assignment_of :weight_id }
     it { should allow_mass_assignment_of :slot_id }
-    it { should allow_mass_assignment_of :defense }
     it { should allow_mass_assignment_of :level }
     it { should_not allow_mass_assignment_of :weight }
     it { should_not allow_mass_assignment_of :slot }
@@ -37,10 +36,6 @@ describe Armor do
       build(:armor, slot: nil).should_not be_valid
     end
 
-    it 'a defense' do
-      build(:armor, defense: nil).should_not be_valid
-    end
-
     it 'a level' do
       build(:armor, level: nil).should_not be_valid
     end
@@ -58,18 +53,6 @@ describe Armor do
 
     it 'name is longer than 48 characters' do
       build(:armor, name: "name".rjust(49, "0")).should_not be_valid
-    end
-
-    it 'defense is not a number' do
-      build(:armor, defense: "Test").should_not be_valid
-    end
-
-    it 'defense is not greater than zero' do
-      build(:armor, defense: 0).should_not be_valid
-    end
-
-    it 'defense is not a integer' do
-      build(:armor, defense: 1.1).should_not be_valid
     end
 
     it 'level is not a number' do

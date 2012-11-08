@@ -1,0 +1,29 @@
+%h1 Listing outfits
+
+%table
+  %tr
+    %th Arms
+    %th Chest
+    %th Feet
+    %th Head
+    %th Legs
+    %th Shoulders
+    %th
+    %th
+    %th
+
+  - @outfits.each do |outfit|
+    %tr
+      %td= outfit.arms
+      %td= outfit.chest
+      %td= outfit.feet
+      %td= outfit.head
+      %td= outfit.legs
+      %td= outfit.shoulders
+      %td= link_to 'Show', outfit
+      %td= link_to 'Edit', edit_outfit_path(outfit)
+      %td= link_to 'Destroy', outfit, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Outfit', new_outfit_path

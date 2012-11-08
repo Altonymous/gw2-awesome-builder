@@ -1,0 +1,24 @@
+%p#notice= notice
+
+%p
+  %b Arms:
+  = @outfit.arms
+%p
+  %b Chest:
+  = @outfit.chest
+%p
+  %b Feet:
+  = @outfit.feet
+%p
+  %b Head:
+  = @outfit.head
+%p
+  %b Legs:
+  = @outfit.legs
+%p
+  %b Shoulders:
+  = @outfit.shoulders
+
+= link_to 'Edit', edit_outfit_path(@outfit)
+\|
+= link_to 'Back', outfits_path
