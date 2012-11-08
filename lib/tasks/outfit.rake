@@ -4,56 +4,75 @@ namespace :outfitter do
   namespace :outfit do
     desc "Clear all armor from the database"
     task :clear => [:environment] do |t, args|
-      puts 'DELETING OUTFITS'
+      puts "Deleting Outfits"
       Outfit.delete_all
-      puts 'DONE'
+      puts "Done\n\n"
     end
 
     desc "Generate all possible outfits from known gear."
     task :generate => [:environment, :clear] do |t, args|
-
-      puts 'GENERATING OUTFIT COMBINATIONS'
-
+      puts "Collecting Gear..."
+      start = sub_start = Time.now
       gear_possibilities = {}
-      slots = Slot.all
-      slots.each do |slot|
-        gear_possibilities[slot.name.delete(' ').underscore] = Armor.find_all_by_slot_id(slot.id).map(&:id)
-        # puts "gear_possibilities[#{slot.id}] = #{gear_possibilities[slot.id]}"
-      end
-      slot_names = slots.map { |slot| "#{slot.name.delete(' ').underscore}_id" }
+      Slot.all.each do |slot|
+        armors = []
 
-      outfits = []
-      permutations = multi_permutations(gear_possibilities)
-      permutations.each do |permutation|
-        outfits << Hash[slot_names.zip permutation.flatten!]
-      end
+        key = "#{slot.name.delete(' ').underscore}_id"
+        possible_armors = Armor.find_all_by_slot_id(slot.id)
+        possible_armors.each do |possible_armor|
+          duplicate = false
 
-      outfits.each do |outfit|
-        Outfit.create!(outfit)
-      end
+          # If some armor already matches the statistics, we don't need to add it to the list of possible pieces
+          armors.each do |armor|
+            if armor.weight_id == possible_armor.weight_id
+              duplicate = armor.gear_enhancements == possible_armor.gear_enhancements
+              if duplicate
+                puts "# Duplicate Found: select * from armor where id in (#{armor.id}, #{possible_armorid})"
+                break
+              end
+            end
+          end
 
-      puts 'DONE'
+          armors << possible_armor unless duplicate
+        end
+
+        gear_possibilities[key] = armors.map(&:id)
+        puts "  gear_possibilities[#{key}] = #{gear_possibilities[key]}"
+      end
+      puts "Gear collected."
+      puts "Took #{(Time.now - sub_start).round(4)} seconds to collect.\n\n"
+
+      outfits = permutations!(gear_possibilities)
+
+      puts "Scrubbing Outfits..."
+      sub_start = Time.now
+      outfits.map! { |item| Outfit.new(item.reduce({}, :update)) }
+      puts "Outfits scrubbed."
+      puts "Took #{(Time.now - sub_start).round(4)} seconds to scrub.\n\n"
+
+      puts "Storing Outfits..."
+      Outfit.import(outfits) unless outfits.blank?
+      puts "Outfits stored."
+      puts "Took #{(Time.now - sub_start).round(4)} seconds to store.\n\n"
+
+      puts 'Done'
+      puts "Took #{(Time.now - start).round(4)} seconds to generate #{outfits.length} outfits.\n\n"
     end
 
-    def multi_permutations(collection)
-      case collection.length
-      when 1
-        return collection.shift[1]
-      when 0
-        raise "You must pass in a multidimensional collection."
+    def permutations!(input)
+      sub_start = Time.now
+      puts "Generating Outfits..."
+      input.each do |key, possibilities|
+        possibilities.map!{|p| {key => p} }
       end
 
-      a = collection.shift[1]
-      b = multi_permutations(collection)
+      digits = input.keys.map!{|key| input[key] }
 
-      return_value = []
-      a.each do |a_value|
-        b.each do |b_value|
-          return_value << [a_value] + [b_value]
-        end
-      end
+      result = digits.shift.product(*digits)
+      puts "# of Generated Outfits: #{result.length}"
+      puts "Took #{(Time.now - sub_start).round(4)} seconds to generate.\n\n"
 
-      return return_value
+      return result
     end
   end
 end
