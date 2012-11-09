@@ -5,28 +5,28 @@
     %th Name
     %th Kind
     %th Slot
-    %th Defense
+    %th Armor
     %th Level
     %th Enhancements
     %th
-    %th
-    %th
+    / %th
+    / %th
 
   - @armors.each do |armor|
     %tr
       %td= armor.name
       %td= armor.weight.name
       %td= armor.slot.name
-      %td= armor.defense
+      %td= armor.armor
       %td= armor.level
       %td
         %ul
         - armor.gear_enhancements.each do |gear_enhancement|
           %li= gear_enhancement.enhancement.name + ': ' + gear_enhancement.rating.to_s
       %td= link_to 'Show', armor
-      %td= link_to 'Edit', edit_armor_path(armor)
-      %td= link_to 'Destroy', armor, method: :delete, data: { confirm: 'Are you sure?' }
+      / %td= link_to 'Edit', edit_armor_path(armor)
+      / %td= link_to 'Destroy', armor, method: :delete, data: { confirm: 'Are you sure?' }
 
 %br
 
-= link_to 'New Armor', new_armor_path
+/ = link_to 'New Armor', new_armor_path
