@@ -1,32 +1,39 @@
 %h1 Listing Outfits
 
-%table
-  %thead
-    %tr
-      %th Armor
-      %th Attack Power
-      %th Hit Points
-      %th Healing Power
-      %th Condition Damage
-      %th Critical Damage
-      %th Critical Chance
-      %th Condition Duration
-      %th Boon Duration
-      %th
+/ %table
+/   %thead
+/     %tr
+/       %th Armor
+/       %th Attack Power
+/       %th Hit Points
+/       %th Healing Power
+/       %th Condition Damage
+/       %th Critical Damage
+/       %th Critical Chance
+/       %th Condition Duration
+/       %th Boon Duration
+/       %th
 
-  - @outfits.each do |outfit|
-    %tr
-      %td= outfit.armor
-      %td= outfit.attack_power
-      %td= outfit.hit_points
-      %td= outfit.healing_power
-      %td= outfit.condition_damage
-      %td= outfit.critical_damage
-      %td= outfit.critical_chance
-      %td= outfit.condition_duration
-      %td= outfit.boon_duration
-      %td= link_to 'Show', outfit
+/   - @outfits.each do |outfit|
+/     %tr
+/       %td= outfit.armor
+/       %td= outfit.attack_power
+/       %td= outfit.hit_points
+/       %td= outfit.healing_power
+/       %td= outfit.condition_damage
+/       %td= outfit.critical_damage
+/       %td= outfit.critical_chance
+/       %td= outfit.condition_duration
+/       %td= outfit.boon_duration
+/       %td= link_to 'Show', outfit
 
 %br
 
 = paginate @outfits
+
+- items = Spidy.get_items
+
+- items.each do |item|
+  = link_to item['name'], item['url']
+  = item
+  %br
