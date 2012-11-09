@@ -1,0 +1,21 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @trinket.name
+%p
+  %b Slot:
+  = @trinket.slot
+%p
+  %b Level:
+  = @trinket.level
+%p
+  %b Gear enhancements:
+  = @trinket.gear_enhancements
+%p
+  %b Enhancements:
+  = @trinket.enhancements
+
+= link_to 'Edit', edit_trinket_path(@trinket)
+\|
+= link_to 'Back', trinkets_path

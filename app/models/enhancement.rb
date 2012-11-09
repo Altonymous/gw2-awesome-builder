@@ -7,6 +7,7 @@ class Enhancement < ActiveRecord::Base
 
   # Polymorphic Associations
   has_many :armors, through: :gear_enhancements, source: :gear, source_type: 'Armor'
+  has_many :trinkets, through: :gear_enhancements, source: :gear, source_type: 'Trinket'
 
   # Validations
   validates :name,

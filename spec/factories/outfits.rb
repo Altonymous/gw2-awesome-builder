@@ -2,11 +2,11 @@
 
 FactoryGirl.define do
   factory :outfit do
-    arms nil
-    chest nil
-    feet nil
-    head nil
-    legs nil
-    shoulders nil
+    association :head, factory: :head
+    association :shoulders, factory: :shoulders
+    association :chest, factory: :chest
+    association :arms, factory: :arms
+    association :legs, factory: :legs
+    association :feet, factory: :feet
   end
 end

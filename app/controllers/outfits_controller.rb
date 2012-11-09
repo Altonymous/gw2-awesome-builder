@@ -2,12 +2,9 @@ class OutfitsController < ApplicationController
   # GET /outfits
   # GET /outfits.json
   def index
-    @outfits = Outfit.all
+    @outfits = Outfit.includes(:head, :shoulders, :chest, :arms, :legs, :feet).order('id desc').page(params[:page])
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @outfits }
-    end
+    respond_with @outfits
   end
 
   # GET /outfits/1
@@ -15,10 +12,7 @@ class OutfitsController < ApplicationController
   def show
     @outfit = Outfit.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @outfit }
-    end
+    respond_with @outfit
   end
 
   # GET /outfits/new
@@ -26,10 +20,7 @@ class OutfitsController < ApplicationController
   def new
     @outfit = Outfit.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @outfit }
-    end
+    respond_with @outfit
   end
 
   # GET /outfits/1/edit
@@ -40,44 +31,25 @@ class OutfitsController < ApplicationController
   # POST /outfits
   # POST /outfits.json
   def create
-    @outfit = Outfit.new(params[:outfit])
+    @outfit = Outfit.create(params[:outfit])
 
-    respond_to do |format|
-      if @outfit.save
-        format.html { redirect_to @outfit, notice: 'Outfit was successfully created.' }
-        format.json { render json: @outfit, status: :created, location: @outfit }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @outfit.errors, status: :unprocessable_entity }
-      end
-    end
+    respond_with @outfit
   end
 
   # PUT /outfits/1
   # PUT /outfits/1.json
   def update
     @outfit = Outfit.find(params[:id])
+    @outfit.update_attributes(params[:outfit])
 
-    respond_to do |format|
-      if @outfit.update_attributes(params[:outfit])
-        format.html { redirect_to @outfit, notice: 'Outfit was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @outfit.errors, status: :unprocessable_entity }
-      end
-    end
+    respond_with @outfit
   end
 
   # DELETE /outfits/1
   # DELETE /outfits/1.json
   def destroy
-    @outfit = Outfit.find(params[:id])
-    @outfit.destroy
+    @outfit = Outfit.destroy(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to outfits_url }
-      format.json { head :no_content }
-    end
+    respond_with @outfit
   end
 end

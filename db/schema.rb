@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108071042) do
+ActiveRecord::Schema.define(:version => 20121108214940) do
 
   create_table "armors", :force => true do |t|
     t.string   "name",       :limit => 48
@@ -91,6 +91,16 @@ ActiveRecord::Schema.define(:version => 20121108071042) do
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
   end
+
+  create_table "trinkets", :force => true do |t|
+    t.string   "name",       :limit => 48
+    t.integer  "level"
+    t.integer  "slot_id"
+    t.datetime "created_at",               :null => false
+    t.datetime "updated_at",               :null => false
+  end
+
+  add_index "trinkets", ["slot_id"], :name => "index_trinkets_on_slot_id"
 
   create_table "users", :force => true do |t|
     t.string   "email",                                :default => "", :null => false
