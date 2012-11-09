@@ -21,8 +21,8 @@
       %td= armor.level
       %td
         %ul
-          - armor.gear_enhancements.each do |gear_enhancement|
-            %li= gear_enhancement.enhancement.name + ': ' + gear_enhancement.rating.to_s
+        - armor.gear_enhancements.each do |gear_enhancement|
+          %li= gear_enhancement.enhancement.name + ': ' + gear_enhancement.rating.to_s
       %td= link_to 'Show', armor
       %td= link_to 'Edit', edit_armor_path(armor)
       %td= link_to 'Destroy', armor, method: :delete, data: { confirm: 'Are you sure?' }

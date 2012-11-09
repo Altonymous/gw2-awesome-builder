@@ -2,27 +2,30 @@
 
 %table
   %tr
-    %th Arms
-    %th Chest
-    %th Feet
-    %th Head
-    %th Legs
-    %th Shoulders
-    %th
-    %th
-    %th
+    %th Armor
+    %th Attack Power
+    %th Hit Points
+    %th Healing Power
+    %th Condition Damage
+    %th Critical Damage
+    %th Critical Chance
+    %th Condition Duration
+    %th Boon Duration
 
-  - @outfits.each do |outfit|
+  - @outfits[0..3].each do |outfit|
     %tr
-      %td= outfit.arms
-      %td= outfit.chest
-      %td= outfit.feet
-      %td= outfit.head
-      %td= outfit.legs
-      %td= outfit.shoulders
-      %td= link_to 'Show', outfit
-      %td= link_to 'Edit', edit_outfit_path(outfit)
-      %td= link_to 'Destroy', outfit, method: :delete, data: { confirm: 'Are you sure?' }
+      %td= outfit.armor
+      %td= outfit.attack_power
+      %td= outfit.hit_points
+      %td= outfit.healing_power
+      %td= outfit.condition_damage
+      %td= outfit.critical_damage
+      %td= outfit.critical_chance
+      %td= outfit.condition_duration
+      %td= outfit.boon_duration
+      / %td= link_to 'Show', outfit
+      / %td= link_to 'Edit', edit_outfit_path(outfit)
+      / %td= link_to 'Destroy'
 
 %br
 
