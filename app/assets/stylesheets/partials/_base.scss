@@ -1,0 +1,54 @@
+body {
+  background: #efefef;
+  font-family: Helvetica, Arial, sans-serif;
+}
+
+header {
+  background: #333;
+  padding: 10px 0;
+  width: 100%;
+  height: 20px;
+  margin-bottom: 24px;
+}
+
+.container { @include container; }
+
+h1 {
+  font-size: 24px;
+  margin-bottom: 12px;
+}
+
+#main {
+  @include container;
+  background: #fefefe;
+  padding: 10px;
+}
+
+table {
+  thead {
+    @include box-shadow(0 1px 2px rgba(0,0,0, .15));
+  }
+  th {
+    background: #efefef;
+    border-right: 1px solid #ddd;
+    padding: 10px;
+    &:first-child {
+      @include border-radius(4px 0 0 4px);
+    }
+    &:last-child {
+      @include border-radius(0 4px 4px 0);
+      border-right: none;
+    }
+  }
+  tr {
+
+  }
+  td {
+    padding: 10px;
+    border-right: 1px solid #eee;
+    &:last-child {
+      border-right: none;
+    }
+  }
+
+}

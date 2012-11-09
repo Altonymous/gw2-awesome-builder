@@ -1,16 +1,18 @@
 %h1 Listing outfits
 
 %table
-  %tr
-    %th Armor
-    %th Attack Power
-    %th Hit Points
-    %th Healing Power
-    %th Condition Damage
-    %th Critical Damage
-    %th Critical Chance
-    %th Condition Duration
-    %th Boon Duration
+  %thead
+    %tr
+      %th Armor
+      %th Attack Power
+      %th Hit Points
+      %th Healing Power
+      %th Condition Damage
+      %th Critical Damage
+      %th Critical Chance
+      %th Condition Duration
+      %th Boon Duration
+      %th
 
   - @outfits[0..3].each do |outfit|
     %tr
@@ -23,10 +25,10 @@
       %td= outfit.critical_chance
       %td= outfit.condition_duration
       %td= outfit.boon_duration
-      / %td= link_to 'Show', outfit
+      %td= link_to 'Show', outfit
       / %td= link_to 'Edit', edit_outfit_path(outfit)
       / %td= link_to 'Destroy'
 
 %br
 
-= link_to 'New Outfit', new_outfit_path
+/ = link_to 'New Outfit', new_outfit_path
