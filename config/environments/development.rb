@@ -40,4 +40,6 @@ Gw2AwesomeBuilder::Application.configure do
 
   # Expands the lines which load the assets
   config.assets.debug = true
+
+  config.gem "newrelic_rpm"
 end
