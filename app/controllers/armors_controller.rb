@@ -2,12 +2,9 @@ class ArmorsController < ApplicationController
   # GET /armors
   # GET /armors.json
   def index
-    @armors = Armor.all
+    @armors = Armor.all.page(params[:page])
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @armors }
-    end
+    respond_with @armors
   end
 
   # GET /armors/1
@@ -15,10 +12,7 @@ class ArmorsController < ApplicationController
   def show
     @armor = Armor.find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @armor }
-    end
+    respond_with @armor
   end
 
   # GET /armors/new
@@ -26,10 +20,7 @@ class ArmorsController < ApplicationController
   def new
     @armor = Armor.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @armor }
-    end
+    respond_with @armor
   end
 
   # GET /armors/1/edit
@@ -41,19 +32,11 @@ class ArmorsController < ApplicationController
   # POST /armors.json
   def create
     gear_enhancements = params[:armor].delete(:gear_enhancements)
-    @armor = Armor.new(params[:armor]) do |armor|
+    @armor = Armor.create(params[:armor]) do |armor|
       armor.gear_enhancements.build(gear_enhancements)
     end
 
-    respond_to do |format|
-      if @armor.save
-        format.html { redirect_to @armor, notice: 'Armor was successfully created.' }
-        format.json { render json: @armor, status: :created, location: @armor }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @armor.errors, status: :unprocessable_entity }
-      end
-    end
+    respond_with @armor
   end
 
   # PUT /armors/1
@@ -64,26 +47,16 @@ class ArmorsController < ApplicationController
       armor.gear_enhancements.build(gear_enhancements)
     end
 
-    respond_to do |format|
-      if @armor.update_attributes(params[:armor])
-        format.html { redirect_to @armor, notice: 'Armor was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @armor.errors, status: :unprocessable_entity }
-      end
-    end
+    @armor.update_attributes(params[:armor])
+
+    respond_with @armor
   end
 
   # DELETE /armors/1
   # DELETE /armors/1.json
   def destroy
-    @armor = Armor.find(params[:id])
-    @armor.destroy
+    @armor = Armor.destroy(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to armors_url }
-      format.json { head :no_content }
-    end
+    respond_with @armor
   end
 end
