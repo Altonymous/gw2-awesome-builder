@@ -1,15 +1,28 @@
 Gw2AwesomeBuilder::Application.routes.draw do
-  resources :outfits
+  resources :trinkets do
+    get 'page/:page', :action => :index, :on => :collection
+  end
 
-  resources :armors
+  resources :outfits do
+    get 'page/:page', :action => :index, :on => :collection
+  end
 
-  resources :enhancements
+  resources :armors do
+    get 'page/:page', :action => :index, :on => :collection
+  end
 
-  resources :statistics
+  resources :enhancements do
+    get 'page/:page', :action => :index, :on => :collection
+  end
+
+  resources :statistics do
+    get 'page/:page', :action => :index, :on => :collection
+  end
 
   authenticated :user do
     root :to => 'home#index'
   end
+
   root :to => "home#index"
   devise_for :users
   resources :users

@@ -1,0 +1,27 @@
+%h1 Listing trinkets
+
+%table
+  %tr
+    %th Name
+    %th Slot
+    %th Level
+    %th Gear enhancements
+    %th Enhancements
+    %th
+    %th
+    %th
+
+  - @trinkets.each do |trinket|
+    %tr
+      %td= trinket.name
+      %td= trinket.slot
+      %td= trinket.level
+      %td= trinket.gear_enhancements
+      %td= trinket.enhancements
+      %td= link_to 'Show', trinket
+      %td= link_to 'Edit', edit_trinket_path(trinket)
+      %td= link_to 'Destroy', trinket, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Trinket', new_trinket_path

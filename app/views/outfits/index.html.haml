@@ -1,4 +1,4 @@
-%h1 Listing outfits
+%h1 Listing Outfits
 
 %table
   %thead
@@ -14,7 +14,7 @@
       %th Boon Duration
       %th
 
-  - @outfits[0..3].each do |outfit|
+  - @outfits.each do |outfit|
     %tr
       %td= outfit.armor
       %td= outfit.attack_power
@@ -26,9 +26,7 @@
       %td= outfit.condition_duration
       %td= outfit.boon_duration
       %td= link_to 'Show', outfit
-      / %td= link_to 'Edit', edit_outfit_path(outfit)
-      / %td= link_to 'Destroy'
 
 %br
 
-/ = link_to 'New Outfit', new_outfit_path
+= paginate @outfits
