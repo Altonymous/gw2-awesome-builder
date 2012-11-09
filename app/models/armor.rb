@@ -22,6 +22,10 @@ class Armor < ActiveRecord::Base
   validates :gear_enhancements,
     presence: true
 
+  scope :light, where(weight_id: Weight.light.id)
+  scope :medium, where(weight_id: Weight.medium.id)
+  scope :heavy, where(weight_id: Weight.heavy.id)
+
   include StatisticModule
 
   def pieces

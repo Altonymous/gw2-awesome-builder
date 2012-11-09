@@ -11,56 +11,73 @@ namespace :outfitter do
 
     desc "Generate all possible outfits from known gear."
     task :generate => [:environment, :clear] do |t, args|
-      puts "Collecting Gear..."
-      start = sub_start = Time.now
-      gear_possibilities = {}
-      Slot.all.each do |slot|
-        armors = []
+      puts "Generating Gear..."
+      start = Time.now
+      total_outfits_length = 0
 
-        key = "#{slot.name.delete(' ').underscore}_id"
-        possible_armors = Armor.find_all_by_slot_id(slot.id)
-        possible_armors.each do |possible_armor|
-          duplicate = false
+      %w(light medium heavy).each do |weight|
+        gear_possibilities = {}
+        outfits = {}
 
-          # If some armor already matches the statistics, we don't need to add it to the list of possible pieces
-          armors.each do |armor|
-            if armor.weight_id == possible_armor.weight_id
-              duplicate = armor.gear_enhancements == possible_armor.gear_enhancements
-              if duplicate
-                puts "# Duplicate Found: select * from armor where id in (#{armor.id}, #{possible_armorid})"
-                break
+        puts "Generating #{weight.camelize} armor outfits...\n\n"
+        weight_start = Time.now
+
+        # Collecting the gear
+        puts "Collecting #{weight.camelize} armor pieces..."
+        collecting_start = Time.now
+        Slot.all.each do |slot|
+          armors = []
+
+          key = "#{slot.name.delete(' ').underscore}_id"
+          possible_armors = Armor.send(weight).find_all_by_slot_id(slot.id)
+          possible_armors.each do |possible_armor|
+            duplicate = false
+
+            # If some armor already matches the statistics, we don't need to add it to the list of possible pieces
+            armors.each do |armor|
+              if armor.weight_id == possible_armor.weight_id
+                duplicate = armor.gear_enhancements == possible_armor.gear_enhancements
+                if duplicate
+                  puts "# Duplicate Found: select * from armor where id in (#{armor.id}, #{possible_armorid})"
+                  break
+                end
               end
             end
+
+            armors << possible_armor unless duplicate
           end
 
-          armors << possible_armor unless duplicate
+          gear_possibilities[key] = armors.map(&:id)
+          puts "  gear_possibilities[#{key}] = #{gear_possibilities[key]}"
         end
+        puts "Took #{(Time.now - collecting_start).round(4)} seconds to collect.\n\n"
 
-        gear_possibilities[key] = armors.map(&:id)
-        puts "  gear_possibilities[#{key}] = #{gear_possibilities[key]}"
+        # Generating outfits from gear
+        outfits = permutations!(gear_possibilities)
+        total_outfits_length = total_outfits_length + outfits.length
+
+        # Reformating the outfits data type
+        puts "Reformating Outfits..."
+        reformating_start = Time.now
+        outfits.map! { |item| Outfit.new(item.reduce({}, :update)) }
+        puts "Took #{(Time.now - reformating_start).round(4)} seconds to reformat.\n\n"
+
+        # Storing the outfits
+        puts "Storing Outfits..."
+        storing_start = Time.now
+        Outfit.import(outfits) unless outfits.blank?
+        puts "Took #{(Time.now - storing_start).round(4)} seconds to store.\n\n"
+
+        # Completing armor set generation
+        puts "Took #{(Time.now - weight_start).round(4)} seconds to generate #{weight.camelize} armor sets."
       end
-      puts "Gear collected."
-      puts "Took #{(Time.now - sub_start).round(4)} seconds to collect.\n\n"
-
-      outfits = permutations!(gear_possibilities)
-
-      puts "Scrubbing Outfits..."
-      sub_start = Time.now
-      outfits.map! { |item| Outfit.new(item.reduce({}, :update)) }
-      puts "Outfits scrubbed."
-      puts "Took #{(Time.now - sub_start).round(4)} seconds to scrub.\n\n"
-
-      puts "Storing Outfits..."
-      Outfit.import(outfits) unless outfits.blank?
-      puts "Outfits stored."
-      puts "Took #{(Time.now - sub_start).round(4)} seconds to store.\n\n"
 
       puts 'Done'
-      puts "Took #{(Time.now - start).round(4)} seconds to generate #{outfits.length} outfits.\n\n"
+      puts "Took #{(Time.now - start).round(4)} seconds to generate #{total_outfits_length} outfits.\n\n"
     end
 
     def permutations!(input)
-      sub_start = Time.now
+      permutations_start = Time.now
       puts "Generating Outfits..."
       input.each do |key, possibilities|
         possibilities.map!{|p| {key => p} }
@@ -70,7 +87,7 @@ namespace :outfitter do
 
       result = digits.shift.product(*digits)
       puts "# of Generated Outfits: #{result.length}"
-      puts "Took #{(Time.now - sub_start).round(4)} seconds to generate.\n\n"
+      puts "Took #{(Time.now - permutations_start).round(4)} seconds to generate.\n\n"
 
       return result
     end
