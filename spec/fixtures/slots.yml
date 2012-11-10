@@ -1,0 +1,33 @@
+head:
+  id: 1
+  name: Head
+shoulders:
+  id: 2
+  name: Shoulders
+chest:
+  id: 3
+  name: Chest
+arms:
+  id: 4
+  name: Arms
+legs:
+  id: 5
+  name: Legs
+feet:
+  id: 6
+  name: Feet
+ring_1:
+  id: 7
+  name: Ring 1
+ring_2:
+  id: 8
+  name: Ring 2
+accessory_1:
+  id: 9
+  name: Accessory 1
+accessory_2:
+  id: 10
+  name: Accessory 2
+amulet:
+  id: 11
+  name: Amulet

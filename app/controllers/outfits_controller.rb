@@ -1,10 +1,11 @@
 class OutfitsController < ApplicationController
+  include SortModule
+
   # GET /outfits
   # GET /outfits.json
   def index
-    sort = params[:sort].gsub('.', ' ') unless params[:sort].blank?
-    sort ||= 'attack_power desc'
-    @outfits = Outfit.includes(:head, :shoulders, :chest, :arms, :legs, :feet).order(sort).page(params[:page])
+    @sort ||= 'attack_power desc'
+    @outfits = Outfit.includes(:head, :shoulders, :chest, :arms, :legs, :feet).order(@sort).page(params[:page])
 
     respond_with @outfits
   end

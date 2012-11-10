@@ -5,35 +5,41 @@ FactoryGirl.define do
     sequence(:name) { |n| "Armor ##{n}" }
     level 1
 
-    weight
-    slot
+    weight { Weight.first }
+    slot { Slot.find_by_name('Head') }
 
-    before(:create) do |armor|
-      armor.gear_enhancements.build({rating: 1}).enhancement = create(:enhancement)
+    trait :with_enhancement do
+      after(:build) do |armor|
+        armor.gear_enhancements.build({rating: 1}).enhancement = Enhancement.first
+      end
+
+      before(:create) do |armor|
+        armor.gear_enhancements.build({rating: 1}).enhancement = Enhancement.first
+      end
     end
 
-    factory :head do
-      association :slot, factory: :head_slot
+    trait :head do
+      slot { Slot.find_by_name("Head") }
     end
 
-    factory :shoulders do
-      association :slot, factory: :shoulders_slot
+    trait :shoulders do
+      slot { Slot.find_by_name("Shoulders") }
     end
 
-    factory :chest do
-      association :slot, factory: :chest_slot
+    trait :chest do
+      slot { Slot.find_by_name("Chest") }
     end
 
-    factory :arms do
-      association :slot, factory: :arms_slot
+    trait :arms do
+      slot { Slot.find_by_name("Arms") }
     end
 
-    factory :legs do
-      association :slot, factory: :legs_slot
+    trait :legs do
+      slot { Slot.find_by_name("Legs") }
     end
 
-    factory :feet do
-      association :slot, factory: :feet_slot
+    trait :feet do
+      slot { Slot.find_by_name("Feet") }
     end
   end
 end

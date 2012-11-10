@@ -19,12 +19,19 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe TrinketsController do
-
   # This should return the minimal set of attributes required to create a valid
   # Trinket. As you add validations to Trinket, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    gear_enhancements = []
+    gear_enhancements << attributes_for(:gear_enhancement).merge({enhancement_id: Enhancement.first.id})
+    gear_enhancements << attributes_for(:gear_enhancement).merge({enhancement_id: Enhancement.last.id})
+    {
+      name: 'Awesome Trinket',
+      level: 1,
+      slot_id: Slot.find_by_name('Amulet').id,
+      gear_enhancements: gear_enhancements
+    }
   end
 
   # This should return the minimal set of values that should be in the session
@@ -36,7 +43,7 @@ describe TrinketsController do
 
   describe "GET index" do
     it "assigns all trinkets as @trinkets" do
-      trinket = Trinket.create! valid_attributes
+      trinket = create(:trinket, :with_enhancement)
       get :index, {}, valid_session
       assigns(:trinkets).should eq([trinket])
     end
@@ -44,7 +51,7 @@ describe TrinketsController do
 
   describe "GET show" do
     it "assigns the requested trinket as @trinket" do
-      trinket = Trinket.create! valid_attributes
+      trinket = create(:trinket, :with_enhancement)
       get :show, {:id => trinket.to_param}, valid_session
       assigns(:trinket).should eq(trinket)
     end
@@ -59,7 +66,7 @@ describe TrinketsController do
 
   describe "GET edit" do
     it "assigns the requested trinket as @trinket" do
-      trinket = Trinket.create! valid_attributes
+      trinket = create(:trinket, :with_enhancement)
       get :edit, {:id => trinket.to_param}, valid_session
       assigns(:trinket).should eq(trinket)
     end
@@ -93,11 +100,11 @@ describe TrinketsController do
         assigns(:trinket).should be_a_new(Trinket)
       end
 
-      it "re-renders the 'new' template" do
+      it "redirects to the 'trinkets#index' action" do
         # Trigger the behavior that occurs when invalid params are submitted
         Trinket.any_instance.stub(:save).and_return(false)
         post :create, {:trinket => {}}, valid_session
-        response.should render_template("new")
+        response.should redirect_to(controller: :trinkets, action: :index)
       end
     end
   end
@@ -105,7 +112,7 @@ describe TrinketsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested trinket" do
-        trinket = Trinket.create! valid_attributes
+        trinket = create(:trinket, :with_enhancement)
         # Assuming there are no other trinkets in the database, this
         # specifies that the Trinket created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -115,13 +122,13 @@ describe TrinketsController do
       end
 
       it "assigns the requested trinket as @trinket" do
-        trinket = Trinket.create! valid_attributes
+        trinket = create(:trinket, :with_enhancement)
         put :update, {:id => trinket.to_param, :trinket => valid_attributes}, valid_session
         assigns(:trinket).should eq(trinket)
       end
 
       it "redirects to the trinket" do
-        trinket = Trinket.create! valid_attributes
+        trinket = create(:trinket, :with_enhancement)
         put :update, {:id => trinket.to_param, :trinket => valid_attributes}, valid_session
         response.should redirect_to(trinket)
       end
@@ -129,33 +136,33 @@ describe TrinketsController do
 
     describe "with invalid params" do
       it "assigns the trinket as @trinket" do
-        trinket = Trinket.create! valid_attributes
+        trinket = create(:trinket, :with_enhancement)
         # Trigger the behavior that occurs when invalid params are submitted
         Trinket.any_instance.stub(:save).and_return(false)
         put :update, {:id => trinket.to_param, :trinket => {}}, valid_session
         assigns(:trinket).should eq(trinket)
       end
 
-      it "re-renders the 'edit' template" do
-        trinket = Trinket.create! valid_attributes
+      it "redirects to the 'trinkets#show' action" do
+        trinket = create(:trinket, :with_enhancement)
         # Trigger the behavior that occurs when invalid params are submitted
         Trinket.any_instance.stub(:save).and_return(false)
         put :update, {:id => trinket.to_param, :trinket => {}}, valid_session
-        response.should render_template("edit")
+        response.should redirect_to(controller: :trinkets, action: :show)
       end
     end
   end
 
   describe "DELETE destroy" do
     it "destroys the requested trinket" do
-      trinket = Trinket.create! valid_attributes
+      trinket = create(:trinket, :with_enhancement)
       expect {
         delete :destroy, {:id => trinket.to_param}, valid_session
       }.to change(Trinket, :count).by(-1)
     end
 
     it "redirects to the trinkets list" do
-      trinket = Trinket.create! valid_attributes
+      trinket = create(:trinket, :with_enhancement)
       delete :destroy, {:id => trinket.to_param}, valid_session
       response.should redirect_to(trinkets_url)
     end

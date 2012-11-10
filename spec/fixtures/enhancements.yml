@@ -1,0 +1,50 @@
+power:
+  id: 1
+  name: Power
+  multiplier: 1
+  statistic_id: 2
+precision:
+  id: 2
+  name: Precision
+  multiplier: 0.04761904761905
+  statistic_id: 7
+toughness:
+  id: 3
+  name: Toughness
+  multiplier: 1
+  statistic_id: 1
+defense:
+  id: 4
+  name: Defense
+  multiplier: 1
+  statistic_id: 1
+vitality:
+  id: 5
+  name: Vitality
+  multiplier: 10
+  statistic_id: 3
+critical_damage:
+  id: 6
+  name: Critical Damage
+  multiplier: 1
+  statistic_id: 6
+condition_damage:
+  id: 7
+  name: Condition Damage
+  multiplier: 1
+  statistic_id: 5
+healing_power:
+  id: 8
+  name: Healing Power
+  multiplier: 1
+  statistic_id: 4
+condition_duration:
+  id: 9
+  name: Condition Duraction
+  multiplier: 1
+  statistic_id: 8
+boon_duration:
+  id: 10
+  name: Boon Duration
+  multiplier: 1
+  statistic_id: 9

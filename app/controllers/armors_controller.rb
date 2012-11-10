@@ -1,8 +1,12 @@
 class ArmorsController < ApplicationController
+  include SortModule
+  include GearEnhancementModule
+
   # GET /armors
   # GET /armors.json
   def index
-    @armors = Armor.all.page(params[:page])
+    @sort ||= 'attack_power desc'
+    @armors = Armor.includes(:gear_enhancements, :weight, :slot).order(@sort).page(params[:page])
 
     respond_with @armors
   end
@@ -26,14 +30,16 @@ class ArmorsController < ApplicationController
   # GET /armors/1/edit
   def edit
     @armor = Armor.find(params[:id])
+
+    respond_with @armor
   end
 
   # POST /armors
   # POST /armors.json
   def create
-    gear_enhancements = params[:armor].delete(:gear_enhancements)
+    params_gear_enhancements = params[:armor].delete(:gear_enhancements)
     @armor = Armor.create(params[:armor]) do |armor|
-      armor.gear_enhancements.build(gear_enhancements)
+      gear_enhancements!(armor, params_gear_enhancements)
     end
 
     respond_with @armor
@@ -42,9 +48,9 @@ class ArmorsController < ApplicationController
   # PUT /armors/1
   # PUT /armors/1.json
   def update
-    gear_enhancements = params[:armor].delete(:gear_enhancements)
+    params_gear_enhancements = params[:armor].delete(:gear_enhancements)
     @armor = Armor.find(params[:id]) do |armor|
-      armor.gear_enhancements.build(gear_enhancements)
+      gear_enhancements!(armor, params_gear_enhancements)
     end
 
     @armor.update_attributes(params[:armor])

@@ -1,0 +1,63 @@
+armor:
+  id: 1
+  name: Armor
+  kind: numeric
+  minimum: 0
+  maximum: 3000
+  interval: 10
+attack_power:
+  id: 2
+  name: Attack Power
+  kind: numeric
+  minimum: 0
+  maximum: 3000
+  interval: 10
+hit_points:
+  id: 3
+  name: Hit Points
+  kind: numeric
+  minimum: 0
+  maximum: 0000
+  interval: 100
+healing_power:
+  id: 4
+  name: Healing Power
+  kind: numeric
+  minimum: 0
+  maximum: 3000
+  interval: 10
+condition_damage:
+  id: 5
+  name: Condition Damage
+  kind: numeric
+  minimum: 0
+  maximum: 3000
+  interval: 10
+critical_damage:
+  id: 6
+  name: Critical Damage
+  kind: numeric
+  minimum: 0
+  maximum: 3000
+  interval: 10
+critical_chance:
+  id: 7
+  name: Critical Chance
+  kind: percentage
+  minimum: 0
+  maximum: 100
+  interval: 1
+condition_duration:
+  id: 8
+  name: Condition Duration
+  kind: percentage
+  minimum: 0
+  maximum: 100
+  interval: 1
+boon_duration:
+  id: 9
+  name: Boon Duration
+  kind: percentage
+  minimum: 0
+  maximum: 100
+  interval: 1
