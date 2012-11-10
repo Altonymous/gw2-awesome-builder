@@ -2,7 +2,7 @@ class OutfitsController < ApplicationController
   # GET /outfits
   # GET /outfits.json
   def index
-    @outfits = Outfit.includes(:head, :shoulders, :chest, :arms, :legs, :feet).order('id desc').page(params[:page])
+    @outfits = Outfit.includes(:head, :shoulders, :chest, :arms, :legs, :feet).order(:attack_power).page(params[:page])
 
     respond_with @outfits
   end
