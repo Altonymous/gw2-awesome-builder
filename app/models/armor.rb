@@ -1,5 +1,7 @@
 class Armor < ActiveRecord::Base
   attr_accessible :name, :weight_id, :slot_id, :level
+  after_initialize :defaults
+  before_create :generate_statistics
 
   belongs_to :weight
   belongs_to :slot
@@ -26,9 +28,25 @@ class Armor < ActiveRecord::Base
   scope :medium, where(weight_id: Weight.medium.id)
   scope :heavy, where(weight_id: Weight.heavy.id)
 
-  include StatisticModule
+  def generate_statistics
+    self.gear_enhancements.each do |gear_enhancement|
+      current_statistic = gear_enhancement.rating.zero? ?
+        0 : gear_enhancement.rating + gear_enhancement.enhancement.multiplier
 
-  def pieces
-    nil
+      statistic = statistic_snake_name(gear_enhancement.enhancement.statistic).to_sym
+      self[statistic] = self[statistic] + current_statistic
+    end
   end
+
+  private
+  def defaults
+    # Set statistics to zero
+    Statistic.all.each do |statistic_model|
+      statistic = statistic_snake_name(statistic_model).to_sym
+
+      self[statistic] ||= 0
+    end
+  end
+
+  include StatisticModule
 end
