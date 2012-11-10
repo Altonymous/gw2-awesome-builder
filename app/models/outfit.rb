@@ -21,16 +21,6 @@ class Outfit < ActiveRecord::Base
   end
 
   def generate_statistics
-    %w(arms chest feet head legs shoulders).each do |piece|
-      self.send(piece.to_sym).gear_enhancements.each do |gear_enhancement|
-        current_statistic = gear_enhancement.rating.zero? ?
-          0 : gear_enhancement.rating + gear_enhancement.enhancement.multiplier
-
-        statistic = statistic_snake_name(gear_enhancement.enhancement.statistic).to_sym
-        self[statistic] = self[statistic] + current_statistic
-      end
-    end
-
     Statistic.all.each do |statistic_model|
       statistic = statistic_snake_name(statistic_model).to_sym
 
