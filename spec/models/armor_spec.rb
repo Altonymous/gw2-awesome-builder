@@ -15,12 +15,12 @@ describe Armor do
     it { should allow_mass_assignment_of :level }
     it { should_not allow_mass_assignment_of :weight }
     it { should_not allow_mass_assignment_of :slot }
-    it { should_not allow_mass_assignment_of :armors_enhancements }
+    it { should_not allow_mass_assignment_of :gear_enhancements }
     it { should_not allow_mass_assignment_of :enhancements }
   end
 
   it 'has a valid factory' do
-    create(:armor).should be_valid
+    create(:armor, :with_enhancement).should be_valid
   end
 
   context 'is invalid without' do
@@ -41,13 +41,15 @@ describe Armor do
     end
 
     it 'a gear enhancement is not defined' do
-      build(:armor, gear_enhancements: []).should_not be_valid
+      armor = build(:armor)
+      armor.gear_enhancements = []
+      armor.should_not be_valid
     end
   end
 
   context 'is invalid if' do
     it 'name already exists' do
-      create(:armor, name: "Armor")
+      create(:armor, :with_enhancement, name: "Armor")
       build(:armor, name: "Armor").should_not be_valid
     end
 

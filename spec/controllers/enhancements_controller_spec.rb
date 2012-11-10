@@ -19,13 +19,11 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe EnhancementsController do
-
   # This should return the minimal set of attributes required to create a valid
   # Enhancement. As you add validations to Enhancement, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    statistic = create(:statistic)
-    attributes_for(:enhancement, statistic_id: statistic.id)
+    attributes_for(:enhancement)
   end
 
   # This should return the minimal set of values that should be in the session
@@ -37,9 +35,9 @@ describe EnhancementsController do
 
   describe "GET index" do
     it "assigns all enhancements as @enhancements" do
-      enhancement = Enhancement.create! valid_attributes
+      enhancements = Enhancement.all
       get :index, {}, valid_session
-      assigns(:enhancements).should eq([enhancement])
+      assigns(:enhancements).should eq(enhancements)
     end
   end
 

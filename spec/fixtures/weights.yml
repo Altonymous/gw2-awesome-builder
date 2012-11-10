@@ -1,0 +1,9 @@
+light:
+  id: 1
+  name: Light
+medium:
+  id: 2
+  name: Medium
+heavy:
+  id: 3
+  name: Heavy

@@ -17,6 +17,7 @@ class Enhancement < ActiveRecord::Base
   validates :multiplier,
     presence: true,
     numericality: { greater_than: 0 }
-  validates :statistic,
-    presence: true
+
+  validates_associated :statistic
+  validates_presence_of :statistic_id
 end

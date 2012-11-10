@@ -3,6 +3,7 @@ class CreateArmors < ActiveRecord::Migration
     create_table :armors do |t|
       t.string :name, limit: 48
       t.integer :level
+
       t.integer :armor
       t.integer :hit_points
       t.integer :attack_power
