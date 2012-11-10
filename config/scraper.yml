@@ -1,3 +1,3 @@
 login_url: https://account.guildwars2.com/login
 login_referer: https://account.guildwars2.com/login?redirect_uri=http%3A%2F%2Ftradingpost-live.ncplatform.net%2Fauthenticate%3Fsource%3D%252F&game_code=gw2
-base_request_url: https://tradingpost-live.ncplatform.net/ws/[:page].json?[:params]
+base_request_url: https://tradingpost-live.ncplatform.net
