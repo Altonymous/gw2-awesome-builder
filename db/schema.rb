@@ -14,14 +14,32 @@
 ActiveRecord::Schema.define(:version => 20121108214940) do
 
   create_table "armors", :force => true do |t|
-    t.string   "name",       :limit => 48
+    t.string   "name",               :limit => 48
     t.integer  "level"
+    t.integer  "armor"
+    t.integer  "hit_points"
+    t.integer  "attack_power"
+    t.integer  "critical_damage"
+    t.integer  "critical_chance"
+    t.integer  "condition_damage"
+    t.integer  "condition_duration"
+    t.integer  "healing_power"
+    t.integer  "boon_duration"
     t.integer  "weight_id"
     t.integer  "slot_id"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
+  add_index "armors", ["armor"], :name => "index_armors_on_armor"
+  add_index "armors", ["attack_power"], :name => "index_armors_on_attack_power"
+  add_index "armors", ["boon_duration"], :name => "index_armors_on_boon_duration"
+  add_index "armors", ["condition_damage"], :name => "index_armors_on_condition_damage"
+  add_index "armors", ["condition_duration"], :name => "index_armors_on_condition_duration"
+  add_index "armors", ["critical_chance"], :name => "index_armors_on_critical_chance"
+  add_index "armors", ["critical_damage"], :name => "index_armors_on_critical_damage"
+  add_index "armors", ["healing_power"], :name => "index_armors_on_healing_power"
+  add_index "armors", ["hit_points"], :name => "index_armors_on_hit_points"
   add_index "armors", ["slot_id"], :name => "index_armors_on_slot_id"
   add_index "armors", ["weight_id"], :name => "index_armors_on_weight_id"
 
@@ -48,20 +66,38 @@ ActiveRecord::Schema.define(:version => 20121108214940) do
   add_index "gear_enhancements", ["gear_id"], :name => "index_gear_enhancements_on_gear_id"
 
   create_table "outfits", :force => true do |t|
+    t.integer  "armor"
+    t.integer  "hit_points"
+    t.integer  "attack_power"
+    t.integer  "critical_damage"
+    t.integer  "critical_chance"
+    t.integer  "condition_damage"
+    t.integer  "condition_duration"
+    t.integer  "healing_power"
+    t.integer  "boon_duration"
     t.integer  "arms_id"
     t.integer  "chest_id"
     t.integer  "feet_id"
     t.integer  "head_id"
     t.integer  "legs_id"
     t.integer  "shoulders_id"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
+  add_index "outfits", ["armor"], :name => "index_outfits_on_armor"
   add_index "outfits", ["arms_id"], :name => "index_outfits_on_arms_id"
+  add_index "outfits", ["attack_power"], :name => "index_outfits_on_attack_power"
+  add_index "outfits", ["boon_duration"], :name => "index_outfits_on_boon_duration"
   add_index "outfits", ["chest_id"], :name => "index_outfits_on_chest_id"
+  add_index "outfits", ["condition_damage"], :name => "index_outfits_on_condition_damage"
+  add_index "outfits", ["condition_duration"], :name => "index_outfits_on_condition_duration"
+  add_index "outfits", ["critical_chance"], :name => "index_outfits_on_critical_chance"
+  add_index "outfits", ["critical_damage"], :name => "index_outfits_on_critical_damage"
   add_index "outfits", ["feet_id"], :name => "index_outfits_on_feet_id"
   add_index "outfits", ["head_id"], :name => "index_outfits_on_head_id"
+  add_index "outfits", ["healing_power"], :name => "index_outfits_on_healing_power"
+  add_index "outfits", ["hit_points"], :name => "index_outfits_on_hit_points"
   add_index "outfits", ["legs_id"], :name => "index_outfits_on_legs_id"
   add_index "outfits", ["shoulders_id"], :name => "index_outfits_on_shoulders_id"
 

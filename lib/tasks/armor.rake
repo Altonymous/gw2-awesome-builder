@@ -4,16 +4,16 @@ namespace :outfitter do
   namespace :armor do
     desc "Clear all armor from the database"
     task :clear => [:environment] do |t, args|
-      puts 'DELETING ARMOR'
+      puts 'Deleting Armor...'
       Armor.delete_all
-      puts 'DONE'
+      puts 'Done'
     end
 
     desc "Create random pieces of armor [:pieces]"
     task :randomize, [:pieces] => [:environment, :clear] do |t, args|
       pieces = args[:pieces] || 100
 
-      puts 'CREATING ARMOR'
+      puts 'Randomizing Armor Creation...'
       (1..pieces.to_i).each do |i|
         Armor.create! do |armor|
           armor.name = "Armor Piece ##{i}"
@@ -37,7 +37,7 @@ namespace :outfitter do
         end
       end
 
-      puts 'DONE'
+      puts 'Done'
     end
   end
 end

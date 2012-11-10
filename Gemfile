@@ -34,3 +34,4 @@ gem 'awesome_print', '>= 1.1.0', group: [:development, :test]
 gem 'activerecord-import', '>= 0.2.11'
 gem 'newrelic_rpm', '>= 3.5.0.1', group: [:development, :test]
 gem 'kaminari', '>= 0.14.1'
+gem 'meta_search', '>= 1.1.3'
