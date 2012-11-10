@@ -19,12 +19,25 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe OutfitsController do
+  let(:head) { create(:armor, :head, :with_enhancement) }
+  let(:shoulders) { create(:armor, :shoulders, :with_enhancement) }
+  let(:chest) { create(:armor, :chest, :with_enhancement) }
+  let(:arms) { create(:armor, :arms, :with_enhancement) }
+  let(:legs) { create(:armor, :legs, :with_enhancement) }
+  let(:feet) { create(:armor, :feet, :with_enhancement) }
 
   # This should return the minimal set of attributes required to create a valid
   # Outfit. As you add validations to Outfit, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {
+      head_id: head.id,
+      shoulders_id: shoulders.id,
+      chest_id: chest.id,
+      arms_id: arms.id,
+      legs_id: legs.id,
+      feet_id: feet.id
+    }
   end
 
   # This should return the minimal set of values that should be in the session
@@ -93,11 +106,11 @@ describe OutfitsController do
         assigns(:outfit).should be_a_new(Outfit)
       end
 
-      it "re-renders the 'new' template" do
+      it "redirects to the 'outfits#index' action" do
         # Trigger the behavior that occurs when invalid params are submitted
         Outfit.any_instance.stub(:save).and_return(false)
         post :create, {:outfit => {}}, valid_session
-        response.should render_template("new")
+        response.should redirect_to(controller: :outfits, action: :index)
       end
     end
   end
@@ -136,12 +149,12 @@ describe OutfitsController do
         assigns(:outfit).should eq(outfit)
       end
 
-      it "re-renders the 'edit' template" do
+      it "redirects to the 'outfits#show' action" do
         outfit = Outfit.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Outfit.any_instance.stub(:save).and_return(false)
         put :update, {:id => outfit.to_param, :outfit => {}}, valid_session
-        response.should render_template("edit")
+        response.should redirect_to(controller: :outfits, action: :show)
       end
     end
   end

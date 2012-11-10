@@ -6,14 +6,17 @@ class GearEnhancement < ActiveRecord::Base
   # Polymorphic Associations
   belongs_to :gear, polymorphic: true
 
-  validates :enhancement,
-    presence: true
+  # Validations
   validates :gear_type,
     presence: true
   validates :rating,
     presence: true,
     numericality: { only_integer: true, greater_than: 0 }
 
+  validates_associated :enhancement
+  validates_presence_of :enhancement_id
+
+  # Overridden Methods
   def ==(other)
     return self.gear_type == other.gear_type && self.enhancement_id == other.enhancement_id && self.rating == other.rating
   end

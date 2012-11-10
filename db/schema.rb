@@ -129,13 +129,31 @@ ActiveRecord::Schema.define(:version => 20121108214940) do
   end
 
   create_table "trinkets", :force => true do |t|
-    t.string   "name",       :limit => 48
+    t.string   "name",               :limit => 48
     t.integer  "level"
+    t.integer  "armor"
+    t.integer  "hit_points"
+    t.integer  "attack_power"
+    t.integer  "critical_damage"
+    t.integer  "critical_chance"
+    t.integer  "condition_damage"
+    t.integer  "condition_duration"
+    t.integer  "healing_power"
+    t.integer  "boon_duration"
     t.integer  "slot_id"
-    t.datetime "created_at",               :null => false
-    t.datetime "updated_at",               :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
+  add_index "trinkets", ["armor"], :name => "index_trinkets_on_armor"
+  add_index "trinkets", ["attack_power"], :name => "index_trinkets_on_attack_power"
+  add_index "trinkets", ["boon_duration"], :name => "index_trinkets_on_boon_duration"
+  add_index "trinkets", ["condition_damage"], :name => "index_trinkets_on_condition_damage"
+  add_index "trinkets", ["condition_duration"], :name => "index_trinkets_on_condition_duration"
+  add_index "trinkets", ["critical_chance"], :name => "index_trinkets_on_critical_chance"
+  add_index "trinkets", ["critical_damage"], :name => "index_trinkets_on_critical_damage"
+  add_index "trinkets", ["healing_power"], :name => "index_trinkets_on_healing_power"
+  add_index "trinkets", ["hit_points"], :name => "index_trinkets_on_hit_points"
   add_index "trinkets", ["slot_id"], :name => "index_trinkets_on_slot_id"
 
   create_table "users", :force => true do |t|

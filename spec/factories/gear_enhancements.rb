@@ -2,11 +2,11 @@
 
 FactoryGirl.define do
   factory :gear_enhancement do
-    enhancement
+    enhancement_id { Enhancement.first.id }
     rating 1
 
     factory :armor_enhancement do
-      association :gear, factory: :armor
+      gear { build(:armor, :head, :with_enhancement) }
     end
   end
 end

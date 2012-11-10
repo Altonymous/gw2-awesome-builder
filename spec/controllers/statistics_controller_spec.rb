@@ -35,9 +35,9 @@ describe StatisticsController do
 
   describe "GET index" do
     it "assigns all statistics as @statistics" do
-      statistic = Statistic.create!(valid_attributes)
+      statistics = Statistic.all
       get :index, {}, valid_session
-      assigns(:statistics).should eq([statistic])
+      assigns(:statistics).should eq(statistics)
     end
   end
 
