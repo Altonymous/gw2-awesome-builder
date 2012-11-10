@@ -33,16 +33,16 @@ class Noko
         item = item.merge(stats)
       end
 
-      puts "Name: #{item["name"]} -----"
-      puts "Defense: #{item["defense"]}"
-      puts "Power: #{item["power"]}"
-      puts "Vitality: #{item["vitality"]}"
-      puts "Precision: #{item["precision"]}"
-      puts "Condition Damage: #{item["condition"]}"
-      puts "Toughness: #{item["toughness"]}"
-      puts "Critical Damage: #{item["critical_damage"]}"
-      puts "Critical Chance: #{item["critical_chance"]}"
-      puts "Healing: #{item["healing"]}"
+      puts "# Name: #{item["name"]} -----"
+      puts "  Defense: #{item["defense"]}"
+      puts "  Power: #{item["power"]}"
+      puts "  Vitality: #{item["vitality"]}"
+      puts "  Precision: #{item["precision"]}"
+      puts "  Condition Damage: #{item["condition"]}"
+      puts "  Toughness: #{item["toughness"]}"
+      puts "  Critical Damage: #{item["critical_damage"]}"
+      puts "  Critical Chance: #{item["critical_chance"]}"
+      puts "  Healing: #{item["healing"]}"
       puts "End -----"
 
     end
