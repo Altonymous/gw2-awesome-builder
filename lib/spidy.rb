@@ -1,10 +1,12 @@
 class Spidy
 
   def initialize
+    @base_url = "http://www.gw2spidy.com/api/v0.9/json/items/0/0?rarity_filter=5&sort_name=asc"
   end
 
   def self.get_items
-    response = JSON.parse(RestClient.get "http://www.gw2spidy.com/api/v0.9/json/items/0/0?rarity_filter=5&sort_name=asc")
+
+    response = JSON.parse(RestClient.get @base_url)
 
     response['results'].map do |result|
       item_id = result['gw2db_external_id']
