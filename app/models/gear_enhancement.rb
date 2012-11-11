@@ -13,7 +13,6 @@ class GearEnhancement < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true, greater_than: 0 }
 
-  validates_associated :enhancement
   validates_presence_of :enhancement_id
 
   # Overridden Methods
