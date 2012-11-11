@@ -5,8 +5,8 @@ class Spidy
   end
 
 
-  def get_items(type, sub_type)
-    results = search_items(type, sub_type)
+  def get_items(type)
+    results = search_items(type)
 
     results.select! { |item| item if item['restriction_level'] == 80 }
 
@@ -28,8 +28,8 @@ class Spidy
     end
   end
 
-  def search_items(type, sub_type)
-    @extras = "/items/#{type}/#{sub_type}?sort_name=asc"
+  def search_items(type)
+    @extras = "/items/#{type}?sort_name=asc"
 
     session = Patron::Session.new
     session.base_url = @base_url
