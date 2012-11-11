@@ -1,38 +1,42 @@
 class Spidy
 
   def initialize
-    @base_url = "http://www.gw2spidy.com/api/v0.9/json/items/0/0?rarity_filter=5&sort_name=asc"
+    @base_url = "http://www.gw2spidy.com/api/v0.9/json"
   end
 
-  def self.get_items
 
-    response = JSON.parse(RestClient.get @base_url)
+  def get_items(type, sub_type)
+    results = search_items(type, sub_type)
 
-    response['results'].map do |result|
+    results.select! { |item| item if item['restriction_level'] == 80 }
+
+    # Not sure if the filter is working or not, we're getting weird data right now
+    # results.select! { |item| item if item['rarity'] == 5 }
+    results.map do |result|
+
+      # I do this to filter out bogus items
       item_id = result['gw2db_external_id']
       name = result['name'].gsub(/'/, '').parameterize
       name = "-#{name}" unless name.length < 1
       url = "http://www.gw2db.com/items/#{item_id}#{name}"
+
+      gw2db = Noko.new
+      gw2db.get_item(url)
+
       extra_data = {'url' => url}
       result.merge(extra_data)
     end
+  end
 
-    # response['results'].map do |result|
-      # get the ID
-      # create a URL for a different site
-      # get that site
-      # prase that response; save it in a "extra_data" variable and it is a Ruby hash
-      # add that response to the "result"
+  def search_items(type, sub_type)
+    @extras = "/items/#{type}/#{sub_type}?sort_name=asc"
 
-      # result.merge(extra_data)
-    # end
+    session = Patron::Session.new
+    session.base_url = @base_url
+    response = session.get @extras
 
-    # stuff = JSON.parse(RestClient.get "http://www.gw2db.com/skills/#{}")
-
-    # puts = JSON.parse(RestClient.get "http://www.gw2db.com/skills/#{}")
-    # gw2db = 6958
-
-
+    response = JSON.parse(response.body)
+    results = response['results']
   end
 
 end

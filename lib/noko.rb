@@ -9,35 +9,41 @@ class Noko
     @weight = {'light' => 1, 'medium' => '3','heavy' => 2}
   end
 
-  def get_items(category, type, weight)
+  def search_items(category, type, weight)
     doc = Nokogiri::HTML(open("http://www.gw2db.com/items/#{category}/#{type}/?filter-item-armor-weight-type=#{@weight[weight]}#{@base_params}"))
 
     items = Hash.new
 
     doc.css('.gwitem').map do |link|
-      url = "http://www.gw2db.com#{link['href']}"
-      page = Nokogiri::HTML(open url)
-
-      item = Hash.new
-      item[:stats] = Hash.new
-      item_html = page.css('.db-summary')
-      item[:name] = item_html.css('.db-title').text.strip
-
-      page.css('.db-summary dd').each do |stat|
-        stats = get_stat(stat)
-        item[:stats] = item[:stats].merge(stats)
-      end
-
-      puts "# #{item[:name]} -----"
-      item[:stats].map do |stat|
-        stat_name ||= "#{stat[1][:name]}: "
-        stat_value = stat[1][:value]
-        puts "  #{stat_name}#{stat_value}".gsub(/\s:\s/, ' ')
-      end
-      puts "# ---------------------\n\n"
+      item = get_item("http://www.gw2db.com#{link['href']}")
+      items = item.merge(item)
 
     end
+  end
 
+  def get_item(url)
+    url = "#{url}"
+    page = Nokogiri::HTML(open url)
+
+    item = Hash.new
+    item[:stats] = Hash.new
+    item_html = page.css('.db-summary')
+    item[:name] = item_html.css('.db-title').text.strip
+
+    page.css('.db-summary dd').each do |stat|
+      stats = get_stat(stat)
+      item[:stats] = item[:stats].merge(stats)
+    end
+
+    puts "# #{item[:name]} -----"
+    item[:stats].map do |stat|
+      stat_name ||= "#{stat[1][:name]}: "
+      stat_value = stat[1][:value]
+      puts "  #{stat_name}#{stat_value}".gsub(/\s:\s/, ' ')
+    end
+    puts "# ---------------------\n\n"
+
+    return item
   end
 
   def get_stat(stat)
