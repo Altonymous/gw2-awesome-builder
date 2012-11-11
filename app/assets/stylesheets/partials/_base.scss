@@ -1,15 +1,61 @@
 body {
   background: #efefef;
   font-family: Helvetica, Arial, sans-serif;
+  font-size: 15px;
+  a { text-decoration: none; }
 }
 
 header {
-  background: #333;
-  padding: 10px 0;
+  @include background-image(linear-gradient(#444, #222));
+  @include inline-block;
+  font-size: 13px;
+  padding: 0;
   width: 100%;
-  height: 20px;
+  // height: 20px;
   margin-bottom: 24px;
-  a { color: #fefefe; }
+  a { color: #ddd; }
+  a:hover { color: #ad0; }
+
+  .container > * {
+    height: 30px;
+    vertical-align: top;
+  }
+  #logo, .page-navigation {
+    @include inline-block;
+    vertical-align: top;
+  }
+
+  #logo {
+    margin-right: 10px;
+    margin-top: 12px;
+  }
+
+
+  ul.account-navigation { float: right; }
+  ul {
+    display: block;
+    margin: 0;
+    height: 40px;
+    margin-top: 6px;
+  }
+  ul li {
+    @include inline-block;
+    a {
+      @include border-radius(4px);
+      @include box-shadow(0 0 0 1px rgba(255,255,255, .05));
+      @include background-image(linear-gradient(#222, #111));
+      display: block;
+      padding: 6px 6px 8px 6px;
+      &:hover {
+        background: #000;
+        @include box-shadow(0 0 0 1px rgba(255,255,255, .1));
+      }
+    }
+  }
+}
+
+.logo {
+
 }
 
 .container { @include container; }
