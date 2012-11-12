@@ -11,6 +11,15 @@ SimpleCov.start 'rails' do
   add_filter "/spec/"
   add_filter "/helpers/"
   add_filter "/config"
+
+  at_exit do
+    SimpleCov.result.format!
+    threshold, actual = 97, SimpleCov.result.covered_percent
+    if actual < threshold
+      puts "Coverage #{actual}% is below the threshold of #{threshold}%."
+      exit 1
+    end
+  end
 end
 
 require File.expand_path("../../config/environment", __FILE__)
@@ -70,6 +79,7 @@ RSpec.configure do |config|
     DatabaseCleaner.strategy = :truncation
   end
   config.before(:each) do
+    SimpleCov.command_name "RSpec:#{Process.pid.to_s}#{ENV['TEST_ENV_NUMBER']}"
     DatabaseCleaner.start
   end
   config.after(:each) do

@@ -9,7 +9,7 @@
   - if user_signed_in?
     %li
       = link_to 'Edit account', edit_user_registration_path
-    - if current_user.has_role? :admin
+    - if current_user.has_role? :administrator
       %li
         = link_to 'Admin', users_path
   - else

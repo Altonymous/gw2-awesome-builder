@@ -10,11 +10,12 @@ FactoryGirl.define do
 
     ignore do
       rating 1
+      enhancement { Enhancement.find_by_name('Toughness') }
     end
 
     trait :with_enhancement do
       after(:build) do |armor, evaluator|
-        armor.gear_enhancements.build({rating: evaluator.rating}).enhancement = Enhancement.first
+        armor.gear_enhancements.build({rating: evaluator.rating}).enhancement = evaluator.enhancement
       end
     end
 

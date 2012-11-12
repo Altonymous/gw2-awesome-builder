@@ -1,4 +1,5 @@
 class Outfit < ActiveRecord::Base
+  resourcify
   attr_accessible :arms_id, :chest_id, :feet_id, :head_id, :legs_id, :shoulders_id
   after_initialize :defaults
   before_save :generate_statistics
