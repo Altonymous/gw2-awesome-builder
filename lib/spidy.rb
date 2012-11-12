@@ -86,7 +86,7 @@ class Spidy
       case type
       when 0 # Armor
         gear_enhancements.each { |gear_enhancement| gear_enhancement.gear_type = 'Armor' }
-        Armor.create!({
+        Armor.create({
                     name: name,
                     level: level,
                     weight_id: Weight.find_by_name(weight).id,
