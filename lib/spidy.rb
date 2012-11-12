@@ -59,6 +59,7 @@ class Spidy
     Armor.delete_all
     (1...100000).each do |i|
       break if get_items(0, i)
+      sleep(rand(3..20).seconds)
     end
   end
 
