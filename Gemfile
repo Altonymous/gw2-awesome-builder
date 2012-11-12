@@ -35,3 +35,4 @@ gem 'newrelic_rpm', '>= 3.5.0.1', group: [:development, :test]
 gem 'kaminari', '>= 0.14.1'
 gem 'meta_search', '>= 1.1.3'
 gem 'parallel_tests', '>= 0.8.14', :group => :development
+gem 'rake', '>= 0.9.2.2', :group => [:development, :test]
