@@ -15,7 +15,7 @@ class Armor < ActiveRecord::Base
   validates :name,
     presence: true,
     uniqueness: true,
-    length: { maximum: 48 }
+    length: { maximum: 96 }
   validates :level,
     presence: true,
     numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 80 }
