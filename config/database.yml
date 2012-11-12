@@ -1,3 +1,9 @@
+# Use this command to have git ignore this file if you
+# makes changes you don't want to checkin.
+# git update-index --assume-unchanged config/database.yml
+
+# Use this command if you need to commit changes to this file
+# git update-index --no-assume-unchanged config/database.yml
 mysql: &mysql
   adapter: mysql2
   username: root
