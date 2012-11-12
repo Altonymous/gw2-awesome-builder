@@ -6,9 +6,9 @@ env:
   - DB=mysql
   - DB=postgresql
 script:
-  - RAILS_ENV=test spec
+  - ROLIFY_STARTUP=no RAILS_ENV=test spec
 before_script:
   - mysql -e 'create database myapp_test'
   - psql -c 'create database myapp_test' -U postgres
-  - rake db:migrate
+  - ROLIFY_STARTUP=yes rake db:migrate
   - rake db:test:prepare

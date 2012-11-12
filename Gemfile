@@ -12,7 +12,6 @@ gem 'jquery-rails', '>= 2.1.3'
 gem 'thin', '>= 1.5.0'
 gem 'pg', '>= 0.14.1'
 gem 'mysql2', '>= 0.3.11', group: [:development, :test]
-# gem 'activerecord-mysql2-adapter', '>= 0', group: [:development, :test]
 gem 'sqlite3-ruby', '>= 1.3.3', group: [:development, :test]
 gem 'haml', '>= 3.1.7'
 gem 'haml-rails', '>= 0.3.5', group: :development
