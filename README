@@ -1,6 +1,7 @@
 Gw2 Awesome Builder
 ========================
 
+<<<<<<< HEAD
 This application was generated with the rails_apps_composer gem:
 https://github.com/RailsApps/rails_apps_composer
 provided by the RailsApps Project:
@@ -18,3 +19,6 @@ ________________________
 
 License
 
+=======
+Just the most awesome gear builder, ever!  That's all.
+>>>>>>> 2a5bf10fa4067c727edc83662a4aae995287e1db

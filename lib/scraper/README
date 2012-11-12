@@ -1,0 +1,57 @@
+Gw2 Awesome Builder - Scraper
+========================
+
+This tool is used to scrape information off the in game trading post for search, saving, etc...
+
+________________________
+
+Usage:
+    # > rails c
+    # > Scraper::Screech.new('email', 'password')
+    # > json_responce = c.zoom(name_like, type, sub_type, rarity, min_level, max_level, page)
+
+Values:
+    # type:
+      - :armor
+      - :bag
+      - :consumable
+      - :weapon
+
+    # sub_type:
+      - of type (:armor)
+        - coat
+        - legs
+        - gloves
+        - helm
+        - aquatic_helm
+        - boots
+        - shoulders
+      - of type (:weapon)
+        - axe
+        - dagger
+        - focus
+        - greatsword
+        - hammer
+        - harpoon_gun
+        - longbow
+        - mace
+        - pistol
+        - rifle
+        - scepter
+        - shield
+        - short_bow
+        - spear
+        - staff
+        - sword
+        - torch
+        - toy
+        - trident
+        - warhorn
+
+    # rarity:
+      - basic
+      - fine
+      - masterwork
+      - rare
+      - exotic
+      - legendary
