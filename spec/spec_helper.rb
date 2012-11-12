@@ -76,6 +76,7 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before(:suite) do
+    `rm -rf #{Rails.root}/coverage`
     DatabaseCleaner.strategy = :truncation
   end
   config.before(:each) do
