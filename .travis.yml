@@ -2,8 +2,8 @@ language: ruby
 rvm:
   - 1.9.3
 env:
-  - DB=sqlite3
-  - DB=mysql
+  # - DB=sqlite3
+  # - DB=mysql
   - DB=postgresql
 script:
   - ROLIFY_STARTUP=no RAILS_ENV=test rspec
