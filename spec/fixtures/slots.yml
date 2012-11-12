@@ -1,19 +1,19 @@
-head:
+helm:
   id: 1
   name: Head
 shoulders:
   id: 2
   name: Shoulders
-chest:
+coat:
   id: 3
   name: Chest
-arms:
+gloves:
   id: 4
   name: Arms
 legs:
   id: 5
   name: Legs
-feet:
+boots:
   id: 6
   name: Feet
 ring_1:

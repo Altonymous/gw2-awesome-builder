@@ -36,6 +36,7 @@ class Noko
     end
 
     puts "# #{item[:name]} -----"
+    gear_enhancements = []
     item[:stats].map do |stat|
       stat_name ||= "#{stat[1][:name]}: "
       stat_value = stat[1][:value]
@@ -44,6 +45,23 @@ class Noko
     puts "# ---------------------\n\n"
 
     return item
+  end
+
+  def get_gear_enhancements(url)
+    item = get_item(url)
+
+    weight
+    gear_enhancements = []
+    item[:stats].map do |stat|
+      stat_name ||= "#{stat[1][:name]}: "
+      stat_value = stat[1][:value]
+
+      weight = stat_value if stat_name.include?('armor-weight')
+      enhancement = Enhancement.find_by_name(stat_name)
+      gear_enhancements << GearEnhancement.new({ enhancement_id: enhancement.id, rating: stat_value.to_i }) if enhancement.present?
+    end
+
+    return gear_enhancements, weight
   end
 
   def get_stat(stat)

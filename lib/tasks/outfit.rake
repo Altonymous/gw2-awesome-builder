@@ -11,7 +11,7 @@ namespace :outfitter do
 
     desc "Test stat_generation"
     task :test => [:environment] do |t, args|
-      # (1..100).each { |i| Outfit.create({head_id: i, shoulders_id: i, chest_id: i, arms_id: i, legs_id: i, feet_id: i}) }
+      # (1..100).each { |i| Outfit.create({helm_id: i, shoulders_id: i, coat_id: i, gloves_id: i, legs_id: i, boots_id: i}) }
       outfits = Outfit.limit(100).order('id asc')
       timing = Benchmark.bm { |b|
         b.report do

@@ -27,7 +27,7 @@ FactoryGirl.define do
       end
     end
 
-    trait :head do
+    trait :helm do
       slot { Slot.find_by_name("Head") }
     end
 
@@ -35,11 +35,11 @@ FactoryGirl.define do
       slot { Slot.find_by_name("Shoulders") }
     end
 
-    trait :chest do
+    trait :coat do
       slot { Slot.find_by_name("Chest") }
     end
 
-    trait :arms do
+    trait :gloves do
       slot { Slot.find_by_name("Arms") }
     end
 
@@ -47,7 +47,7 @@ FactoryGirl.define do
       slot { Slot.find_by_name("Legs") }
     end
 
-    trait :feet do
+    trait :boots do
       slot { Slot.find_by_name("Feet") }
     end
   end

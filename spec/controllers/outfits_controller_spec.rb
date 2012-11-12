@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe OutfitsController do
   let(:attack_power) { Enhancement.find_by_name('Power') }
-  let(:head) { create(:armor, :head, :with_enhancement, enhancement: attack_power) }
+  let(:helm) { create(:armor, :helm, :with_enhancement, enhancement: attack_power) }
   let(:shoulders) { create(:armor, :shoulders, :with_enhancement, enhancement: attack_power) }
-  let(:chest) { create(:armor, :chest, :with_enhancement, enhancement: attack_power) }
-  let(:arms) { create(:armor, :arms, :with_enhancement, enhancement: attack_power) }
+  let(:coat) { create(:armor, :coat, :with_enhancement, enhancement: attack_power) }
+  let(:gloves) { create(:armor, :gloves, :with_enhancement, enhancement: attack_power) }
   let(:legs) { create(:armor, :legs, :with_enhancement, enhancement: attack_power) }
-  let(:feet) { create(:armor, :feet, :with_enhancement, enhancement: attack_power) }
+  let(:boots) { create(:armor, :boots, :with_enhancement, enhancement: attack_power) }
 
   def valid_attributes
     {
-      head_id: head.id,
+      helm_id: helm.id,
       shoulders_id: shoulders.id,
-      chest_id: chest.id,
-      arms_id: arms.id,
+      coat_id: coat.id,
+      gloves_id: gloves.id,
       legs_id: legs.id,
-      feet_id: feet.id
+      boots_id: boots.id
     }
   end
 
@@ -32,7 +32,7 @@ describe OutfitsController do
 
       before(:each) do
         outfits << create(:outfit)
-        outfits << create(:outfit, head: create(:armor, :with_enhancement, enhancement: Enhancement.find_by_name('Precision')))
+        outfits << create(:outfit, helm: create(:armor, :with_enhancement, enhancement: Enhancement.find_by_name('Precision')))
       end
 
       context 'default' do

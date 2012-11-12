@@ -35,12 +35,12 @@ Enhancement.create!([
 
 puts 'CREATING SLOTS'
 Slot.create!([
-               { name: 'Head' },
+               { name: 'Helm' },
                { name: 'Shoulders' },
-               { name: 'Chest' },
-               { name: 'Arms' },
+               { name: 'Coat' },
+               { name: 'Gloves' },
                { name: 'Legs' },
-               { name: 'Feet' }
+               { name: 'Boots' }
 ])
 
 puts 'CREATING WEIGHTS'

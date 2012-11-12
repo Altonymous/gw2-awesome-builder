@@ -6,7 +6,7 @@ FactoryGirl.define do
     rating 1
 
     factory :armor_enhancement do
-      gear { build(:armor, :head, :with_enhancement) }
+      gear { build(:armor, :helm, :with_enhancement) }
     end
   end
 end
