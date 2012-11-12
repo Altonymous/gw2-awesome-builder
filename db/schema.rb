@@ -14,7 +14,7 @@
 ActiveRecord::Schema.define(:version => 20121108214940) do
 
   create_table "armors", :force => true do |t|
-    t.string   "name",               :limit => 48
+    t.string   "name",               :limit => 96
     t.integer  "level"
     t.integer  "armor"
     t.integer  "hit_points"
