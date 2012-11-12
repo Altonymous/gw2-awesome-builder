@@ -1,0 +1,39 @@
+.sliders {
+  * { text-align: center; }
+  .label { font-size: 12px; margin: 10px 0; }
+  .amount { font-size: 14px; font-weight: bold; }
+}
+
+.ui-slider-vertical { margin: 20px auto; width: 12px; }
+
+.ui-widget-content {
+  @include box-shadow(inset 0 1px 3px rgba(0,0,0, .2),
+                      0 0 1px 1px rgba(255,255,255, .45));
+  background: #ddd;
+}
+
+.ui-widget-content .ui-state-default {
+  @include box-shadow(inset 0 1px 0 #fff,
+                      0 1px 2px rgba(0,0,0, .15));
+  background: #efefef;
+  border: 1px solid #aaa;
+  outline: none;
+  -moz-outline-style: none;
+}
+
+.ui-widget-content .ui-state-hover {
+  @include box-shadow(inset 0 1px 0 #fff,
+                      0 0 2px 1px rgba(0,0,0, .15));
+  background: #fff;
+  cursor: url(/assets/open-hand-cursor.png),url(/assets/open-hand-cursor.png),pointer !important;
+}
+
+.ui-widget-content .ui-state-active {
+  background: white;
+  cursor: url(/assets/closed-hand-cursor.png),url(/assets/closed-hand-cursor.png),pointer !important;
+}
+
+.ui-slider-range {
+  @include box-shadow(inset 0 0 3px 2px rgba(170,255,170, .65));
+  background: #77cc77;
+}

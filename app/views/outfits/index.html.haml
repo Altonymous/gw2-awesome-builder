@@ -1,20 +1,20 @@
+
 %h1 Listing Outfits
 
-%table
+%table#ex1
   %thead
-    %tr
-      - # Create a method to toggle the sort order
-      - # Can we sort by multiple columns?
-      %th= link_to "Armor", "?sort=armor.desc"
-      %th= link_to "Attack Power", "?sort=attack_power.desc"
-      %th= link_to "Hit Points", "?sort=hit_points.desc"
-      %th= link_to "Healing Power", "?sort=healing_power.desc"
-      %th= link_to "Condition Damage", "?sort=condition_damage.desc"
-      %th= link_to "Critical Damage", "?sort=critical_damage.desc"
-      %th= link_to "Critical Chance", "?sort=critical_chance.desc"
-      %th= link_to "Condition Duration", "?sort=condition_duration.desc"
-      %th= link_to "Boon Duration", "?sort=boon_duration.desc"
-      %th
+    %tr.sliders
+      %th=stat_slider("Armor")
+      %th=stat_slider("Attack Power")
+      %th=stat_slider("Hit Points")
+      %th=stat_slider("Healing Power")
+      %th=stat_slider("Condition Damage")
+      %th=stat_slider("Critical Damage")
+      %th=stat_slider("Critical Chance")
+      %th=stat_slider("Condition Duration")
+      %th=stat_slider("Boon Duration")
+      %th.nosort
+
 
   - @outfits.each do |outfit|
     %tr
@@ -34,3 +34,28 @@
 = paginate @outfits
 
 %br
+:javascript
+  $(function() {
+    $.each($(".slider-range" ), function(e) {
+
+      $(this).slider({
+        orientation: "vertical",
+        range: true,
+        values: [ 17, 67 ],
+        slide: function( event, ui ) {
+          var name = $(this).data("name");
+          $(".slider-amount #slider-" + name).text( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
+        }
+      });
+
+    });
+    $(".slider-range").each(function() {
+      var name = $(this).data("name");
+      var rangeIndicator = $(".slider-amount #slider-" + name);
+      rangeIndicator.text($(this).slider("values", 0) + " - " + $(this).slider("values", 1))
+    })
+
+    $('#ex1').sorttable({items: '>:not(.nosort)', placeholder: 'placeholder'});
+
+  });
+
