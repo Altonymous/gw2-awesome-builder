@@ -80,30 +80,14 @@ namespace :outfitter do
           outfits = permutations!(gear_possibilities)
           total_outfits_length = total_outfits_length + outfits.length
 
-          # Reformating the outfits data type
-          puts "Reformating Outfits..."
-          reformating_start = Time.now
-          outfits.map! { |item| Outfit.new(item.reduce({}, :update)) }
-          puts "Took #{(Time.now - reformating_start).round(4)} seconds to reformat.\n\n"
-
-          # Generating statistics
-          # TODO: SPEED THIS UP!
-          puts "Generating statistics"
-          generating_start = Time.now
-          outfits.map! do |item|
-            item.generate_statistics
-            item
-          end
-          puts "Took #{(Time.now - generating_start).round(4)} seconds to generate statistics.\n\n"
-
           # Storing the outfits
           puts "Storing Outfits..."
           storing_start = Time.now
-          Outfit.import(outfits) unless outfits.blank?
+          outfits.map! { |item| Outfit.new(item.reduce({}, :update)).save! }
           puts "Took #{(Time.now - storing_start).round(4)} seconds to store.\n\n"
 
           # Completing armor set generation
-          puts "Took #{(Time.now - weight_start).round(4)} seconds to generate #{weight.camelize} armor sets."
+          puts "Took #{(Time.now - weight_start).round(4)} seconds to generate #{weight.camelize} armor sets.\n\n"
         end
 
         puts 'Done'

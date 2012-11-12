@@ -1,4 +1,5 @@
 class Enhancement < ActiveRecord::Base
+  resourcify
   attr_accessible :name, :multiplier, :statistic_id
 
   belongs_to :statistic

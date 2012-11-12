@@ -50,7 +50,7 @@ describe Armor do
   context 'is invalid if' do
     it 'name already exists' do
       create(:armor, :with_enhancement, name: "Armor")
-      build(:armor, name: "Armor").should_not be_valid
+      build(:armor, :with_enhancement, name: "Armor").should_not be_valid
     end
 
     it 'name is longer than 48 characters' do
@@ -72,5 +72,21 @@ describe Armor do
     it 'level is not less than or equal to eighty' do
       build(:armor, level: 81).should_not be_valid
     end
+  end
+
+  context '#generate_statistics' do
+    subject { gear }
+
+    let(:gear) { create(:armor, :with_all_enhancements, :rating => 10) }
+
+    it { subject.armor.should equal(22) }
+    it { subject.hit_points.should equal(20) }
+    it { subject.attack_power.should equal(11) }
+    it { subject.critical_damage.should equal(11) }
+    it { subject.critical_chance.should equal(10) }
+    it { subject.condition_damage.should equal(11) }
+    it { subject.condition_duration.should equal(11) }
+    it { subject.healing_power.should equal(11) }
+    it { subject.boon_duration.should equal(11) }
   end
 end

@@ -1,4 +1,5 @@
 class Statistic < ActiveRecord::Base
+  resourcify
   attr_accessible :name, :kind, :minimum, :maximum, :interval
 
   has_many :enhancements

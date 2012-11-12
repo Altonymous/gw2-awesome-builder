@@ -11,10 +11,6 @@ FactoryGirl.define do
       after(:build) do |trinket|
         trinket.gear_enhancements.build({rating: 1}).enhancement = Enhancement.first
       end
-
-      before(:create) do |trinket|
-        trinket.gear_enhancements.build({rating: 1}).enhancement = Enhancement.first
-      end
     end
 
     trait :ring_1 do

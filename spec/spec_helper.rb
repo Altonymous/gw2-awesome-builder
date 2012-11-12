@@ -1,12 +1,33 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
 ENV["RAILS_ENV"] ||= 'test'
+
+# Setup code coverage
+require 'simplecov'
+
+# SimpleCov.command_name 'specs'
+SimpleCov.start 'rails' do
+  add_group "Concerns", "app/concerns"
+
+  add_filter "/spec/"
+  add_filter "/helpers/"
+  add_filter "/config"
+
+  at_exit do
+    SimpleCov.result.format!
+    threshold, actual = 97, SimpleCov.result.covered_percent
+    if actual < threshold
+      puts "Coverage #{actual}% is below the threshold of #{threshold}%."
+      exit 1
+    end
+  end
+end
+
 require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'email_spec'
 require 'rspec/autorun'
+require "cancan/matchers"
 
-# Setup code coverage
-require 'simplecov'
 
 class SimpleCov::Formatter::MergedFormatter
   def format(result)
@@ -15,9 +36,6 @@ class SimpleCov::Formatter::MergedFormatter
   end
 end
 SimpleCov.formatter = SimpleCov::Formatter::MergedFormatter
-
-# SimpleCov.command_name 'specs'
-SimpleCov.start 'rails'
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.
@@ -58,9 +76,11 @@ RSpec.configure do |config|
   config.order = "random"
 
   config.before(:suite) do
+    `rm -rf #{Rails.root}/coverage`
     DatabaseCleaner.strategy = :truncation
   end
   config.before(:each) do
+    SimpleCov.command_name "RSpec:#{Process.pid.to_s}#{ENV['TEST_ENV_NUMBER']}"
     DatabaseCleaner.start
   end
   config.after(:each) do

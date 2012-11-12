@@ -1,0 +1,14 @@
+language: ruby
+rvm:
+  - 1.9.3
+env:
+  # - DB=sqlite3
+  # - DB=mysql
+  - DB=postgresql
+script:
+  - ROLIFY_STARTUP=no RAILS_ENV=test rspec
+before_script:
+  - mysql -e 'create database myapp_test'
+  - psql -c 'create database myapp_test' -U postgres
+  - ROLIFY_STARTUP=yes rake db:migrate
+  - rake db:test:prepare
