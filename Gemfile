@@ -12,6 +12,8 @@ end
 gem 'jquery-rails', '>= 2.1.3'
 gem 'thin', '>= 1.5.0'
 gem 'pg', '>= 0.14.1'
+# gem 'mysql2', '>= 0.3.11', group: [:development, :test]
+# gem 'sqlite3-ruby', '>= 1.3.3', group: [:development, :test]
 gem 'haml', '>= 3.1.7'
 gem 'haml-rails', '>= 0.3.5', group: :development
 gem 'hpricot', '>= 0.8.6', group: :development
@@ -37,3 +39,5 @@ gem 'newrelic_rpm', '>= 3.5.0.1', group: [:development, :test]
 gem 'kaminari', '>= 0.14.1'
 gem 'patron', '>= 0.4.18'
 gem 'meta_search', '>= 1.1.3'
+gem 'parallel_tests', '>= 0.8.14', group: :development
+gem 'rake', '>= 0.9.2.2', :group => [:development, :test]

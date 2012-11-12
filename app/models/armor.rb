@@ -1,4 +1,5 @@
 class Armor < ActiveRecord::Base
+  resourcify
   attr_accessible :name, :weight_id, :slot_id, :level
 
   after_initialize :defaults

@@ -1,39 +1,36 @@
 %h1 Listing Outfits
 
-/ %table
-/   %thead
-/     %tr
-/       %th Armor
-/       %th Attack Power
-/       %th Hit Points
-/       %th Healing Power
-/       %th Condition Damage
-/       %th Critical Damage
-/       %th Critical Chance
-/       %th Condition Duration
-/       %th Boon Duration
-/       %th
+%table
+  %thead
+    %tr
+      - # Create a method to toggle the sort order
+      - # Can we sort by multiple columns?
+      %th= link_to "Armor", "?sort=armor.desc"
+      %th= link_to "Attack Power", "?sort=attack_power.desc"
+      %th= link_to "Hit Points", "?sort=hit_points.desc"
+      %th= link_to "Healing Power", "?sort=healing_power.desc"
+      %th= link_to "Condition Damage", "?sort=condition_damage.desc"
+      %th= link_to "Critical Damage", "?sort=critical_damage.desc"
+      %th= link_to "Critical Chance", "?sort=critical_chance.desc"
+      %th= link_to "Condition Duration", "?sort=condition_duration.desc"
+      %th= link_to "Boon Duration", "?sort=boon_duration.desc"
+      %th
 
-/   - @outfits.each do |outfit|
-/     %tr
-/       %td= outfit.armor
-/       %td= outfit.attack_power
-/       %td= outfit.hit_points
-/       %td= outfit.healing_power
-/       %td= outfit.condition_damage
-/       %td= outfit.critical_damage
-/       %td= outfit.critical_chance
-/       %td= outfit.condition_duration
-/       %td= outfit.boon_duration
-/       %td= link_to 'Show', outfit
+  - @outfits.each do |outfit|
+    %tr
+      %td= outfit.armor
+      %td= outfit.attack_power
+      %td= outfit.hit_points
+      %td= outfit.healing_power
+      %td= outfit.condition_damage
+      %td= outfit.critical_damage
+      %td= outfit.critical_chance
+      %td= outfit.condition_duration
+      %td= outfit.boon_duration
+      %td= link_to 'Show', outfit
 
 %br
 
 = paginate @outfits
 
-- items = Spidy.get_items
-
-- items.each do |item|
-  = link_to item['name'], item['url']
-  = item
   %br

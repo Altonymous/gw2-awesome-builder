@@ -1,0 +1,6 @@
+administrator:
+  id: 1
+  name: administrator
+user:
+  id: 2
+  name: user

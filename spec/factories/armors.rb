@@ -8,13 +8,22 @@ FactoryGirl.define do
     weight { Weight.first }
     slot { Slot.find_by_name('Head') }
 
-    trait :with_enhancement do
-      after(:build) do |armor|
-        armor.gear_enhancements.build({rating: 1}).enhancement = Enhancement.first
-      end
+    ignore do
+      rating 1
+      enhancement { Enhancement.find_by_name('Toughness') }
+    end
 
-      before(:create) do |armor|
-        armor.gear_enhancements.build({rating: 1}).enhancement = Enhancement.first
+    trait :with_enhancement do
+      after(:build) do |armor, evaluator|
+        armor.gear_enhancements.build({rating: evaluator.rating}).enhancement = evaluator.enhancement
+      end
+    end
+
+    trait :with_all_enhancements do
+      after(:build) do |armor, evaluator|
+        Enhancement.all.each do |enhancement|
+          armor.gear_enhancements.build({rating: evaluator.rating}).enhancement = enhancement
+        end
       end
     end
 

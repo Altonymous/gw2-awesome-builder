@@ -1,4 +1,5 @@
 class Trinket < ActiveRecord::Base
+  resourcify
   attr_accessible :name, :level, :slot_id
 
   after_initialize :defaults

@@ -1,0 +1,33 @@
+# Use this command to have git ignore this file if you
+# makes changes you don't want to checkin.
+# git update-index --assume-unchanged config/database.yml
+
+# Use this command if you need to commit changes to this file
+# git update-index --no-assume-unchanged config/database.yml
+mysql: &mysql
+  adapter: mysql2
+  username: root
+  password:
+  database: myapp_<%= Rails.env %>
+
+postgresql: &postgresql
+  adapter: postgresql
+  username: postgres
+  password:
+  database: myapp_<%= Rails.env %>
+  min_messages: ERROR
+
+defaults: &defaults
+  pool: 5
+  timeout: 5000
+  host: localhost
+  <<: *<%= ENV['DB'] || "postgresql" %>
+
+development:
+  <<: *defaults
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

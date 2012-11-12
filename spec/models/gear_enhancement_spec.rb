@@ -42,5 +42,30 @@ describe GearEnhancement do
         build(:armor_enhancement, rating: 1.1).should_not be_valid
       end
     end
+
+    context 'check equality' do
+      let(:enhancement1) { build(:gear_enhancement) }
+      let(:enhancement2) { build(:gear_enhancement) }
+
+      it { enhancement1.should == enhancement2 }
+
+      context 'should not be equal' do
+        it 'gear_type is different' do
+          enhancement2.gear_type = 'Other'
+          result = enhancement1 == enhancement2
+          result.should be_false
+        end
+
+        it 'enhancement_id is different' do
+          enhancement2.enhancement_id = enhancement1.enhancement_id + 1
+          enhancement1.should_not == enhancement2
+        end
+
+        it 'rating is different' do
+          enhancement2.rating = enhancement1.rating + 1
+          enhancement1.should_not == enhancement2
+        end
+      end
+    end
   end
 end
