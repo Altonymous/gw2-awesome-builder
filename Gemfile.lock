@@ -238,6 +238,7 @@ DEPENDENCIES
   quiet_assets (>= 1.0.1)
   rabl (>= 0.7.6)
   rails (= 3.2.8)
+  rake (>= 0.9.2.2)
   rolify (>= 3.2.0)
   rspec-rails (>= 2.11.4)
   ruby_parser (>= 2.3.1)
