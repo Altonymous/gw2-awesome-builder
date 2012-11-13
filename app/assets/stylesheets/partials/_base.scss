@@ -1,3 +1,56 @@
+.stats-header {
+  @include border-radius(4px);
+  @include box-shadow(0 0 0 1px rgba(0,0,0, .6),
+                      0 1px 2px rgba(0,0,0, .15),
+                      inset 0 1px 8px rgba(0,0,0, .4));
+  @include background-image(linear-gradient(#aaaaad, #99999b));
+  display: block;
+  color: #333;
+  width: 900px;
+  height: 380px;
+  margin: 6px 0;
+  .stats-slider {
+    @include inline-block;
+    @include box-shadow(inset -1px 0 0 rgba(0,0,0, .4),
+                        inset -2px 0 0 rgba(255,255,255, .4));
+    margin: 0;
+    padding: 10px;
+    width: 80px;
+    height: 360px;
+    vertical-align: top;
+    &:last-child { @include box-shadow(none); }
+  }
+}
+
+.stats-row-container {
+
+  .stats-row {
+    @include inline-block;
+    @include border-radius(4px);
+    @include box-shadow(0 0 0 1px rgba(0,0,0, .20),
+                        0 1px 2px rgba(0,0,0, .15));
+    background: #f8f8f8;
+    margin: 6px 0;
+    width: 900px;
+    &:hover {
+      background: #fefefe;
+    }
+    .stats-item {
+      @include box-shadow(inset -1px 0 0 #ddd);
+      text-align: center;
+      margin: 0;
+      padding: 10px;
+      width: 80px;
+      &:last-child { @include box-shadow(none); }
+    }
+  }
+  .stats-item {
+    @include inline-block;
+    &.preview { width: 40px; padding: 10px 5px; }
+  }
+}
+
+
 body {
   background: #efefef;
   font-family: Helvetica, Arial, sans-serif;
@@ -67,11 +120,13 @@ h1 {
 
 #main {
   @include container;
-  background: #fefefe;
-  padding: 10px;
+  overflow: visible;
+  // background: #fefefe;
+  // padding: 10px;
 }
 
 table {
+  border-collapse:separate;
   width: 100%;
   thead {
     @include box-shadow(0 1px 2px rgba(0,0,0, .15));
@@ -79,6 +134,7 @@ table {
   th {
     @include box-shadow(inset -1px 0 0 #ddd);
     background: #efefef;
+    min-width: 65px;
     padding: 10px;
     &:first-child {
       @include border-radius(4px 0 0 4px);
@@ -89,6 +145,8 @@ table {
     }
   }
   tr {
+    @include box-shadow(0 1px 2px 2px #f0f);
+    margin: 10px 0;
     &:nth-child(even) { background-color: #f6f6f6; }
   }
   td {

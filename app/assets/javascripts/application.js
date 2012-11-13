@@ -13,5 +13,5 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui-1.9.1.custom.min
-//= require jquery.sorttable
+//= require fauxtable
 //= require_tree .
