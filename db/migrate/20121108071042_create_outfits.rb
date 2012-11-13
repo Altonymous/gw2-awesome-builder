@@ -11,10 +11,10 @@ class CreateOutfits < ActiveRecord::Migration
       t.integer :healing_power
       t.integer :boon_duration
 
-      t.belongs_to :arms
-      t.belongs_to :chest
-      t.belongs_to :feet
-      t.belongs_to :head
+      t.belongs_to :gloves
+      t.belongs_to :coat
+      t.belongs_to :boots
+      t.belongs_to :helm
       t.belongs_to :legs
       t.belongs_to :shoulders
 
@@ -31,10 +31,10 @@ class CreateOutfits < ActiveRecord::Migration
     add_index :outfits, :healing_power
     add_index :outfits, :boon_duration
 
-    add_index :outfits, :arms_id
-    add_index :outfits, :chest_id
-    add_index :outfits, :feet_id
-    add_index :outfits, :head_id
+    add_index :outfits, :gloves_id
+    add_index :outfits, :coat_id
+    add_index :outfits, :boots_id
+    add_index :outfits, :helm_id
     add_index :outfits, :legs_id
     add_index :outfits, :shoulders_id
   end

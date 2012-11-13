@@ -53,8 +53,8 @@ describe Armor do
       build(:armor, :with_enhancement, name: "Armor").should_not be_valid
     end
 
-    it 'name is longer than 48 characters' do
-      build(:armor, name: "name".rjust(49, "0")).should_not be_valid
+    it 'name is longer than 96 characters' do
+      build(:armor, name: "name".rjust(97, "0")).should_not be_valid
     end
 
     it 'level is not a number' do

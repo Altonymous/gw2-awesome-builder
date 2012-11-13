@@ -2,21 +2,21 @@ require 'spec_helper'
 
 describe Outfit do
   context 'associations' do
-    it { should belong_to :head }
+    it { should belong_to :helm }
     it { should belong_to :shoulders }
-    it { should belong_to :chest }
-    it { should belong_to :arms }
+    it { should belong_to :coat }
+    it { should belong_to :gloves }
     it { should belong_to :legs }
-    it { should belong_to :feet }
+    it { should belong_to :boots }
   end
 
   context 'mass assignment' do
-    it { should allow_mass_assignment_of :arms_id }
+    it { should allow_mass_assignment_of :helm_id }
     it { should allow_mass_assignment_of :shoulders_id }
-    it { should allow_mass_assignment_of :chest_id }
-    it { should allow_mass_assignment_of :arms_id }
+    it { should allow_mass_assignment_of :coat_id }
+    it { should allow_mass_assignment_of :gloves_id }
     it { should allow_mass_assignment_of :legs_id }
-    it { should allow_mass_assignment_of :feet_id }
+    it { should allow_mass_assignment_of :boots_id }
   end
 
   it 'has a valid factory' do
@@ -60,28 +60,28 @@ describe Outfit do
       build(:outfit, boon_duration: nil).should_not be_valid
     end
 
-    it 'a head piece' do
-      build(:outfit, head_id: nil).should_not be_valid
+    it 'a helm piece' do
+      build(:outfit, helm_id: nil).should_not be_valid
     end
 
     it 'a shoulders piece' do
       build(:outfit, shoulders_id: nil).should_not be_valid
     end
 
-    it 'a chest piece' do
-      build(:outfit, chest_id: nil).should_not be_valid
+    it 'a coat piece' do
+      build(:outfit, coat_id: nil).should_not be_valid
     end
 
-    it 'a arms piece' do
-      build(:outfit, arms_id: nil).should_not be_valid
+    it 'a gloves piece' do
+      build(:outfit, gloves_id: nil).should_not be_valid
     end
 
     it 'a legs piece' do
       build(:outfit, legs_id: nil).should_not be_valid
     end
 
-    it 'a feet piece' do
-      build(:outfit, feet_id: nil).should_not be_valid
+    it 'a boots piece' do
+      build(:outfit, boots_id: nil).should_not be_valid
     end
   end
 

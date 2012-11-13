@@ -1,22 +1,22 @@
 %p#notice= notice
 
 %p
-  %b Head:
-  = link_to @outfit.head.name, armor_path(@outfit.head)
+  %b Helm:
+  = link_to @outfit.helm.name, armor_path(@outfit.helm)
 %p
   %b Shoulders:
   = link_to @outfit.shoulders.name, armor_path(@outfit.shoulders)
 %p
-  %b Chest:
-  = link_to @outfit.chest.name, armor_path(@outfit.chest)
+  %b Coat:
+  = link_to @outfit.coat.name, armor_path(@outfit.coat)
 %p
-  %b Arms:
-  = link_to @outfit.arms.name, armor_path(@outfit.arms)
+  %b Gloves:
+  = link_to @outfit.gloves.name, armor_path(@outfit.gloves)
 %p
   %b Legs:
   = link_to @outfit.legs.name, armor_path(@outfit.legs)
 %p
-  %b Feet:
-  = link_to @outfit.feet.name, armor_path(@outfit.feet)
+  %b Boots:
+  = link_to @outfit.boots.name, armor_path(@outfit.boots)
 
 = link_to 'Back', outfits_path

@@ -34,7 +34,6 @@ gem 'simplecov-sublime-ruby-coverage', '~> 1.0.0', group: [:development, :test]
 gem 'rabl', '>= 0.7.6'
 gem 'shoulda', '>= 3.3.2', group: [:development, :test]
 gem 'awesome_print', '>= 1.1.0', group: [:development, :test]
-gem 'activerecord-import', '>= 0.2.11'
 gem 'newrelic_rpm', '>= 3.5.0.1', group: [:development, :test]
 gem 'kaminari', '>= 0.14.1'
 gem 'patron', '>= 0.4.18'

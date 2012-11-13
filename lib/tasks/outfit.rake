@@ -5,13 +5,13 @@ namespace :outfitter do
     desc "Clear all armor from the database"
     task :clear => [:environment] do |t, args|
       puts "Deleting Outfits"
-      Outfit.delete_all
+      # Outfit.delete_all
       puts "Done\n\n"
     end
 
     desc "Test stat_generation"
     task :test => [:environment] do |t, args|
-      # (1..100).each { |i| Outfit.create({head_id: i, shoulders_id: i, chest_id: i, arms_id: i, legs_id: i, feet_id: i}) }
+      # (1..100).each { |i| Outfit.create({helm_id: i, shoulders_id: i, coat_id: i, gloves_id: i, legs_id: i, boots_id: i}) }
       outfits = Outfit.limit(100).order('id asc')
       timing = Benchmark.bm { |b|
         b.report do
@@ -33,7 +33,7 @@ namespace :outfitter do
     end
 
     desc "Generate all possible outfits from known gear."
-    task :generate => [:environment, :clear] do |t, args|
+    task :generate => [:environment] do |t, args|
       timing = Benchmark.measure {
         puts "Generating outfits..."
         start = Time.now
@@ -77,14 +77,15 @@ namespace :outfitter do
           puts "Took #{(Time.now - collecting_start).round(4)} seconds to collect.\n\n"
 
           # Generating outfits from gear
-          outfits = permutations!(gear_possibilities)
+          # outfits = permutations!(gear_possibilities)
+          outfits = generate(gear_possibilities)
           total_outfits_length = total_outfits_length + outfits.length
 
           # Storing the outfits
-          puts "Storing Outfits..."
-          storing_start = Time.now
-          outfits.map! { |item| Outfit.new(item.reduce({}, :update)).save! }
-          puts "Took #{(Time.now - storing_start).round(4)} seconds to store.\n\n"
+          # puts "Storing Outfits..."
+          # storing_start = Time.now
+          # outfits.map! { |item| Outfit.new(item.reduce({}, :update)).save! }
+          # puts "Took #{(Time.now - storing_start).round(4)} seconds to store.\n\n"
 
           # Completing armor set generation
           puts "Took #{(Time.now - weight_start).round(4)} seconds to generate #{weight.camelize} armor sets.\n\n"
@@ -97,6 +98,53 @@ namespace :outfitter do
       puts "#{timing}"
     end
 
+    def generate(input)
+      input.each do |key, possibilities|
+        possibilities.map!{|p| {key => p} }
+      end
+
+      digits = input.keys.map!{ |key| input[key] }
+
+      i = 1
+      shifted = digits.shift
+      shifted.each do |item|
+        puts "Generating outfits #{i} of #{shifted.length}..."
+        permutations_start = Time.now
+        results = [item].product(*digits)
+        puts "# of generated outfits in the set number - #{i}: #{results.length}"
+        puts "Took #{(Time.now - permutations_start).round(4)} seconds to generate.\n\n"
+
+        # Storing the outfits
+        puts "Storing Outfits..."
+        last_time = Time.now
+        storing_start = Time.now
+        j = 1
+        outfits = []
+        results.each do |item|
+          # reduction_time = Time.now
+          reduced_item = item.reduce({}, :update)
+          # puts "Took #{(Time.now - reduction_time).round(4)} seconds to reduce.\n\n"
+
+          # saved_time = Time.now
+          outfit = Outfit.new(reduced_item).save(validate: false)
+          # puts "Took #{(Time.now - saved_time).round(4)} seconds to save.\n\n"
+
+          j = j + 1
+          if j % 10000 == 0
+            # puts "10000 items took #{(Time.now - last_time).round(4)} seconds before import"
+            # Outfit.import(outfits, :validate => false)
+            # outfits = []
+            puts "10000 items took #{(Time.now - last_time).round(4)} seconds after import"
+            last_time = Time.now
+          end
+        end
+
+        puts "Took #{(Time.now - storing_start).round(4)} seconds to store.\n\n"
+
+        i = i + 1
+      end
+    end
+
     def permutations!(input)
       permutations_start = Time.now
       puts "Generating Outfits..."
@@ -104,7 +152,7 @@ namespace :outfitter do
         possibilities.map!{|p| {key => p} }
       end
 
-      digits = input.keys.map!{|key| input[key] }
+      digits = input.keys.map!{ |key| input[key] }
 
       result = digits.shift.product(*digits)
       puts "# of Generated Outfits: #{result.length}"

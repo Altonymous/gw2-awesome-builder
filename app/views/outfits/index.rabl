@@ -9,6 +9,6 @@ attributes :armor,
            :critical_damage,
            :boon_duration
 
-child :head do
+child :helm do
   extends "armors/show"
 end
