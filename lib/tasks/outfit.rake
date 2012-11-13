@@ -5,7 +5,7 @@ namespace :outfitter do
     desc "Clear all armor from the database"
     task :clear => [:environment] do |t, args|
       puts "Deleting Outfits"
-      Outfit.delete_all
+      # Outfit.delete_all
       puts "Done\n\n"
     end
 
@@ -33,7 +33,7 @@ namespace :outfitter do
     end
 
     desc "Generate all possible outfits from known gear."
-    task :generate => [:environment, :clear] do |t, args|
+    task :generate => [:environment] do |t, args|
       timing = Benchmark.measure {
         puts "Generating outfits..."
         start = Time.now
@@ -116,8 +116,29 @@ namespace :outfitter do
 
         # Storing the outfits
         puts "Storing Outfits..."
+        last_time = Time.now
         storing_start = Time.now
-        results.map! { |item| Outfit.new(item.reduce({}, :update)).save! }
+        j = 1
+        outfits = []
+        results.each do |item|
+          # reduction_time = Time.now
+          reduced_item = item.reduce({}, :update)
+          # puts "Took #{(Time.now - reduction_time).round(4)} seconds to reduce.\n\n"
+
+          # saved_time = Time.now
+          outfit = Outfit.new(reduced_item).save(validate: false)
+          # puts "Took #{(Time.now - saved_time).round(4)} seconds to save.\n\n"
+
+          j = j + 1
+          if j % 10000 == 0
+            # puts "10000 items took #{(Time.now - last_time).round(4)} seconds before import"
+            # Outfit.import(outfits, :validate => false)
+            # outfits = []
+            puts "10000 items took #{(Time.now - last_time).round(4)} seconds after import"
+            last_time = Time.now
+          end
+        end
+
         puts "Took #{(Time.now - storing_start).round(4)} seconds to store.\n\n"
 
         i = i + 1

@@ -1,6 +1,6 @@
 class Armor < ActiveRecord::Base
   resourcify
-  attr_accessible :name, :weight_id, :slot_id, :level
+  attr_accessible :name, :weight_id, :slot_id, :level, :gw2db_url, :icon_url
 
   after_initialize :defaults
   before_save :generate_statistics
@@ -34,6 +34,12 @@ class Armor < ActiveRecord::Base
 
   # Methods
   def generate_statistics
+    Statistic.all.each do |statistic_model|
+      statistic = statistic_snake_name(statistic_model).to_sym
+
+      write_attribute(statistic, 0)
+    end
+
     self.gear_enhancements.each do |gear_enhancement|
       current_statistic = gear_enhancement.rating.zero? ?
         0 : gear_enhancement.rating + gear_enhancement.enhancement.multiplier

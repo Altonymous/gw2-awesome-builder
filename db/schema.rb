@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121108214940) do
+ActiveRecord::Schema.define(:version => 20121113215648) do
 
   create_table "armors", :force => true do |t|
     t.string   "name",               :limit => 96
@@ -27,8 +27,10 @@ ActiveRecord::Schema.define(:version => 20121108214940) do
     t.integer  "boon_duration"
     t.integer  "weight_id"
     t.integer  "slot_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.string   "gw2db_url"
+    t.string   "icon_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "armors", ["armor"], :name => "index_armors_on_armor"
@@ -81,8 +83,9 @@ ActiveRecord::Schema.define(:version => 20121108214940) do
     t.integer  "helm_id"
     t.integer  "legs_id"
     t.integer  "shoulders_id"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",                    :null => false
+    t.datetime "updated_at",                    :null => false
+    t.float    "statistics_generation_seconds"
   end
 
   add_index "outfits", ["armor"], :name => "index_outfits_on_armor"
