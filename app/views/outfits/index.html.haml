@@ -27,34 +27,6 @@
         .stats-item>= outfit.boon_duration
       .stats-item.preview>= link_to 'Show', outfit
 
-/ %table#ex1
-/   %thead
-/     %tr.sliders
-/       %th=stat_slider("Armor")
-/       %th=stat_slider("Attack Power")
-/       %th=stat_slider("Hit Points")
-/       %th=stat_slider("Healing Power")
-/       %th=stat_slider("Condition Damage")
-/       %th=stat_slider("Critical Damage")
-/       %th=stat_slider("Critical Chance")
-/       %th=stat_slider("Condition Duration")
-/       %th=stat_slider("Boon Duration")
-/       %th.nosort
-
-
-/   - @outfits.each do |outfit|
-/     %tr
-/       %td= outfit.armor
-/       %td= outfit.attack_power
-/       %td= outfit.hit_points
-/       %td= outfit.healing_power
-/       %td= outfit.condition_damage
-/       %td= outfit.critical_damage
-/       %td= outfit.critical_chance
-/       %td= outfit.condition_duration
-/       %td= outfit.boon_duration
-/       %td= link_to 'Show', outfit
-
 %br
 
 = paginate @outfits
@@ -73,7 +45,7 @@
           var name = $(this).data("name");
           $(".slider-amount #slider-" + name).text( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
         }
-      });
+      }).height(150);
 
     });
     $(".slider-range").each(function() {
@@ -83,7 +55,30 @@
     });
 
     // $('#stats').sorttable({items: '>:not(.nosort)', placeholder: 'placeholder'});
-    $('#stats').fauxtable({items: '>:not(.nosort)', placeholder: 'placeholder', helper: '.stats-slider'});
+    $('#stats').fauxtable({
+      items: '>:not(.nosort)',
+      placeholder: 'placeholder',
+      helper: '.stats-slider',
+      stop: function(e, ui) {
+        setTimeout(function() {
+          var i = ui.item.index() + 1;
+          $(".stats-row .stats-item:nth-child("+i+")").effect("highlight", 400);
+          ui.item.effect("highlight");
+          $(".fix-me").removeClass('fix-me');
+        }, 100);
+      },
+      change: function(e, ui) {
+        var lastItem = $(".stats-header .stats-slider:last-child");
+        var prevItem = $(".ui-sortable-helper").prev();
+        // console.log(prevItem + " : " + lastItem.prev())
+        if (lastItem.hasClass("ui-sortable-helper") && lastItem.prev().hasClass('stats-slider')) {
+          prevItem.addClass('fix-me');
+        } else {
+          $(".fix-me").removeClass('fix-me');
+        }
+      }
+    });
+
 
   });
 
