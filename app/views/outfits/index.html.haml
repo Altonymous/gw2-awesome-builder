@@ -67,7 +67,8 @@
       $(this).slider({
         orientation: "vertical",
         range: true,
-        values: [ 17, 67 ],
+        step: 5,
+        values: [ 0, 100 ],
         slide: function( event, ui ) {
           var name = $(this).data("name");
           $(".slider-amount #slider-" + name).text( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
