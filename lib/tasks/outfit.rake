@@ -77,14 +77,15 @@ namespace :outfitter do
           puts "Took #{(Time.now - collecting_start).round(4)} seconds to collect.\n\n"
 
           # Generating outfits from gear
-          outfits = permutations!(gear_possibilities)
+          # outfits = permutations!(gear_possibilities)
+          outfits = generate(gear_possibilities)
           total_outfits_length = total_outfits_length + outfits.length
 
           # Storing the outfits
-          puts "Storing Outfits..."
-          storing_start = Time.now
-          outfits.map! { |item| Outfit.new(item.reduce({}, :update)).save! }
-          puts "Took #{(Time.now - storing_start).round(4)} seconds to store.\n\n"
+          # puts "Storing Outfits..."
+          # storing_start = Time.now
+          # outfits.map! { |item| Outfit.new(item.reduce({}, :update)).save! }
+          # puts "Took #{(Time.now - storing_start).round(4)} seconds to store.\n\n"
 
           # Completing armor set generation
           puts "Took #{(Time.now - weight_start).round(4)} seconds to generate #{weight.camelize} armor sets.\n\n"
@@ -97,6 +98,32 @@ namespace :outfitter do
       puts "#{timing}"
     end
 
+    def generate(input)
+      input.each do |key, possibilities|
+        possibilities.map!{|p| {key => p} }
+      end
+
+      digits = input.keys.map!{ |key| input[key] }
+
+      i = 1
+      shifted = digits.shift
+      shifted.each do |item|
+        puts "Generating outfits #{i} of #{shifted.length}..."
+        permutations_start = Time.now
+        results = [item].product(*digits)
+        puts "# of generated outfits in the set number - #{i}: #{results.length}"
+        puts "Took #{(Time.now - permutations_start).round(4)} seconds to generate.\n\n"
+
+        # Storing the outfits
+        puts "Storing Outfits..."
+        storing_start = Time.now
+        results.map! { |item| Outfit.new(item.reduce({}, :update)).save! }
+        puts "Took #{(Time.now - storing_start).round(4)} seconds to store.\n\n"
+
+        i = i + 1
+      end
+    end
+
     def permutations!(input)
       permutations_start = Time.now
       puts "Generating Outfits..."
@@ -104,7 +131,7 @@ namespace :outfitter do
         possibilities.map!{|p| {key => p} }
       end
 
-      digits = input.keys.map!{|key| input[key] }
+      digits = input.keys.map!{ |key| input[key] }
 
       result = digits.shift.product(*digits)
       puts "# of Generated Outfits: #{result.length}"
