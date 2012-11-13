@@ -57,7 +57,7 @@ class Spidy
 
   def get_all_items()
     # Armor.delete_all
-    get_items(0)
+      get_items(0)
     # end
   end
 
@@ -96,7 +96,7 @@ class Spidy
         armor.gear_enhancements = gear_enhancements
         armor.gw2db_url = gw2db_url
         armor.icon_url = icon_url
-        armor.save!
+        armor.save
       end
     end
 
