@@ -4,7 +4,7 @@
     %meta{:content => "width=device-width, initial-scale=1.0", :name => "viewport"}
       %title= content_for?(:title) ? yield(:title) : "Gw2 Awesome Builder"
       %meta{:content => content_for?(:description) ? yield(:description) : "Gw2 Awesome Builder", :name => "description"}
-        = favicon_link_tag "/favicon.ico"
+        = favicon_link_tag "/favicon.ico?1"
         = stylesheet_link_tag "http://code.jquery.com/ui/1.9.1/themes/base/jquery-ui.css"
         = stylesheet_link_tag "http://fonts.googleapis.com/css?family=Droid+Sans:400,700|Istok+Web:400,700,400italic,700italic"
         = stylesheet_link_tag "application", :media => "all"
