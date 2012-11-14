@@ -3,10 +3,22 @@ gw2-awesome-builder
 
 Guild Wars 2 - Want to be awesome?  Use our builder.
 
-- `createuser -d -l -P postgres`
+- Setup Basic System
+  - `createuser -d -l -P postgres`
+    - leave password blank
 
-- `ROLIFY_STARTUP=yes rake db:setup`
+  - `rake db:setup`
 
-- run `rake db:test:prepare` (for the specs)
+- Setup & Run Specs
+  - run `rake db:test:prepare`
+
+  - run `rake spec`
+
+- Setup & Run Specs (in parallel)
+  - run `rake parallel:create`
+
+  - run `rake parallel:prepare`
+
+  - run `rake parallel:spec`
 
 [![Build Status](https://secure.travis-ci.org/Altonymous/gw2-awesome-builder.png?branch=master)](https://travis-ci.org/Altonymous/gw2-awesome-builder)
