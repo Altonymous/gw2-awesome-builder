@@ -8,6 +8,7 @@
   cursor: move;
   margin: 0;
   padding: 0;
+  width: 0;
 
   .stats-slider { overflow: hidden; }
   .slider-amount {
@@ -23,7 +24,7 @@
   @include inline-block;
   background: rgba(60,60,60, .7) !important;
   visibility: visible !important;
-  padding: 10px;
-  width: 80px;
-  height: 266px !important;
+  padding: 0;
+  width: 77.75px;
+  height: 286px !important;
 }
