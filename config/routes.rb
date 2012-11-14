@@ -1,4 +1,8 @@
 Gw2AwesomeBuilder::Application.routes.draw do
+  ActiveAdmin.routes(self)
+
+  devise_for :admin_users, ActiveAdmin::Devise.config
+
   resources :trinkets do
     get 'page/:page', :action => :index, :on => :collection
   end
