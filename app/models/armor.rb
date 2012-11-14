@@ -42,7 +42,7 @@ class Armor < ActiveRecord::Base
 
     self.gear_enhancements.each do |gear_enhancement|
       current_statistic = gear_enhancement.rating.zero? ?
-        0 : gear_enhancement.rating + gear_enhancement.enhancement.multiplier
+        0 : gear_enhancement.rating * gear_enhancement.enhancement.multiplier
 
       statistic = statistic_snake_name(Statistic.find(gear_enhancement.enhancement.statistic_id)).to_sym
       write_attribute(statistic, read_attribute(statistic) + current_statistic)
