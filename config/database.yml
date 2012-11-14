@@ -8,13 +8,13 @@ mysql: &mysql
   adapter: mysql2
   username: root
   password:
-  database: myapp_<%= Rails.env %>
+  database: myapp_<%= Rails.env %><%= ENV['TEST_ENV_NUMBER'] %>
 
 postgresql: &postgresql
   adapter: postgresql
   username: postgres
   password:
-  database: myapp_<%= Rails.env %>
+  database: myapp_<%= Rails.env %><%= ENV['TEST_ENV_NUMBER'] %>
   min_messages: ERROR
 
 defaults: &defaults
