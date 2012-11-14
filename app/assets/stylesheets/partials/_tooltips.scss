@@ -1,0 +1,26 @@
+#tiptip_content {
+  @include box-shadow(0 1px 4px 1px rgba(0,0,0, .55),
+                      0 0 0 1px #222,
+                      inset 0 0 0 1px rgba(255,255,255, .15));
+
+  @include background-image(linear-gradient(#444, #333));
+  border: none;
+  padding: 10px 0;
+}
+
+.db-tooltip {
+  font-size: 14px;
+  li > * { @include inline-block; }
+  li {
+    border-bottom: 1px solid rgba(0,0,0, .25);
+    margin: 0 0 4px 0;
+    padding: 0 10px 2px;
+    &:last-child { border: none; margin: 0; padding: 0 10px; }
+  }
+  .db-image {
+    img {
+      max-width: 30px;
+      max-height: 30px;
+    }
+  }
+}

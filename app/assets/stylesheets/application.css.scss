@@ -37,11 +37,14 @@
 /* =================================================================
    Vendor
 ================================================================= */
+@import 'tipTip.css';
 
 /* =================================================================
    Partials
 ================================================================= */
+@import 'partials/mixins';
 @import 'partials/base';
 @import 'partials/sliders';
 @import 'partials/fauxtable';
 @import 'partials/fonts';
+@import 'partials/tooltips';
