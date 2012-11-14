@@ -12,14 +12,16 @@ SimpleCov.start 'rails' do
   add_filter "/helpers/"
   add_filter "/config"
 
-  at_exit do
-    SimpleCov.result.format!
-    threshold, actual = 97, SimpleCov.result.covered_percent
-    if actual < threshold
-      puts "Coverage #{actual}% is below the threshold of #{threshold}%."
-      exit 1
-    end
-  end
+  # at_exit do
+  #   SimpleCov.result.format!
+  #   threshold, actual = 97, SimpleCov.result.covered_percent
+  #   if actual < threshold
+  #     puts "Coverage #{actual}% is below the threshold of #{threshold}%."
+  #     exit 1
+  #   end
+
+  #   exit 0
+  # end
 end
 
 require File.expand_path("../../config/environment", __FILE__)
