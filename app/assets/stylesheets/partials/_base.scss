@@ -1,3 +1,7 @@
+$blueprint-grid-columns: 12;
+$blueprint-grid-width: 60px;
+$blueprint-grid-margin: 20px;
+
 body {
 
   background: #efefef url(texturetastic_gray.png);
@@ -70,6 +74,24 @@ h1 {
 #main {
   @include container;
   overflow: visible;
+}
+
+#stats { @include column(9); }
+#sidebar {
+  @include column(3, true);
+  @include border-radius(4px);
+  @include box-sizing(border-box);
+  @include box-shadow(0 0 0 1px rgba(0,0,0, .2),
+                      inset 0 0 0 1px rgba(255,255,255, .4),
+                      0 1px 6px rgba(0,0,0, .45));
+  @include background-image(linear-gradient(rgba(250,250,250, 1) 0%,
+                                            rgba(230,230,230, 1) 100%));
+  border: none;
+  color: #333;
+  padding: 10px 0;
+  // > h1, h2, h3, p { margin: 0 10px 12px; }
+  h2 { font-size: 16px; margin: 0 0 6px; font-weight: bold; }
+  li { font-size: 12px; }
 }
 
 .table {

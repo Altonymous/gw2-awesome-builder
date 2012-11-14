@@ -1,69 +1,71 @@
 
 %h1 Listing Outfits
+#the-grid
+  #stats
+    .stats-header.stats-row.sliders
+      .stats-slider>=stat_slider("Armor")
+      .stats-slider>=stat_slider("Attack Power")
+      .stats-slider>=stat_slider("Hit Points")
+      .stats-slider>=stat_slider("Healing Power")
+      .stats-slider>=stat_slider("Condition Damage")
+      .stats-slider>=stat_slider("Critical Damage")
+      .stats-slider>=stat_slider("Critical Chance")
+      .stats-slider>=stat_slider("Condition Duration")
+      .stats-slider>=stat_slider("Boon Duration")
 
-#stats
-  .stats-header.stats-row.sliders
-    .stats-slider>=stat_slider("Armor")
-    .stats-slider>=stat_slider("Attack Power")
-    .stats-slider>=stat_slider("Hit Points")
-    .stats-slider>=stat_slider("Healing Power")
-    .stats-slider>=stat_slider("Condition Damage")
-    .stats-slider>=stat_slider("Critical Damage")
-    .stats-slider>=stat_slider("Critical Chance")
-    .stats-slider>=stat_slider("Condition Duration")
-    .stats-slider>=stat_slider("Boon Duration")
+    - @outfits.each do |outfit|
+      .stats-row-container
+        .stats-row>
+          .stats-item>= outfit.armor
+          .stats-item>= outfit.attack_power
+          .stats-item>= outfit.hit_points
+          .stats-item>= outfit.healing_power
+          .stats-item>= outfit.condition_damage
+          .stats-item>= outfit.critical_damage
+          .stats-item>= outfit.critical_chance
+          .stats-item>= outfit.condition_duration
+          .stats-item>= outfit.boon_duration
+        .stats-item.preview.icon-eye{:title => "wtf"}>= link_to 'Show', outfit
 
-  - @outfits.each do |outfit|
-    .stats-row-container
-      .stats-row>
-        .stats-item>= outfit.armor
-        .stats-item>= outfit.attack_power
-        .stats-item>= outfit.hit_points
-        .stats-item>= outfit.healing_power
-        .stats-item>= outfit.condition_damage
-        .stats-item>= outfit.critical_damage
-        .stats-item>= outfit.critical_chance
-        .stats-item>= outfit.condition_duration
-        .stats-item>= outfit.boon_duration
-      .stats-item.preview.icon-eye{:title => "wtf"}>= link_to 'Show', outfit
-
+  #sidebar
+    %ul.db-tooltip
+      %li
+        %h2 Stuff and things
+      %li
+        .db-image
+          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
+        .db-title
+          Heavy Water Filter
+      %li
+        .db-image
+          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
+        .db-title
+          Heavy Water Filter
+      %li
+        .db-image
+          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
+        .db-title
+          Heavy Water Filter
+      %li
+        .db-image
+          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
+        .db-title
+          Heavy Water Filter
+      %li
+        .db-image
+          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
+        .db-title
+          Heavy Water Filter
+      %li
+        .db-image
+          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
+        .db-title
+          Heavy Water Filter
+      %li
+        %button Selected Gear
 %br
 
 = paginate @outfits
-
-%ul.db-tooltip
-  %li
-    .db-image
-      %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-    .db-title
-      Heavy Water Filter
-  %li
-    .db-image
-      %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-    .db-title
-      Heavy Water Filter
-  %li
-    .db-image
-      %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-    .db-title
-      Heavy Water Filter
-  %li
-    .db-image
-      %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-    .db-title
-      Heavy Water Filter
-  %li
-    .db-image
-      %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-    .db-title
-      Heavy Water Filter
-  %li
-    .db-image
-      %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-    .db-title
-      Heavy Water Filter
-  %li
-    %button Show me more
 
 
 
