@@ -2,12 +2,12 @@
 
 FactoryGirl.define do
   factory :outfit do
-    head { create(:armor, :head, :with_enhancement) }
+    helm { create(:armor, :helm, :with_enhancement) }
     shoulders { create(:armor, :shoulders, :with_enhancement) }
-    chest { create(:armor, :chest, :with_enhancement) }
-    arms { create(:armor, :arms, :with_enhancement) }
+    coat { create(:armor, :coat, :with_enhancement) }
+    gloves { create(:armor, :gloves, :with_enhancement) }
     legs { create(:armor, :legs, :with_enhancement) }
-    feet { create(:armor, :feet, :with_enhancement) }
+    boots { create(:armor, :boots, :with_enhancement) }
 
     armor 0
     attack_power 0

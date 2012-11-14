@@ -3,7 +3,7 @@ class OutfitsController < ApplicationController
 
   def index
     @sort ||= 'attack_power desc'
-    @outfits = Outfit.includes(:head, :shoulders, :chest, :arms, :legs, :feet).order(@sort).page(params[:page])
+    @outfits = Outfit.includes(:helm, :shoulders, :coat, :gloves, :legs, :boots).order(@sort).page(params[:page])
 
     respond_with @outfits
   end
