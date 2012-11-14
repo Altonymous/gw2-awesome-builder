@@ -92,7 +92,6 @@
       rangeIndicator.text($(this).slider("values", 0) + " - " + $(this).slider("values", 1))
     });
 
-    // $('#stats').sorttable({items: '>:not(.nosort)', placeholder: 'placeholder'});
     $('#stats').fauxtable({
       items: '>:not(.nosort)',
       placeholder: 'placeholder',
@@ -118,14 +117,16 @@
     });
 
 
+
     var tip = $(".db-tooltip");
-    // $(function(){
-    //   $(".preview").tipTip({maxWidth: "auto",
-    //                         edgeOffset: 10,
-    //                         defaultPosition: "top",
-    //                         content: tip,
-    //                         keepAlive: true,
-    //                         delay: 0});
-    // });
+    $(function(){
+      $(".stats-row-container").tipTip({maxWidth: "auto",
+                              edgeOffset: 10,
+                              defaultPosition: "left",
+                              content: "      Click to show gear      ",
+                              delay: 1000});
+    });
+
+
   });
 

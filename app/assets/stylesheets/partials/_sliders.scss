@@ -108,6 +108,7 @@
                                        rgba(240,240,240, 1) 100%));
     font-size: 14px;
     margin: 0 0 6px;
+    white-space: nowrap;
     &:hover { background: #fefefe; }
     .stats-item {
       @include inline-block;
@@ -115,7 +116,8 @@
       text-align: center;
       margin: 0;
       padding: 10px 0;
-      width: 77px;
+      width: 78px;
+      white-space: normal;
       &:last-child { @include box-shadow(none); }
     }
   }
