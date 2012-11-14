@@ -1,6 +1,6 @@
 class GearEnhancement < ActiveRecord::Base
   resourcify
-  attr_accessible :rating, :enhancement_id
+  attr_accessible :rating, :enhancement_id, :gear_id, :gear_type
 
   belongs_to :enhancement
 

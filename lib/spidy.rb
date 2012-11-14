@@ -55,10 +55,13 @@ class Spidy
     @base_url = "http://www.gw2spidy.com/api/v0.9/json"
   end
 
-  def get_all_items()
-    # Armor.delete_all
+  def get_all_items(delete_all = false)
+    if delete_all
+      GearEnhancement.delete_all
+      Armor.delete_all
+    end
+
     get_items(0)
-    # end
   end
 
   def get_items(type)
@@ -79,24 +82,29 @@ class Spidy
       gw2db_url = "http://www.gw2db.com/items/#{gw2db_item_id}"
 
       gw2db = Noko.new
-      gear_enhancements, weight = gw2db.get_gear_enhancements(gw2db_url)
+      gear_enhancements_array, weight = gw2db.get_gear_enhancements(gw2db_url)
 
       case type
       when 0 # Armor
-        gear_enhancements.each { |gear_enhancement| gear_enhancement.gear_type = 'Armor' }
         armor = Armor.find_or_initialize_by_name_and_level_and_weight_id_and_slot_id({
                                                                                        name: name,
                                                                                        level: level,
                                                                                        weight_id: Weight.find_by_name(weight).id,
                                                                                        slot_id: Slot.find_by_name(Spidy::armor_sub_type[sub_type_id]).id
         })
-        puts "#{gw2db_url}"
-        puts "#{icon_url}"
+
+        gear_enhancements = []
+        gear_enhancements_array.each do |gear_enhancement_hash|
+          gear_enhancement_hash[:gear_id] = armor.id
+          gear_enhancement_hash[:gear_type] = 'Armor'
+          gear_enhancement = GearEnhancement.find_or_initialize_by_gear_id_and_enhancement_id(gear_enhancement_hash)
+          gear_enhancements << gear_enhancement
+        end
 
         armor.gear_enhancements = gear_enhancements
         armor.gw2db_url = gw2db_url
         armor.icon_url = icon_url
-        armor.save!
+        armor.save if armor.valid?
       end
     end
 
@@ -108,6 +116,7 @@ class Spidy
     puts "Let's do this! #{@base_url}#{@extras}"
 
     session = Patron::Session.new
+    session.timeout = 15
     session.base_url = @base_url
     response = session.get @extras
 

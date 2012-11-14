@@ -59,7 +59,7 @@ class Noko
 
       weight = stat_value if stat_id.include?('armor-weight')
       enhancement = Enhancement.find_by_name(stat_name)
-      gear_enhancements << GearEnhancement.new({ enhancement_id: enhancement.id, rating: stat_value.to_i }) if enhancement.present?
+      gear_enhancements << { enhancement_id: enhancement.id, rating: stat_value.to_i } if enhancement.present?
     end
 
     return gear_enhancements, weight
