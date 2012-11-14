@@ -79,14 +79,14 @@ describe Armor do
 
     let(:gear) { create(:armor, :with_all_enhancements, :rating => 10) }
 
-    it { subject.armor.should equal(22) }
-    it { subject.hit_points.should equal(20) }
-    it { subject.attack_power.should equal(11) }
-    it { subject.critical_damage.should equal(11) }
-    it { subject.critical_chance.should equal(10) }
-    it { subject.condition_damage.should equal(11) }
-    it { subject.condition_duration.should equal(11) }
-    it { subject.healing_power.should equal(11) }
-    it { subject.boon_duration.should equal(11) }
+    it { subject.armor.should equal(20) }
+    it { subject.hit_points.should equal(100) }
+    it { subject.attack_power.should equal(10) }
+    it { subject.critical_damage.should equal(10) }
+    it { subject.critical_chance.should equal(0) }
+    it { subject.condition_damage.should equal(10) }
+    it { subject.condition_duration.should equal(10) }
+    it { subject.healing_power.should equal(10) }
+    it { subject.boon_duration.should equal(10) }
   end
 end
