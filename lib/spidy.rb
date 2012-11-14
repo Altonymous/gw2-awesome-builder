@@ -55,10 +55,13 @@ class Spidy
     @base_url = "http://www.gw2spidy.com/api/v0.9/json"
   end
 
-  def get_all_items()
-    # Armor.delete_all
-      get_items(0)
-    # end
+  def get_all_items(delete_all = false)
+    if delete_all
+      GearEnhancement.delete_all
+      Armor.delete_all
+    end
+
+    get_items(0)
   end
 
   def get_items(type)
@@ -90,13 +93,11 @@ class Spidy
                                                                                        weight_id: Weight.find_by_name(weight).id,
                                                                                        slot_id: Slot.find_by_name(Spidy::armor_sub_type[sub_type_id]).id
         })
-        puts "#{gw2db_url}"
-        puts "#{icon_url}"
 
         armor.gear_enhancements = gear_enhancements
         armor.gw2db_url = gw2db_url
         armor.icon_url = icon_url
-        armor.save
+        armor.save if armor.valid?
       end
     end
 
