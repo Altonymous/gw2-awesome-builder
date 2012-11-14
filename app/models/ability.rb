@@ -6,9 +6,9 @@ class Ability
     alias_action :show, :edit, :update, :destroy, to: :modify
 
     user ||= User.new # guest user (not logged in)
-    if user.is_administrator?
+    if user.has_role?(:administrator)
       can :manage, :all
-    elsif user.is_user?
+    elsif user.has_role?(:user)
       # Can see everything, except other users
       can :read, :all
       cannot :read, User

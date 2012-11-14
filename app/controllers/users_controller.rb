@@ -32,7 +32,7 @@ class UsersController < ApplicationController
 
   def update
     @user = User.find(params[:id])
-    if current_user.is_administrator?
+    if current_user.has_role?(:administrator)
       @user.update_attributes(params[:user])
     else
       if params[:user][:password].blank?
