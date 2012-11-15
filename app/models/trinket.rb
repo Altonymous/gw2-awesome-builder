@@ -9,7 +9,7 @@ class Trinket < ActiveRecord::Base
   belongs_to :slot
 
   # Polymorphic Associations
-  has_many :gear_enhancements, as: :gear
+  has_many :gear_enhancements, as: :gear, :dependent => :destroy
   has_many :enhancements, through: :gear_enhancements
 
   has_many :gear_outfits, as: :gear, :dependent => :destroy

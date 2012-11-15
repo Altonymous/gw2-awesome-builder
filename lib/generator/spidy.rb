@@ -2,8 +2,9 @@ module Generator
   class Spidy
     # Enumerators
     @@type = {
-      0 => 'Armor',
-      18 => 'Weapon'
+      armor: 0,
+      weapon: 18,
+      trinket: 15
     }
     cattr_reader :type, :instance_reader => false
 
@@ -17,6 +18,13 @@ module Generator
       6 => 'Shoulders'
     }
     cattr_reader :armor_sub_type, :instance_reader => false
+
+    @@trinket_sub_type = {
+      0 => 'Accessory',
+      1 => 'Amulet',
+      2 => 'Ring'
+    }
+    cattr_reader :trinket_sub_type, :instance_reader => false
 
     @@weapon_sub_type = {
       axe: 4,
@@ -58,12 +66,14 @@ module Generator
 
     def destroy_all
       Armor.destroy_all
+      Trinket.destroy_all
     end
 
     def get_all_items(delete_armors = false)
       destroy_all if delete_armors
 
-      get_items(0)
+      get_items(:trinket)
+      # get_items(:armor)
     end
 
     def get_items(type)
@@ -72,9 +82,11 @@ module Generator
 
       results.each do |result|
         # Skip the item if it's not level 80 & Exotic
-        next unless result['restriction_level'].to_i == 80 && result['rarity'].to_i == 5 && !result['name'].downcase.include?('pvp') && !result['name'].downcase.include?(' of ')
+        next unless result['restriction_level'].to_i == 80 && result['rarity'].to_i == 5 && !result['name'].downcase.include?('pvp')
+         # && !result['name'].downcase.include?(' of ')
 
         name = result['name']
+        name = name.split(' of ')[0] if name.include?(' of ')
         level = result['restriction_level'].to_i
         sub_type_id = result['sub_type_id'].to_i
         icon_url = result['img']
@@ -86,7 +98,7 @@ module Generator
         gear_enhancements_array, weight = gw2db.get_gear_enhancements(gw2db_url)
 
         case type
-        when 0 # Armor
+        when :armor
           armor = Armor.find_or_initialize_by_name_and_level_and_weight_id_and_slot_id({
                                                                                          name: name,
                                                                                          level: level,
@@ -106,6 +118,25 @@ module Generator
           armor.gw2db_url = gw2db_url
           armor.icon_url = icon_url
           armor.save if armor.valid?
+        when :trinket
+          trinket = Trinket.find_or_initialize_by_name_and_level_and_slot_id({
+                                                                               name: name,
+                                                                               level: level,
+                                                                               slot_id: Slot.find_by_name(Spidy::trinket_sub_type[sub_type_id]).id
+          })
+
+          gear_enhancements = []
+          gear_enhancements_array.each do |gear_enhancement_hash|
+            gear_enhancement_hash[:gear_id] = trinket.id
+            gear_enhancement_hash[:gear_type] = 'Trinket'
+            gear_enhancement = GearEnhancement.find_or_initialize_by_gear_id_and_enhancement_id(gear_enhancement_hash)
+            gear_enhancements << gear_enhancement
+          end
+
+          trinket.gear_enhancements = gear_enhancements
+          trinket.gw2db_url = gw2db_url
+          trinket.icon_url = icon_url
+          trinket.save if trinket.valid?
         end
       end
 
@@ -113,7 +144,7 @@ module Generator
     end
 
     def collect_items(type)
-      @extras = "/all-items/#{type}"
+      @extras = "/all-items/#{Spidy::type[type]}"
       puts "Let's do this! #{@base_url}#{@extras}"
 
       session = Patron::Session.new
@@ -126,7 +157,7 @@ module Generator
     end
 
     def search_items(type, page)
-      @extras = "/items/#{type}/#{page}?sort_name=asc"
+      @extras = "/items/#{Spidy::type[type]}/#{page}?sort_name=asc"
       puts "Let's do this! #{@base_url}#{@extras}"
 
       session = Patron::Session.new
