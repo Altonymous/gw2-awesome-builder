@@ -52,7 +52,13 @@
 
     - @outfits.each do |outfit|
       .stats-row-container
-        .stats-row>
+        .stats-row{"data-helm-id" => outfit.helm_id,
+                   "data-coat-id" => outfit.coat_id,
+                   "data-shoulders-id" => outfit.shoulders_id,
+                   "data-gloves-id" => outfit.gloves_id,
+                   "data-legs-id" => outfit.legs_id,
+                   "data-boots-id" => outfit.boots_id,
+                   }>
           .stats-item>= outfit.armor
           .stats-item>= outfit.attack_power
           .stats-item>= outfit.hit_points
@@ -70,63 +76,4 @@
 
 
 %br
-:javascript
-  $(function() {
-    $.each($(".slider-range" ), function(e) {
-
-      $(this).slider({
-        orientation: "vertical",
-        range: true,
-        step: 5,
-        values: [ 0, 100 ],
-        slide: function( event, ui ) {
-          var name = $(this).data("name");
-          $(".slider-amount #slider-" + name).text( ui.values[ 0 ] + " - " + ui.values[ 1 ] );
-        }
-      }).height(150);
-
-    });
-    $(".slider-range").each(function() {
-      var name = $(this).data("name");
-      var rangeIndicator = $(".slider-amount #slider-" + name);
-      rangeIndicator.text($(this).slider("values", 0) + " - " + $(this).slider("values", 1))
-    });
-
-    $('#stats').fauxtable({
-      items: '>:not(.nosort)',
-      placeholder: 'placeholder',
-      helper: '.stats-slider',
-      stop: function(e, ui) {
-        setTimeout(function() {
-          var i = ui.item.index() + 1;
-          $(".stats-row .stats-item:nth-child("+i+")").effect("highlight", 400);
-          ui.item.effect("highlight");
-          $(".fix-me").removeClass('fix-me');
-        }, 100);
-      },
-      change: function(e, ui) {
-        var lastItem = $(".stats-header .stats-slider:last-child");
-        var prevItem = $(".ui-sortable-helper").prev();
-
-        if (lastItem.hasClass("ui-sortable-helper") && lastItem.prev().hasClass('stats-slider')) {
-          prevItem.addClass('fix-me');
-        } else {
-          $(".fix-me").removeClass('fix-me');
-        }
-      }
-    });
-
-
-
-    var tip = $(".db-tooltip");
-    $(function(){
-      $(".stats-row-container").tipTip({maxWidth: "auto",
-                              edgeOffset: 10,
-                              defaultPosition: "left",
-                              content: "      Click to show gear      ",
-                              delay: 1000});
-    });
-
-
-  });
 

@@ -15,4 +15,6 @@
 //= require jquery-ui-1.9.1.custom.min
 //= require fauxtable
 //= require jquery.tipTip.minified
+//= require underscore-min
+//= require backbone-min
 //= require_tree .
