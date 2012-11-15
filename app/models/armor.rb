@@ -8,8 +8,11 @@ class Armor < ActiveRecord::Base
   belongs_to :weight
   belongs_to :slot
 
-  has_many :gear_enhancements, as: :gear
+  has_many :gear_enhancements, as: :gear, :dependent => :destroy
   has_many :enhancements, through: :gear_enhancements
+
+  has_many :gear_outfits, as: :gear, :dependent => :destroy
+  has_many :outfits, through: :gear_outfits
 
   # Validations
   validates :name,
@@ -24,8 +27,8 @@ class Armor < ActiveRecord::Base
   validates_presence_of :weight_id
   validates_associated :slot
   validates_presence_of :slot_id
-  validates_associated :gear_enhancements
-  validates_presence_of :gear_enhancements
+  validates_associated :enhancements
+  validates_associated :outfits
 
   # Scopes
   scope :light, where(weight_id: Weight.light.id) unless Weight.light.blank?

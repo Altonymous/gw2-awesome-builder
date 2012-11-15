@@ -11,12 +11,14 @@ describe OutfitsController do
 
   def valid_attributes
     {
-      helm_id: helm.id,
-      shoulders_id: shoulders.id,
-      coat_id: coat.id,
-      gloves_id: gloves.id,
-      legs_id: legs.id,
-      boots_id: boots.id
+      armors: [
+        { id: helm.id },
+        { id: shoulders.id },
+        { id: coat.id },
+        { id: gloves.id },
+        { id: legs.id },
+        { id: boots.id }
+      ]
     }
   end
 
@@ -32,7 +34,7 @@ describe OutfitsController do
 
       before(:each) do
         outfits << create(:outfit)
-        outfits << create(:outfit, helm: create(:armor, :with_enhancement, enhancement: Enhancement.find_by_name('Precision')))
+        outfits << create(:outfit, helm: create(:armor, :helm, :with_enhancement, enhancement: Enhancement.find_by_name('Precision')))
       end
 
       context 'default' do

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115171942) do
+ActiveRecord::Schema.define(:version => 20121115175648) do
 
   create_table "armors", :force => true do |t|
     t.string   "name",               :limit => 96
@@ -88,12 +88,6 @@ ActiveRecord::Schema.define(:version => 20121115171942) do
     t.integer  "condition_duration"
     t.integer  "healing_power"
     t.integer  "boon_duration"
-    t.integer  "gloves_id"
-    t.integer  "coat_id"
-    t.integer  "boots_id"
-    t.integer  "helm_id"
-    t.integer  "legs_id"
-    t.integer  "shoulders_id"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
     t.float    "statistics_generation_seconds"
@@ -102,18 +96,12 @@ ActiveRecord::Schema.define(:version => 20121115171942) do
   add_index "outfits", ["armor"], :name => "index_outfits_on_armor"
   add_index "outfits", ["attack_power"], :name => "index_outfits_on_attack_power"
   add_index "outfits", ["boon_duration"], :name => "index_outfits_on_boon_duration"
-  add_index "outfits", ["boots_id"], :name => "index_outfits_on_boots_id"
-  add_index "outfits", ["coat_id"], :name => "index_outfits_on_coat_id"
   add_index "outfits", ["condition_damage"], :name => "index_outfits_on_condition_damage"
   add_index "outfits", ["condition_duration"], :name => "index_outfits_on_condition_duration"
   add_index "outfits", ["critical_chance"], :name => "index_outfits_on_critical_chance"
   add_index "outfits", ["critical_damage"], :name => "index_outfits_on_critical_damage"
-  add_index "outfits", ["gloves_id"], :name => "index_outfits_on_gloves_id"
   add_index "outfits", ["healing_power"], :name => "index_outfits_on_healing_power"
-  add_index "outfits", ["helm_id"], :name => "index_outfits_on_helm_id"
   add_index "outfits", ["hit_points"], :name => "index_outfits_on_hit_points"
-  add_index "outfits", ["legs_id"], :name => "index_outfits_on_legs_id"
-  add_index "outfits", ["shoulders_id"], :name => "index_outfits_on_shoulders_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"

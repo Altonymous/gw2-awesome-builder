@@ -2,13 +2,6 @@
 
 FactoryGirl.define do
   factory :outfit do
-    helm { create(:armor, :helm, :with_enhancement) }
-    shoulders { create(:armor, :shoulders, :with_enhancement) }
-    coat { create(:armor, :coat, :with_enhancement) }
-    gloves { create(:armor, :gloves, :with_enhancement) }
-    legs { create(:armor, :legs, :with_enhancement) }
-    boots { create(:armor, :boots, :with_enhancement) }
-
     armor 0
     attack_power 0
     hit_points 0
@@ -18,5 +11,15 @@ FactoryGirl.define do
     condition_duration 0
     healing_power 0
     boon_duration 0
+
+    ignore do
+      helm { create(:armor, :helm, :with_enhancement) }
+    end
+
+    trait :helm do
+      after(:build) do |outfit, evaluator|
+        outfit.gears << evaluator.helm
+      end
+    end
   end
 end

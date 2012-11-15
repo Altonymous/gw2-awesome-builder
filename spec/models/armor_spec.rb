@@ -20,57 +20,51 @@ describe Armor do
   end
 
   it 'has a valid factory' do
-    create(:armor, :with_enhancement).should be_valid
+    create(:armor, :with_enhancement, :with_outfit).should be_valid
   end
 
   context 'is invalid without' do
     it 'a name' do
-      build(:armor, name: nil).should_not be_valid
+      build(:armor, :with_enhancement, :with_outfit, name: nil).should_not be_valid
     end
 
     it 'a weight' do
-      build(:armor, weight: nil).should_not be_valid
+      build(:armor, :with_enhancement, :with_outfit, weight: nil).should_not be_valid
     end
 
     it 'a slot' do
-      build(:armor, slot: nil).should_not be_valid
+      build(:armor, :with_enhancement, :with_outfit, slot: nil).should_not be_valid
     end
 
     it 'a level' do
-      build(:armor, level: nil).should_not be_valid
-    end
-
-    it 'a gear enhancement is not defined' do
-      armor = build(:armor)
-      armor.gear_enhancements = []
-      armor.should_not be_valid
+      build(:armor, :with_enhancement, :with_outfit, level: nil).should_not be_valid
     end
   end
 
   context 'is invalid if' do
     it 'name already exists' do
-      create(:armor, :with_enhancement, name: "Armor")
-      build(:armor, :with_enhancement, name: "Armor").should_not be_valid
+      create(:armor, :with_enhancement, :with_outfit, name: "Armor")
+      build(:armor, :with_enhancement, :with_outfit, name: "Armor").should_not be_valid
     end
 
     it 'name is longer than 96 characters' do
-      build(:armor, name: "name".rjust(97, "0")).should_not be_valid
+      build(:armor, :with_enhancement, :with_outfit, name: "name".rjust(97, "0")).should_not be_valid
     end
 
     it 'level is not a number' do
-      build(:armor, level: "Test").should_not be_valid
+      build(:armor, :with_enhancement, :with_outfit, level: "Test").should_not be_valid
     end
 
     it 'level is not greater than zero' do
-      build(:armor, level: 0).should_not be_valid
+      build(:armor, :with_enhancement, :with_outfit, level: 0).should_not be_valid
     end
 
     it 'level is not an integer' do
-      build(:armor, level: 1.1).should_not be_valid
+      build(:armor, :with_enhancement, :with_outfit, level: 1.1).should_not be_valid
     end
 
     it 'level is not less than or equal to eighty' do
-      build(:armor, level: 81).should_not be_valid
+      build(:armor, :with_enhancement, :with_outfit, level: 81).should_not be_valid
     end
   end
 

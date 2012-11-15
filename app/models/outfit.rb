@@ -1,17 +1,13 @@
 class Outfit < ActiveRecord::Base
   resourcify
-  attr_accessible :gloves_id, :coat_id, :boots_id, :helm_id, :legs_id, :shoulders_id,
-    :gloves, :coat, :boots, :helm, :legs, :shoulders
   after_initialize :defaults
   before_save :generate_statistics
 
-  belongs_to :helm, class_name: :Armor
-  belongs_to :shoulders, class_name: :Armor
-  belongs_to :coat, class_name: :Armor
-  belongs_to :gloves, class_name: :Armor
-  belongs_to :legs, class_name: :Armor
-  belongs_to :boots, class_name: :Armor
+  # Polymorphic Associations
+  has_many :gear_outfits, :dependent => :destroy
+  has_many :armors, through: :gear_outfits, source: :gear, source_type: 'Armor'
 
+  # Validations
   validates :armor,
     presence: true,
     numericality: { only_integer: true, greater_than_or_equal_to: 0 }
@@ -48,23 +44,14 @@ class Outfit < ActiveRecord::Base
     presence: true,
     numericality: { only_integer: true, greater_than_or_equal_to: 0 }
 
-  validates_associated :helm
-  validates_presence_of :helm_id
-  validates_associated :shoulders
-  validates_presence_of :shoulders_id
-  validates_associated :coat
-  validates_presence_of :coat_id
-  validates_associated :gloves
-  validates_presence_of :gloves_id
-  validates_associated :legs
-  validates_presence_of :legs_id
-  validates_associated :boots
-  validates_presence_of :boots_id
-
+  # Methods
   def generate_statistics
     StatisticModule::statistics.each do |statistic|
-      gears.each do |piece|
-        write_attribute(statistic, read_attribute(statistic) + self.send(piece.to_sym)[statistic])
+      # Set the statistic to 0 before we recalculate
+      write_attribute(statistic, 0)
+
+      armors.each do |armor|
+        write_attribute(statistic, read_attribute(statistic) + armor[statistic])
       end
     end
   end

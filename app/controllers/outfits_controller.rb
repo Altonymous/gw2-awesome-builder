@@ -3,7 +3,7 @@ class OutfitsController < ApplicationController
 
   def index
     @sort ||= 'attack_power desc'
-    @outfits = Outfit.includes(:helm, :shoulders, :coat, :gloves, :legs, :boots).order(@sort).page(params[:page])
+    @outfits = Outfit.includes(:armors).order(@sort).page(params[:page])
 
     respond_with @outfits
   end
@@ -25,13 +25,20 @@ class OutfitsController < ApplicationController
   end
 
   def create
-    @outfit = Outfit.create(params[:outfit])
+    armors = params[:outfit].delete(:armors)
+
+    @outfit = Outfit.create(params[:outfit]) do |outfit|
+      outfit.armors = armors.map! { |armor| Armor.find(armor[:id]) } unless armors.blank?
+    end
 
     respond_with @outfit
   end
 
   def update
+    armors = params[:outfit].delete(:armors)
+
     @outfit = Outfit.find(params[:id])
+    @outfit.armors = armors.map! { |armor| Armor.find(armor[:id]) } unless armors.blank?
     @outfit.update_attributes(params[:outfit])
 
     respond_with @outfit

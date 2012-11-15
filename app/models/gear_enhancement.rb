@@ -1,7 +1,8 @@
 class GearEnhancement < ActiveRecord::Base
   resourcify
-  attr_accessible :rating, :enhancement_id, :gear_id, :gear_type
+  attr_accessible :enhancement_id, :gear_id, :gear_type, :rating
 
+  # Associations
   belongs_to :enhancement
 
   # Polymorphic Associations
@@ -10,11 +11,11 @@ class GearEnhancement < ActiveRecord::Base
   # Validations
   validates :gear_type,
     presence: true
+  validates :enhancement_id,
+    presence: true
   validates :rating,
     presence: true,
     numericality: { only_integer: true, greater_than: 0 }
-  validates :enhancement_id,
-    presence: true
 
   # Overridden Methods
   def ==(other)

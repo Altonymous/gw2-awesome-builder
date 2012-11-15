@@ -11,6 +11,7 @@ FactoryGirl.define do
     ignore do
       rating 1
       enhancement { Enhancement.find_by_name('Toughness') }
+      outfit { create(:outfit) }
     end
 
     trait :with_enhancement do
@@ -24,6 +25,12 @@ FactoryGirl.define do
         Enhancement.all.each do |enhancement|
           armor.gear_enhancements.build({rating: evaluator.rating}).enhancement = enhancement
         end
+      end
+    end
+
+    trait :with_outfit do
+      after(:build) do |armor, evaluator|
+        armor.outfits << evaluator.outfit
       end
     end
 

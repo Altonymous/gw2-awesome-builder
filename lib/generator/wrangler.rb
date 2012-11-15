@@ -3,19 +3,20 @@ module Generator
     def initialize
     end
 
-    def delete_all
+    def destroy_all
       puts "Deleting Outfits"
-      Outfit.delete_all
+      Outfit.destroy_all
       puts "Done\n\n"
     end
 
     def start(delete_outfits = true)
-      delete_all if delete_outfits
+      destroy_all if delete_outfits
 
       puts "Generating outfits..."
       start = Time.now
-      %w(light medium heavy).each do |weight|
-        puts "Generating #{weight.camelize} armor outfits...\n\n"
+
+      WeightModule::weights.each do |weight|
+        puts "Generating #{weight.to_s.camelize} armor outfits...\n\n"
         weight_start = Time.now
 
         # Collecting the gear
@@ -25,7 +26,7 @@ module Generator
         outfits = generate_outfits(gear)
 
         # Completing armor set generation
-        puts "Took #{(Time.now - weight_start).round(4)} seconds to generate #{weight.camelize} armor sets.\n\n"
+        puts "Took #{(Time.now - weight_start).round(4)} seconds to generate #{weight.to_s.camelize} armor sets.\n\n"
       end
       puts 'Done'
       puts "Took #{(Time.now - start).round(4)} seconds to generate all outfits.\n\n"
@@ -33,7 +34,7 @@ module Generator
 
     private
     def collect_gear(weight)
-      puts "Collecting #{weight.camelize} armor pieces..."
+      puts "Collecting #{weight.to_s.camelize} armor pieces..."
       collecting_start = Time.now
       gear_possibilities = {}
 
@@ -106,7 +107,11 @@ module Generator
           reduced_item[key] = piece
         end
 
-        Outfit.new(reduced_item).save({validate: false})
+        Outfit.new do |outfit|
+          outfit.armors = reduced_item.values
+          outfit.save(validate: false)
+        end
+        # Outfit.new(reduced_item).save({validate: false})
 
         j = j + 1
         if j % 5000 == 0 || j == outfits.length
