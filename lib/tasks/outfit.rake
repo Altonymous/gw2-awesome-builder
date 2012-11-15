@@ -9,10 +9,16 @@ namespace :outfitter do
       puts "Done\n\n"
     end
 
+    desc "Collect all the gear from external sources"
+    task :collect_gear, [:delete_gear] => [:environment] do |t, args|
+      delete_gear = args[:delete_gear].blank? ? true : args[:delete_gear]
+
+      Spidy.new.get_all_items(0)
+    end
+
     desc "Generate all possible outfits from known gear."
-    task :generate, [:delete_all, :outfit_limit] => [:environment] do |t, args|
-      delete_outfits = args[:delete_outfits].blank? ? true : false
-      outfit_limit = args[:outfit_limit].blank? ? nil : args[:outfit_limit].to_i
+    task :generate, [:delete_outfits] => [:environment] do |t, args|
+      delete_outfits = args[:delete_outfits].blank? ? true : args[:delete_outfits]
 
       Generator::Wrangler.new.start(delete_outfits)
     end
