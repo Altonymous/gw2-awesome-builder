@@ -32,12 +32,6 @@ describe Trinket do
     it 'a level' do
       build(:trinket, level: nil).should_not be_valid
     end
-
-    it 'a gear enhancement is not defined' do
-      armor = build(:trinket)
-      armor.gear_enhancements = []
-      armor.should_not be_valid
-    end
   end
 
   context 'is invalid if' do
@@ -47,7 +41,7 @@ describe Trinket do
     end
 
     it 'name is longer than 48 characters' do
-      build(:trinket, name: "name".rjust(49, "0")).should_not be_valid
+      build(:trinket, name: "name".rjust(97, "0")).should_not be_valid
     end
 
     it 'level is not a number' do

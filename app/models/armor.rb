@@ -1,13 +1,15 @@
 class Armor < ActiveRecord::Base
   resourcify
-  attr_accessible :name, :weight_id, :slot_id, :level, :gw2db_url, :icon_url
+  attr_accessible :name, :level, :slot_id, :weight_id, :gw2db_url, :icon_url
 
   after_initialize :defaults
   before_save :generate_statistics
 
+  # Associations
   belongs_to :weight
   belongs_to :slot
 
+  # Polymorphic Associations
   has_many :gear_enhancements, as: :gear, :dependent => :destroy
   has_many :enhancements, through: :gear_enhancements
 
@@ -17,7 +19,7 @@ class Armor < ActiveRecord::Base
   # Validations
   validates :name,
     presence: true,
-    uniqueness: { scope: [:weight_id, :slot_id]},
+    uniqueness: { scope: [:weight_id, :slot_id] },
     length: { maximum: 96 }
   validates :level,
     presence: true,
@@ -57,6 +59,4 @@ class Armor < ActiveRecord::Base
       write_attribute(statistic, 0) if read_attribute(statistic).nil?
     end
   end
-
-  include StatisticModule
 end

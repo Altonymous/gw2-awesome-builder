@@ -6,6 +6,7 @@ class Outfit < ActiveRecord::Base
   # Polymorphic Associations
   has_many :gear_outfits, :dependent => :destroy
   has_many :armors, through: :gear_outfits, source: :gear, source_type: 'Armor'
+  has_many :trinkets, through: :gear_outfits, source: :gear, source_type: 'Trinket'
 
   # Validations
   validates :armor,

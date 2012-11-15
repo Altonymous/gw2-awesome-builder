@@ -1,28 +1,33 @@
 class Trinket < ActiveRecord::Base
   resourcify
-  attr_accessible :name, :level, :slot_id
+  attr_accessible :name, :level, :slot_id, :gw2db_url, :icon_url
 
   after_initialize :defaults
   before_save :generate_statistics
 
+  # Associations
   belongs_to :slot
 
+  # Polymorphic Associations
   has_many :gear_enhancements, as: :gear
   has_many :enhancements, through: :gear_enhancements
+
+  has_many :gear_outfits, as: :gear, :dependent => :destroy
+  has_many :outfits, through: :gear_outfits
 
   # Validations
   validates :name,
     presence: true,
     uniqueness: true,
-    length: { maximum: 48 }
+    length: { maximum: 96 }
   validates :level,
     presence: true,
     numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 80 }
 
   validates_associated :slot
   validates_presence_of :slot_id
-  validates_associated :gear_enhancements
-  validates_presence_of :gear_enhancements
+  validates_associated :enhancements
+  validates_associated :outfits
 
   # Methods
   def generate_statistics

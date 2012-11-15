@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115175648) do
+ActiveRecord::Schema.define(:version => 20121115212842) do
 
   create_table "armors", :force => true do |t|
     t.string   "name",               :limit => 96
@@ -131,7 +131,7 @@ ActiveRecord::Schema.define(:version => 20121115175648) do
   end
 
   create_table "trinkets", :force => true do |t|
-    t.string   "name",               :limit => 48
+    t.string   "name",               :limit => 96
     t.integer  "level"
     t.integer  "armor"
     t.integer  "hit_points"
@@ -143,8 +143,10 @@ ActiveRecord::Schema.define(:version => 20121115175648) do
     t.integer  "healing_power"
     t.integer  "boon_duration"
     t.integer  "slot_id"
-    t.datetime "created_at",                       :null => false
-    t.datetime "updated_at",                       :null => false
+    t.string   "gw2db_url"
+    t.string   "icon_url"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "trinkets", ["armor"], :name => "index_trinkets_on_armor"
