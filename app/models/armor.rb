@@ -34,9 +34,7 @@ class Armor < ActiveRecord::Base
 
   # Methods
   def generate_statistics
-    Statistic.all.each do |statistic_model|
-      statistic = statistic_snake_name(statistic_model).to_sym
-
+    statistics.each do |statistic|
       write_attribute(statistic, 0)
     end
 
@@ -52,9 +50,7 @@ class Armor < ActiveRecord::Base
   private
   def defaults
     # Set statistics to zero
-    Statistic.all.each do |statistic_model|
-      statistic = statistic_snake_name(statistic_model).to_sym
-
+    statistics.each do |statistic|
       write_attribute(statistic, 0) if read_attribute(statistic).nil?
     end
   end

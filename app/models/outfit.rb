@@ -62,10 +62,8 @@ class Outfit < ActiveRecord::Base
   validates_presence_of :boots_id
 
   def generate_statistics
-    Statistic.all.each do |statistic_model|
-      statistic = statistic_snake_name(statistic_model).to_sym
-
-      %w(gloves coat boots helm legs shoulders).each do |piece|
+    statistics.each do |statistic|
+      gears.each do |piece|
         write_attribute(statistic, read_attribute(statistic) + self.send(piece.to_sym)[statistic])
       end
     end
@@ -74,12 +72,11 @@ class Outfit < ActiveRecord::Base
   private
   def defaults
     # Set statistics to zero
-    Statistic.all.each do |statistic_model|
-      statistic = statistic_snake_name(statistic_model).to_sym
-
+    statistics.each do |statistic|
       write_attribute(statistic, 0) if read_attribute(statistic).nil?
     end
   end
 
   include StatisticModule
+  include GearModule
 end

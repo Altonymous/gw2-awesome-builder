@@ -1,5 +1,5 @@
 module StatisticModule
-  def statistic_snake_name(statistic)
-    statistic.name.delete(' ').underscore.to_sym
+  def statistics
+    %w(armor attack_power hit_points healing_power condition_damage critical_damage critical_chance condition_duration boon_duration)
   end
 end
