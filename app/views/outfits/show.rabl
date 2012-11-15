@@ -9,21 +9,6 @@ attributes :armor,
            :critical_damage,
            :boon_duration
 
-child(:helm => :helm) do
-  extends "armors/show"
-end
-child(:shoulders => :shoulders) do
-  extends "armors/show"
-end
-child(:coat => :coat) do
-  extends "armors/show"
-end
-child(:gloves => :gloves) do
-  extends "armors/show"
-end
-child(:legs => :legs) do
-  extends "armors/show"
-end
-child(:boots => :boots) do
+child(:armors) do
   extends "armors/show"
 end

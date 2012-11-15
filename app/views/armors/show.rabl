@@ -2,6 +2,12 @@ object @armor
 attribute :id
 attribute :name
 attribute :armor
+
+child(:slot) do
+  attribute :id
+  attribute :name
+end
+
 attribute :attack_power
 attribute :hit_points
 attribute :healing_power
