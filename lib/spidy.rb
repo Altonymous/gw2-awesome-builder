@@ -71,7 +71,7 @@ class Spidy
 
     results.each do |result|
       # Skip the item if it's not level 80 & Exotic
-      next unless result['restriction_level'] == "80" && result['rarity'].to_i == 5
+      next unless result['restriction_level'] == "80" && result['rarity'].to_i == 5 && !result['name'].downcase.include?('pvp') && !result['name'].downcase.include?(' of ')
 
       name = result['name']
       level = result['restriction_level'].to_i

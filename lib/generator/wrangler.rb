@@ -106,8 +106,6 @@ module Generator
         end
 
         Outfit.new(reduced_item).save({validate: false})
-        # Old way...
-        # outfit = Outfit.new(reduced_item).save(validate: false)
 
         j = j + 1
         if j % 10000 == 0
