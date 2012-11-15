@@ -1,4 +1,8 @@
 module OutfitsHelper
+  def armor(outfit, slot)
+    outfit.armors.select { |armor| armor.slot_id == SlotModule::SLOT[slot] }
+  end
+
   def stat_slider(name)
     capture_haml do
       haml_tag "div", {:data => {:name => name.parameterize}, :class => "slider-range", :style => "height: 250px;"}
