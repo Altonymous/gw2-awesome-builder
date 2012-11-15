@@ -13,8 +13,8 @@ class GearEnhancement < ActiveRecord::Base
   validates :rating,
     presence: true,
     numericality: { only_integer: true, greater_than: 0 }
-
-  validates_presence_of :enhancement_id
+  validates :enhancement_id,
+    presence: true
 
   # Overridden Methods
   def ==(other)

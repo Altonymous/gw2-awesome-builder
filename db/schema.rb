@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121113215648) do
+ActiveRecord::Schema.define(:version => 20121115171942) do
 
   create_table "armors", :force => true do |t|
     t.string   "name",               :limit => 96
@@ -66,6 +66,17 @@ ActiveRecord::Schema.define(:version => 20121113215648) do
 
   add_index "gear_enhancements", ["enhancement_id"], :name => "index_gear_enhancements_on_enhancement_id"
   add_index "gear_enhancements", ["gear_id"], :name => "index_gear_enhancements_on_gear_id"
+
+  create_table "gear_outfits", :force => true do |t|
+    t.integer  "gear_id"
+    t.string   "gear_type"
+    t.integer  "outfit_id"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  add_index "gear_outfits", ["gear_id"], :name => "index_gear_outfits_on_gear_id"
+  add_index "gear_outfits", ["outfit_id"], :name => "index_gear_outfits_on_outfit_id"
 
   create_table "outfits", :force => true do |t|
     t.integer  "armor"
