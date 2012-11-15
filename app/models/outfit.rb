@@ -62,7 +62,7 @@ class Outfit < ActiveRecord::Base
   validates_presence_of :boots_id
 
   def generate_statistics
-    statistics.each do |statistic|
+    StatisticModule::statistics.each do |statistic|
       gears.each do |piece|
         write_attribute(statistic, read_attribute(statistic) + self.send(piece.to_sym)[statistic])
       end
@@ -72,7 +72,7 @@ class Outfit < ActiveRecord::Base
   private
   def defaults
     # Set statistics to zero
-    statistics.each do |statistic|
+    StatisticModule::statistics.each do |statistic|
       write_attribute(statistic, 0) if read_attribute(statistic).nil?
     end
   end

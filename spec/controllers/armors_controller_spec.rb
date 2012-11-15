@@ -30,7 +30,7 @@ describe ArmorsController do
       name: 'Awesome Armor',
       level: 1,
       weight_id: Weight.first.id,
-      slot_id: Slot.find_by_name('Head').id,
+      slot_id: Slot.find_by_name('Helm').id,
       gear_enhancements: gear_enhancements
     }
   end

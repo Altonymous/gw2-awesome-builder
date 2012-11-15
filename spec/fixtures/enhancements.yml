@@ -40,7 +40,7 @@ healing_power:
   statistic_id: 4
 condition_duration:
   id: 9
-  name: Condition Duraction
+  name: Condition Duration
   multiplier: 1
   statistic_id: 8
 boon_duration:
