@@ -14,7 +14,7 @@ class Armor < ActiveRecord::Base
   # Validations
   validates :name,
     presence: true,
-    uniqueness: true,
+    uniqueness: { scope: [:weight_id, :slot_id]},
     length: { maximum: 96 }
   validates :level,
     presence: true,
