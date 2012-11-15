@@ -33,9 +33,16 @@ class Armor < ActiveRecord::Base
   validates_associated :outfits
 
   # Scopes
-  scope :light, where(weight_id: Weight.light.id) unless Weight.light.blank?
-  scope :medium, where(weight_id: Weight.medium.id) unless Weight.medium.blank?
-  scope :heavy, where(weight_id: Weight.heavy.id) unless Weight.heavy.blank?
+  scope :helm, where(slot_id: SlotModule::SLOT[:helm])
+  scope :shoulders, where(slot_id: SlotModule::SLOT[:shoulders])
+  scope :coats, where(slot_id: SlotModule::SLOT[:coat])
+  scope :gloves, where(slot_id: SlotModule::SLOT[:gloves])
+  scope :legs, where(slot_id: SlotModule::SLOT[:legs])
+  scope :boots, where(slot_id: SlotModule::SLOT[:boots])
+
+  scope :light, where(weight_id: WeightModule::WEIGHT[:light])
+  scope :medium, where(weight_id: WeightModule::WEIGHT[:medium])
+  scope :heavy, where(weight_id: WeightModule::WEIGHT[:heavy])
 
   # Methods
   def generate_statistics

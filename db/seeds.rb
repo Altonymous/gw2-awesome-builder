@@ -40,7 +40,10 @@ Slot.create!([
                { id: 3, name: 'Coat' },
                { id: 4, name: 'Gloves' },
                { id: 5, name: 'Legs' },
-               { id: 6, name: 'Boots' }
+               { id: 6, name: 'Boots' },
+               { id: 7, name: 'Ring' },
+               { id: 8, name: 'Accessory' },
+               { id: 9, name: 'Amulet' }
 ])
 
 puts 'CREATING WEIGHTS'

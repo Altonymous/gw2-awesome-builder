@@ -5,7 +5,10 @@ module SlotModule
     coat: 3,
     gloves: 4,
     legs: 5,
-    boots: 6
+    boots: 6,
+    ring: 7,
+    accessory: 8,
+    amulet: 9
   }
 
   def self.slots

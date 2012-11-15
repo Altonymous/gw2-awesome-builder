@@ -29,6 +29,11 @@ class Trinket < ActiveRecord::Base
   validates_associated :enhancements
   validates_associated :outfits
 
+  # Scopes
+  scope :rings, where(slot_id: SlotModule::SLOT[:ring])
+  scope :accessories, where(slot_id: SlotModule::SLOT[:ring])
+  scope :amulets, where(slot_id: SlotModule::SLOT[:ring])
+
   # Methods
   def generate_statistics
     StatisticModule::statistics.each do |statistic|
