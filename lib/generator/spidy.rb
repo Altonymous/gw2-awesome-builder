@@ -72,8 +72,8 @@ module Generator
     def get_all_items(delete_armors = false)
       destroy_all if delete_armors
 
+      get_items(:armor)
       get_items(:trinket)
-      # get_items(:armor)
     end
 
     def get_items(type)
