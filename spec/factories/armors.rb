@@ -6,7 +6,7 @@ FactoryGirl.define do
     level 1
 
     weight { Weight.first }
-    slot { Slot.find_by_name('Head') }
+    slot { Slot.find_by_name('Helm') }
 
     ignore do
       rating 1
@@ -28,7 +28,7 @@ FactoryGirl.define do
     end
 
     trait :helm do
-      slot { Slot.find_by_name("Head") }
+      slot { Slot.find_by_name("Helm") }
     end
 
     trait :shoulders do
@@ -36,11 +36,11 @@ FactoryGirl.define do
     end
 
     trait :coat do
-      slot { Slot.find_by_name("Chest") }
+      slot { Slot.find_by_name("Coat") }
     end
 
     trait :gloves do
-      slot { Slot.find_by_name("Arms") }
+      slot { Slot.find_by_name("Gloves") }
     end
 
     trait :legs do
@@ -48,7 +48,7 @@ FactoryGirl.define do
     end
 
     trait :boots do
-      slot { Slot.find_by_name("Feet") }
+      slot { Slot.find_by_name("Boots") }
     end
   end
 end

@@ -14,7 +14,7 @@ class ArmorsController < ApplicationController
   # GET /armors/1
   # GET /armors/1.json
   def show
-    @armor = Armor.find(params[:id])
+    @armor = Armor.includes(:gear_enhancements, :enhancements).find(params[:id])
 
     respond_with @armor
   end

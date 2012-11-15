@@ -96,6 +96,7 @@ module Generator
       storing_start = Time.now
 
       j = 1
+      # queued_outfits = []
       outfits.each do |item|
         reduced_item = item.reduce({}, :update)
 
@@ -108,8 +109,13 @@ module Generator
         Outfit.new(reduced_item).save({validate: false})
 
         j = j + 1
-        if j % 10000 == 0
-          puts "10000 items took #{(Time.now - last_time).round(4)} seconds after import"
+        if j % 5000 == 0 || j == outfits.length
+          # ActiveRecord::Base.transaction do
+          #   queued_outfits.each { |outfit| outfit.save({validate: false}) }
+          # end
+          # queued_outfits = []
+          current_count = j < outfits.length ? 5000 : outfits.length % 5000
+          puts "#{current_count} items took #{(Time.now - last_time).round(4)} seconds to store"
           last_time = Time.now
         end
       end

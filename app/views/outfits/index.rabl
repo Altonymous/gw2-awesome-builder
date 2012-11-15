@@ -1,5 +1,6 @@
 collection @outfits
-attributes :armor,
+attributes :id,
+           :armor,
            :attack_power,
            :hit_points,
            :healing_power,
@@ -8,7 +9,3 @@ attributes :armor,
            :critical_chance,
            :critical_damage,
            :boon_duration
-
-child :helm do
-  extends "armors/show"
-end

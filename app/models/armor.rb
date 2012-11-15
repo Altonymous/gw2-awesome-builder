@@ -14,7 +14,7 @@ class Armor < ActiveRecord::Base
   # Validations
   validates :name,
     presence: true,
-    uniqueness: true,
+    uniqueness: { scope: [:weight_id, :slot_id]},
     length: { maximum: 96 }
   validates :level,
     presence: true,
@@ -34,9 +34,7 @@ class Armor < ActiveRecord::Base
 
   # Methods
   def generate_statistics
-    Statistic.all.each do |statistic_model|
-      statistic = statistic_snake_name(statistic_model).to_sym
-
+    StatisticModule::statistics.each do |statistic|
       write_attribute(statistic, 0)
     end
 
@@ -44,7 +42,7 @@ class Armor < ActiveRecord::Base
       current_statistic = gear_enhancement.rating.zero? ?
         0 : gear_enhancement.rating * gear_enhancement.enhancement.multiplier
 
-      statistic = statistic_snake_name(Statistic.find(gear_enhancement.enhancement.statistic_id)).to_sym
+      statistic = StatisticModule::find_by_statistic_id(gear_enhancement.enhancement.statistic_id)
       write_attribute(statistic, read_attribute(statistic) + current_statistic)
     end
   end
@@ -52,9 +50,7 @@ class Armor < ActiveRecord::Base
   private
   def defaults
     # Set statistics to zero
-    Statistic.all.each do |statistic_model|
-      statistic = statistic_snake_name(statistic_model).to_sym
-
+    StatisticModule::statistics.each do |statistic|
       write_attribute(statistic, 0) if read_attribute(statistic).nil?
     end
   end

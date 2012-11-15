@@ -1,0 +1,3 @@
+collection @armors
+attributes :id
+

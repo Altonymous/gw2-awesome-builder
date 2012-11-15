@@ -1,21 +1,21 @@
 helm:
   id: 1
-  name: Head
+  name: Helm
 shoulders:
   id: 2
   name: Shoulders
 coat:
   id: 3
-  name: Chest
+  name: Coat
 gloves:
   id: 4
-  name: Arms
+  name: Gloves
 legs:
   id: 5
   name: Legs
 boots:
   id: 6
-  name: Feet
+  name: Boots
 ring_1:
   id: 7
   name: Ring 1
