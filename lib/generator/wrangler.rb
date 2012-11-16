@@ -53,7 +53,6 @@ module Generator
       end
     end
 
-    private
     # Delete
     def delete_all
       delete_outfits
@@ -79,6 +78,7 @@ module Generator
       puts 'Done'
     end
 
+    private
     # Fake
     def generate_armor(name, slot_id, weight_id)
       Armor.create! do |armor|
