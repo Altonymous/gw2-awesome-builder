@@ -1,5 +1,5 @@
-
-# - for outfit in outfits
+= outfits
+#- for outfit in outfits
 #   .stats-row-container
 #     .stats-row{"data-id" => outfit.id}>
 #       .stats-item>= outfit.armor

@@ -25,6 +25,7 @@
 
 %br
 
+/ = Rabl::Renderer.json(@outfits, 'outfits/index', :view_path => 'app/views', :scope => self)
+
 :javascript
-  console.log #{@outfits.to_json}
-  / Outfitter.initialize({ outfits: #{@outfits.to_json} })
+  Outfitter.initialize({ outfits: #{Rabl::Renderer.json(@outfits, 'outfits/index', :view_path => 'app/views', :scope => self)} })

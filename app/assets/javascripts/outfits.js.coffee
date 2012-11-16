@@ -6,11 +6,8 @@ $ ->
   setup = (@container) ->
     setupTable()
     setupSliders()
-    # init()
-
 
   init = (router) ->
-
 
   setupTable = ->
     $('#stats').fauxtable

@@ -3,3 +3,6 @@ Outfitter.Views.OutfitsIndex = Backbone.View.extend
     this.$el.html JST['outfits/index']
       outfits: this.collection
     return this
+
+  reset: ->
+    render()
