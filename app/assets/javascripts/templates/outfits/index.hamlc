@@ -1,0 +1,13 @@
+
+# - for outfit in outfits
+#   .stats-row-container
+#     .stats-row{"data-id" => outfit.id}>
+#       .stats-item>= outfit.armor
+#       .stats-item>= outfit.attack_power
+#       .stats-item>= outfit.hit_points
+#       .stats-item>= outfit.healing_power
+#       .stats-item>= outfit.condition_damage
+#       .stats-item>= outfit.critical_damage
+#       .stats-item>= outfit.critical_chance
+#       .stats-item>= outfit.condition_duration
+#       .stats-item>= outfit.boon_duration

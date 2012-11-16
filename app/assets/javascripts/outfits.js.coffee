@@ -6,11 +6,11 @@ $ ->
   setup = (@container) ->
     setupTable()
     setupSliders()
-    init()
+    # init()
 
 
   init = (router) ->
-    Outfitter.initialize(Outfitter.Routers.Outfits)
+
 
   setupTable = ->
     $('#stats').fauxtable
