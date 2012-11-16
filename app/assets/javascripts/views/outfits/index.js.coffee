@@ -3,7 +3,8 @@ Outfitter.Views.Outfits.Index = Backbone.View.extend
   model: Outfitter.Models.Outfit
 
   events:
-    "click .stats-row"       : "showOutfit"
+    "click .stats-row"        : "showOutfit"
+    "click .page"           : "renderPage"
 
   initialize: ->
     @.collection.on("reset", @.render)
@@ -29,3 +30,6 @@ Outfitter.Views.Outfits.Index = Backbone.View.extend
           outfit: outfit
         $('#sidebar').html(view.render().$el)
 
+  renderPage: (event) ->
+    e.preventDefault();
+    console.log renderPage

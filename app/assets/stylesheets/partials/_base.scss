@@ -102,3 +102,20 @@ h1 {
     vertical-align: middle;
   }
 }
+
+.stats-outfits-container {
+  @include inline-block;
+}
+
+.pagination {
+  margin: 10px 0 40px 0;
+  a { color: #666; }
+  .page {
+    @include border-radius(4px);
+    font-weight: bold;
+    text-align: center;
+    margin: 0 10px 0 0;
+    padding: 5px 8px;
+    &.current { @include box-shadow(0 1px 3px rgba(0,0,0, .15)); background: #fff; }
+  }
+}

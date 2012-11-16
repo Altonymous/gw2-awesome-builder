@@ -1,7 +1,7 @@
 Outfitter.Routers.Outfits = Backbone.Router.extend
   routes:
     "": "index"
-    ":id": "show"
+    ":id" : "page"
 
   initialize: (options) ->
     @.collection = options.outfits
@@ -20,6 +20,9 @@ Outfitter.Routers.Outfits = Backbone.Router.extend
     #       collection: @.collection
     #       outfit: outfit
     #     $('#sidebar').html(view.render().$el)
+
+  page: (id) ->
+    console.log "page"
 
   # fetchCollection: (callback) ->
   #   @.collection.fetch
