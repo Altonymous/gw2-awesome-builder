@@ -1,7 +1,8 @@
 window.Outfitter =
   Models: {}
   Collections: {}
-  Views: {}
+  Views:
+    Outfits: {}
   Routers: {}
 
   initialize: (data) ->

@@ -1,0 +1,13 @@
+
+%ul.db-tooltip
+  %li
+    %h2 Selected Gear
+  - for armor in @outfit.armors
+    %li
+      %a{:href => "http://www.gw2db.com/skills/521-air-attunement"}
+        .db-image
+          %img{:alt => "", :src => armor.icon_url}
+        .db-title
+          = armor.name
+  %li
+    %button Show More
