@@ -14,10 +14,8 @@ Outfitter.Views.Outfits.Index = Backbone.View.extend
     @.collection.on("reset", @.render)
 
   render: ->
-    console.log @.collection
-    console.log @.options.pagination
     this.$el.html JST['outfits/index']
-      outfits: @.collection
+      outfits: @.collection.toJSON()
       pagination: @.pagination
     return this
 

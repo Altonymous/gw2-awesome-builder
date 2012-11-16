@@ -1,4 +1,4 @@
-= @pagination
+
 - for outfit in @outfits
   .stats-row-container
     .stats-row{"data-id" => outfit.id}>
