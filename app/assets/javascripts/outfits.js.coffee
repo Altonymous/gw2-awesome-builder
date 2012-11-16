@@ -2,24 +2,27 @@
 # All this logic will automatically be available in application.js.
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
-window.Outfits =
-  setup: (@container) ->
-    Outfits.setupTable()
-    Outfits.setupSliders()
-    Outfits.jsonTest()
+$ ->
+  setup = (@container) ->
+    setupTable()
+    setupSliders()
+    init()
 
-  setupTable: ->
+
+  init = (router) ->
+    Outfitter.initialize(Outfitter.Routers.Outfits)
+
+  setupTable = ->
     $('#stats').fauxtable
       items: '>:not(.nosort)',
       placeholder: 'placeholder',
       helper: '.stats-slider',
       stop: (e, ui) ->
-        Outfits.highlightTableColumn(ui.item.index()+1)
+        highlightTableColumn(ui.item.index()+1)
       change: (e, ui) ->
-        Outfits.handleTableEndCorners()
-    $(".stats-row").click -> Outfits.handleOutfitClick($(this))
+        handleTableEndCorners()
 
-  setupSliders: ->
+  setupSliders = ->
     $.each $(".slider-range" ), ->
       name = $(this).data("name")
 
@@ -35,14 +38,14 @@ window.Outfits =
       rangeIndicator = $(".slider-amount #slider-" + name)
       rangeIndicator.text $(this).slider("values", 0) + " - " + $(this).slider("values", 1)
 
-  highlightTableColumn: (i) ->
+  highlightTableColumn = (i) ->
     setTimeout ->
       $(".stats-row .stats-item:nth-child("+i+")").effect("highlight", 400)
       $(".stats-header .stats-slider:nth-child("+i+")").effect("highlight")
       $(".fix-me").removeClass('fix-me')
     , 100
 
-  handleTableEndCorners: ->
+  handleTableEndCorners = ->
     lastItem = $(".stats-header .stats-slider:last-child")
     prevItem = $(".ui-sortable-helper").prev()
 
@@ -52,31 +55,74 @@ window.Outfits =
     else
       $(".fix-me").removeClass('fix-me')
 
-  handleOutfitClick: (item) ->
-    # this is useless if i dont have a full data set
-    console.log Outfits.getArmor @armors.toJSON(), "id", item.data("boots-id")
+  # handleOutfitClick = (item) ->
+  #   outfitID = item.data("id")
+  #   console.log outfitID
+  #   bb = getJSON "outfits", outfitID
+  #   console.log bb
 
-  getArmor: (obj, key, val) ->
-    $.grep obj, (item) ->
-      console.log item.armor[key]
-      return item.armor.key == val # I dont know how to get key to eval
+  #   # helm_id, shoulders_id, coat_id, legs_id, gloves_id, boots_id
+
+  #   $.ajax
+  #     url: "/outfits/" + outfitID + ".json",
+  #     success: (data) ->
+  #       console.log "ajax: " + data
+  #       return data
 
 
-  jsonTest: ->
-    Armor = Backbone.Model.extend()
-    ArmorsCollection = Backbone.Collection.extend
-      model: Armor,
-      url: '/armors.json',
-      poop: ->
-        return this.filter (armor) ->
-          return armor
+    # theView = Backbone.View.extend
+    #   initialize: ->
+    #     this.collection = new ArmorsCollection()
+    #     this.collection.bind("reset", this.render, this)
+    #     this.collection.bind("change", this.render, this)
+    #     this.collection.fetch()
+    #   ,
+    #   render: ->
+    #     alert("test" + this.collection.toJSON());
+    # myView = new theView();
 
-    @armors = new ArmorsCollection()
-    @armors.fetch
-      success: (collection, response) ->
-        console.log response
+  # getArmor = (obj, key, val) ->
+  #   $.grep obj, (item) ->
+  #     console.log item.armor[key]
+  #     return item.armor.key == val
 
-$ Outfits.setup
+
+  # getJSON = (path, id) ->
+
+  #   ArmorsCollection = Backbone.Collection.extend
+  #     model: Armor,
+  #     url: '/' + path + '/' + id + '.json',
+  #     parse: (response) ->
+  #       returnJSON(response)
+  #       return response
+
+  #   armors = new ArmorsCollection()
+  #   armors.fetch
+  #     success: (response) ->
+  #       return response
+
+  # returnJSON = (response) ->
+  #   console.log response
+
+  # renderSelectedGear = ->
+  #   RealWorldItemView = Backbone.View.extend
+  #     tagName: 'li',
+  #     template: null,
+
+  #     initialize: ->
+  #       # This is useful to bind(or delegate) the this keyword inside all the function objects to the view
+  #       # Read more here: http://documentcloud.github.com/underscore/#bindAll
+  #       _.bindAll(this)
+
+  #       # later we will see complex template engines, but is the basic from underscore
+  #       this.template = _.template('<span>Name: <strong><%= name %></strong> - <%= color %> </span>')
+  #     ,
+  #     render : ->
+  #       $(this.el).html this.template( this.model.toJSON() )
+  #       return this
+
+
+  setup()
 
 #   var tip = $(".db-tooltip");
 #   $(function(){

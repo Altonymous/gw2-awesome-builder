@@ -1,3 +1,2 @@
 collection @armors
 attributes :id
-

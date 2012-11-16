@@ -1,42 +1,7 @@
 
 %h1 Listing Outfits
 #the-grid
-  #sidebar
-    %ul.db-tooltip
-      %li
-        %h2 Selected Gear
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        %button Show More
+  =render "selected-gear"
 
   #stats
     .stats-header.stats-row.sliders
@@ -52,13 +17,7 @@
 
     - @outfits.each do |outfit|
       .stats-row-container
-        .stats-row{"data-helm-id" => armor(outfit, :helm),
-                   "data-coat-id" => armor(outfit, :coat),
-                   "data-shoulders-id" => armor(outfit, :shoulders),
-                   "data-gloves-id" => armor(outfit, :gloves),
-                   "data-legs-id" => armor(outfit, :legs),
-                   "data-boots-id" => armor(outfit, :boots),
-                   }>
+        .stats-row{"data-id" => outfit.id}>
           .stats-item>= outfit.armor
           .stats-item>= outfit.attack_power
           .stats-item>= outfit.hit_points
