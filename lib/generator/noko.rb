@@ -23,7 +23,7 @@ module Generator
     end
 
     def get_item(url)
-      url = "#{url}"
+      puts "Gathering details on the item from: #{url}"
       page = Nokogiri::HTML(open url)
 
       item = Hash.new
