@@ -1,7 +1,7 @@
 class Outfit < ActiveRecord::Base
   resourcify
   after_initialize :defaults
-  before_save :generate_statistics, if: blah?
+  before_save :generate_statistics
 
   # Polymorphic Associations
   has_many :gear_outfits, :dependent => :destroy
