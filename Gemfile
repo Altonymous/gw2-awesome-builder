@@ -7,6 +7,8 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
   gem 'uglifier', '>= 1.0.3'
   gem 'compass-rails', '>= 1.0.3'
+  gem 'haml_coffee_assets'
+  gem 'execjs'
 end
 
 gem 'jquery-rails', '>= 2.1.3'

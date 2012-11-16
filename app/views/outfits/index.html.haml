@@ -1,42 +1,7 @@
 
 %h1 Listing Outfits
 #the-grid
-  #sidebar
-    %ul.db-tooltip
-      %li
-        %h2 Selected Gear
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        .db-image
-          %img{:alt => "", :src => "http://media-ascalon.cursecdn.com/avatars/thumbnails/114/418/56/56/61297.png"}
-        .db-title
-          Heavy Water Filter
-      %li
-        %button Show More
+  =render "selected-gear"
 
   #stats
     .stats-header.stats-row.sliders
@@ -52,13 +17,7 @@
 
     - @outfits.each do |outfit|
       .stats-row-container
-        .stats-row{"data-helm-id" => outfit.helm_id,
-                   "data-coat-id" => outfit.coat_id,
-                   "data-shoulders-id" => outfit.shoulders_id,
-                   "data-gloves-id" => outfit.gloves_id,
-                   "data-legs-id" => outfit.legs_id,
-                   "data-boots-id" => outfit.boots_id,
-                   }>
+        .stats-row{"data-id" => outfit.id}>
           .stats-item>= outfit.armor
           .stats-item>= outfit.attack_power
           .stats-item>= outfit.hit_points
