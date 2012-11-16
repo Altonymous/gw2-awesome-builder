@@ -4,7 +4,7 @@ Outfitter.Routers.Outfits = Backbone.Router.extend
     ":id": "show"
 
   initialize: (options) ->
-    @.collection = options.outfit
+    @.collection = options.outfits
 
   index: ->
     view = new Outfitter.Views.OutfitsIndex
