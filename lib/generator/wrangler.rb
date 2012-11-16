@@ -122,7 +122,14 @@ module Generator
         end
 
         Outfit.new do |outfit|
-          outfit.armors = reduced_item.values
+          reduced_item.each do |key, value|
+            if %w(ring_1 ring_2 accessory_1 accessory_2 amulet).include?(key.to_s)
+              outfit.trinkets << value
+            else
+              outfit.armors << value
+            end
+          end
+          # outfit.armors = reduced_item.values
           outfit.save(validate: false)
         end
         # Outfit.new(reduced_item).save({validate: false})

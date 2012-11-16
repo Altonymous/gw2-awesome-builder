@@ -90,7 +90,6 @@ ActiveRecord::Schema.define(:version => 20121115225420) do
     t.integer  "boon_duration"
     t.datetime "created_at",                    :null => false
     t.datetime "updated_at",                    :null => false
-    t.float    "statistics_generation_seconds"
   end
 
   add_index "outfits", ["armor"], :name => "index_outfits_on_armor"
