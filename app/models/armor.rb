@@ -40,9 +40,9 @@ class Armor < ActiveRecord::Base
   scope :legs, where(slot_id: SlotModule::SLOT[:legs][:id])
   scope :boots, where(slot_id: SlotModule::SLOT[:boots][:id])
 
-  scope :light, where(weight_id: WeightModule::WEIGHT[:light])
-  scope :medium, where(weight_id: WeightModule::WEIGHT[:medium])
-  scope :heavy, where(weight_id: WeightModule::WEIGHT[:heavy])
+  scope :light, where(weight_id: WeightModule::WEIGHT[:light][:id])
+  scope :medium, where(weight_id: WeightModule::WEIGHT[:medium][:id])
+  scope :heavy, where(weight_id: WeightModule::WEIGHT[:heavy][:id])
 
   # Methods
   def generate_statistics

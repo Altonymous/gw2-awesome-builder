@@ -54,6 +54,10 @@ class Outfit < ActiveRecord::Base
       armors.each do |armor|
         write_attribute(statistic, read_attribute(statistic) + armor[statistic])
       end
+
+      trinkets.each do |trinket|
+        write_attribute(statistic, read_attribute(statistic) + trinket[statistic])
+      end
     end
   end
 
@@ -66,5 +70,4 @@ class Outfit < ActiveRecord::Base
   end
 
   include StatisticModule
-  include GearModule
 end
