@@ -92,10 +92,12 @@ module Generator
         icon_url = result['img']
 
         gw2db_item_id = result['gw2db_external_id']
+        next if gw2db_item_id.zero?
         gw2db_url = "http://www.gw2db.com/items/#{gw2db_item_id}"
 
+        puts "Scraping details on #{name} from #{gw2db_url}"
         gw2db = Noko.new
-        gear_enhancements_array, weight = gw2db.get_gear_enhancements(gw2db_url)
+        gear_enhancements_array, weight = gw2db.get_gear_enhancements(name, gw2db_url)
 
         case type
         when :armor
