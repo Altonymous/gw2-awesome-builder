@@ -38,17 +38,22 @@ module Generator
       collecting_start = Time.now
       gear_possibilities = {}
 
-      Slot.all.each do |slot|
+      SlotModule::slots.each do |slot|
         approved_gear_pieces = []
 
-        slot_name = "#{slot.name.delete(' ').underscore}"
-        possible_gear_pieces = Armor.send(weight).includes(:gear_enhancements, :enhancements).find_all_by_slot_id(slot.id)
+        case SlotModule::SLOT[slot][:slot_type]
+        when 'Armor'
+          possible_gear_pieces = Armor.send(weight).includes(:gear_enhancements, :enhancements).find_all_by_slot_id(SlotModule::SLOT[slot][:id])
+        when 'Trinket'
+          possible_gear_pieces = Trinket.includes(:gear_enhancements, :enhancements).find_all_by_slot_id(SlotModule::SLOT[slot][:id])
+        end
+
         possible_gear_pieces.each do |possible_gear_piece|
           duplicate = false
 
           # If some armor already matches the statistics, we don't need to add it to the list of possible pieces
           approved_gear_pieces.each do |approved_gear_piece|
-            if approved_gear_piece.weight_id == possible_gear_piece.weight_id
+            if SlotModule::SLOT[slot][:slot_type] == 'Armor' && approved_gear_piece.weight_id == possible_gear_piece.weight_id
               duplicate = approved_gear_piece.gear_enhancements == possible_gear_piece.gear_enhancements
               if duplicate
                 # puts "# Duplicate Found: select * from armors where id in (#{approved_gear_piece.id}, #{possible_gear_piece.id});"
@@ -60,11 +65,20 @@ module Generator
           approved_gear_pieces << possible_gear_piece unless duplicate
         end
 
-        gear_possibilities[slot_name] = approved_gear_pieces
-        # puts "  gear_possibilities[#{slot_name}] = #{approved_gear_pieces.map(&:id)}"
+        if %w(ring accessory).include?(slot.to_s)
+          (1..2).each do |i|
+            slot_name = "#{slot}_#{i}".to_sym
+            gear_possibilities[slot_name] = approved_gear_pieces
+          end
+        else
+          gear_possibilities[slot] = approved_gear_pieces
+        end
       end
       puts "Took #{(Time.now - collecting_start).round(4)} seconds to collect.\n\n"
 
+      gear_possibilities.each do |key, values|
+        puts "#{key} - #{values.map(&:id)}"
+      end
       gear_possibilities
     end
 

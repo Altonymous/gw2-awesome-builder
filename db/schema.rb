@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115212842) do
+ActiveRecord::Schema.define(:version => 20121115225420) do
 
   create_table "armors", :force => true do |t|
     t.string   "name",               :limit => 96
@@ -118,6 +118,7 @@ ActiveRecord::Schema.define(:version => 20121115212842) do
     t.string   "name",       :limit => 16
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+    t.string   "slot_type",  :limit => 16
   end
 
   create_table "statistics", :force => true do |t|

@@ -1,6 +1,6 @@
 module OutfitsHelper
   def armor(outfit, slot)
-    outfit.armors.select { |armor| armor.slot_id == SlotModule::SLOT[slot] }
+    outfit.armors.select { |armor| armor.slot_id == SlotModule::SLOT[slot][:id] }
   end
 
   def stat_slider(name)

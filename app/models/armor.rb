@@ -33,12 +33,12 @@ class Armor < ActiveRecord::Base
   validates_associated :outfits
 
   # Scopes
-  scope :helm, where(slot_id: SlotModule::SLOT[:helm])
-  scope :shoulders, where(slot_id: SlotModule::SLOT[:shoulders])
-  scope :coats, where(slot_id: SlotModule::SLOT[:coat])
-  scope :gloves, where(slot_id: SlotModule::SLOT[:gloves])
-  scope :legs, where(slot_id: SlotModule::SLOT[:legs])
-  scope :boots, where(slot_id: SlotModule::SLOT[:boots])
+  scope :helm, where(slot_id: SlotModule::SLOT[:helm][:id])
+  scope :shoulders, where(slot_id: SlotModule::SLOT[:shoulders][:id])
+  scope :coats, where(slot_id: SlotModule::SLOT[:coat][:id])
+  scope :gloves, where(slot_id: SlotModule::SLOT[:gloves][:id])
+  scope :legs, where(slot_id: SlotModule::SLOT[:legs][:id])
+  scope :boots, where(slot_id: SlotModule::SLOT[:boots][:id])
 
   scope :light, where(weight_id: WeightModule::WEIGHT[:light])
   scope :medium, where(weight_id: WeightModule::WEIGHT[:medium])

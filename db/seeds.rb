@@ -17,7 +17,7 @@ Statistic.create!([
                     { id: 7, name: 'Critical Chance', kind: 'percentage', minimum: 0, maximum: 100, interval: 1 },
                     { id: 8, name: 'Condition Duration', kind: 'percentage', minimum: 0, maximum: 100, interval: 1 },
                     { id: 9, name: 'Boon Duration', kind: 'percentage', minimum: 0, maximum: 100, interval: 1 }
-])
+], without_protection: true)
 
 puts 'CREATING ENHANCEMENTS'
 Enhancement.create!([
@@ -31,26 +31,26 @@ Enhancement.create!([
                       { id: 8, name: 'Healing Power', multiplier: 1, statistic_id: Statistic.find_by_name('Healing Power').id },
                       { id: 9, name: 'Condition Duration', multiplier: 1, statistic_id: Statistic.find_by_name('Condition Duration').id },
                       { id: 10, name: 'Boon Duration', multiplier: 1, statistic_id: Statistic.find_by_name('Boon Duration').id }
-])
+], without_protection: true)
 
 puts 'CREATING SLOTS'
 Slot.create!([
-               { id: 1, name: 'Helm' },
-               { id: 2, name: 'Shoulders' },
-               { id: 3, name: 'Coat' },
-               { id: 4, name: 'Gloves' },
-               { id: 5, name: 'Legs' },
-               { id: 6, name: 'Boots' },
-               { id: 7, name: 'Ring' },
-               { id: 8, name: 'Accessory' },
-               { id: 9, name: 'Amulet' }
-])
+               { id: 1, name: 'Helm', slot_type: 'Armor' },
+               { id: 2, name: 'Shoulders', slot_type: 'Armor' },
+               { id: 3, name: 'Coat', slot_type: 'Armor' },
+               { id: 4, name: 'Gloves', slot_type: 'Armor' },
+               { id: 5, name: 'Legs', slot_type: 'Armor' },
+               { id: 6, name: 'Boots', slot_type: 'Armor' },
+               { id: 7, name: 'Ring', slot_type: 'Trinket' },
+               { id: 8, name: 'Accessory', slot_type: 'Trinket' },
+               { id: 9, name: 'Amulet', slot_type: 'Trinket' }
+], without_protection: true)
 
 puts 'CREATING WEIGHTS'
 Weight.create!([
   { id: 1, name: 'Light' },
   { id: 2, name: 'Medium' },
   { id: 3, name: 'Heavy' }
-  ])
+  ], without_protection: true)
 
 puts 'DONE'
