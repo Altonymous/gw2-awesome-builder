@@ -1,0 +1,12 @@
+
+%ul.db-tooltip
+  %li
+    %h2 Selected Gear
+  - for armor in @outfit.armors
+    %li
+      .db-image
+        %img{:alt => "", :src => armor.icon_url}
+      .db-title
+        = armor.name
+  %li
+    %button Show More
