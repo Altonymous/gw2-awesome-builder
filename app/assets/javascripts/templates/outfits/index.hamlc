@@ -1,4 +1,4 @@
-
+= @pagination.total_count
 - for outfit in @outfits
   .stats-row-container
     .stats-row{"data-id" => outfit.id}>
@@ -11,3 +11,11 @@
       .stats-item>= outfit.critical_chance
       .stats-item>= outfit.condition_duration
       .stats-item>= outfit.boon_duration
+
+.pagination
+  .page 1
+  .page 2
+  .next Next
+  .prev Previous
+  .first First
+  .last Last

@@ -6,6 +6,8 @@ window.Outfitter =
   Routers: {}
 
   initialize: (data) ->
-    new Outfitter.Routers.Outfits
-      outfits: new Outfitter.Collections.Outfits(data.outfits)
+
+    data.outfits = new Outfitter.Collections.Outfits(data.outfits)
+
+    new Outfitter.Routers.Outfits(data)
     Backbone.history.start()

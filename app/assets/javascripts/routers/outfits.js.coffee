@@ -5,11 +5,13 @@ Outfitter.Routers.Outfits = Backbone.Router.extend
 
   initialize: (options) ->
     @.collection = options.outfits
+    options.pagination
 
   index: ->
-    view = new Outfitter.Views.Outfits.Index
-      collection: @.collection
-    $('.stats-outfits-container').html(view.render().$el)
+    # view = new Outfitter.Views.Outfits.Index
+    #   collection: @.collection
+    #   paginationCollection: @.paginationCollection
+    # $('.stats-outfits-container').html(view.render().$el)
 
   show: (id) ->
     console.log "woop"

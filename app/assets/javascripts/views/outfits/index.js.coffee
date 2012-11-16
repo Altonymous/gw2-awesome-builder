@@ -3,15 +3,21 @@ Outfitter.Views.Outfits.Index = Backbone.View.extend
   model: Outfitter.Models.Outfit
 
   events:
-    "click .stats-row"        : "showOutfit"
-    "click .page"           : "renderPage"
+    "click .stats-row"      : "showOutfit"
+    "click .page"           : "gotoPage"
+    "click .next"           : "nextPage"
+    "click .prev"           : "prevPage"
+    "click .first"          : "firstPage"
+    "click .last"           : "lastPage"
 
   initialize: ->
     @.collection.on("reset", @.render)
 
   render: ->
+
     this.$el.html JST['outfits/index']
-      outfits: @.collection.toJSON()
+      outfits: @.collection
+      pagination: @.paginationCollection
     return this
 
   showOutfit: (event) ->
@@ -30,6 +36,18 @@ Outfitter.Views.Outfits.Index = Backbone.View.extend
           outfit: outfit
         $('#sidebar').html(view.render().$el)
 
-  renderPage: (event) ->
-    e.preventDefault();
-    console.log renderPage
+  gotoPage: (event) ->
+    event.preventDefault();
+    console.log "gotoPage"
+
+  nextPage: (event) ->
+    console.log "nextPage"
+
+  prevPage: (event) ->
+    console.log "prevPage"
+
+  firstPage: (event) ->
+    console.log "firstPage"
+
+  lastPage: (event) ->
+    console.log "lastPage"
