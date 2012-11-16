@@ -3,24 +3,22 @@ Outfitter.Routers.Outfits = Backbone.Router.extend
     "": "index",
     ":id": "show"
 
-  initialize: ->
+  initialize: (options) ->
+    @.collection = options.outfit
 
   index: ->
-    @.collection = new Outfitter.Collections.Outfits()
-    @.fetchCollection(theCallback)
-
     view = new Outfitter.Views.OutfitsIndex
-      collection: Outfitter.outfits
+      collection: @.collection
     $('.stats-outfits-container').html(view.render().$el)
 
   show: ->
 
-  fetchCollection: (callback) ->
-    @.collection.fetch
-      success: (response) ->
-        callback(response)
-    return this
+  # fetchCollection: (callback) ->
+  #   @.collection.fetch
+  #     success: (response) ->
+  #       callback(response)
+  #   return this
 
-  theCallback = (response) ->
-      collection: response
+  # theCallback = (response) ->
+  #     collection: response
 

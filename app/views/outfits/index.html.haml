@@ -25,7 +25,5 @@
 
 %br
 
-/ = Rabl::Renderer.json(@outfits, 'outfits/index', :view_path => 'app/views', :scope => self)
-
 :javascript
   Outfitter.initialize({ outfits: #{Rabl::Renderer.json(@outfits, 'outfits/index', :view_path => 'app/views', :scope => self)} })
