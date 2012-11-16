@@ -3,15 +3,8 @@ module Generator
     def initialize
     end
 
-    def destroy_all
-      puts "Deleting Outfits"
-      Outfit.destroy_all
-      puts "Done\n\n"
-    end
-
-    def start(delete_outfits = true)
-      destroy_all if delete_outfits
-
+    # Outfits
+    def generate_outfits()
       puts "Generating outfits..."
       start = Time.now
 
@@ -23,7 +16,7 @@ module Generator
         gear = collect_gear(weight)
 
         # Generating outfits from gear
-        outfits = generate_outfits(gear)
+        outfits = create_outfits(gear)
 
         # Completing armor set generation
         puts "Took #{(Time.now - weight_start).round(4)} seconds to generate #{weight.to_s.camelize} armor sets.\n\n"
@@ -32,7 +25,101 @@ module Generator
       puts "Took #{(Time.now - start).round(4)} seconds to generate all outfits.\n\n"
     end
 
+    # Fake
+    def randomize_gear
+      i = 1
+      pieces = SlotModule::SLOT.values.select { |slot| slot[:slot_type] == 'Armor' }.length * 3 * 3
+      pieces = pieces + SlotModule::SLOT.values.select { |slot| slot[:slot_type] == 'Trinket' }.length * 3
+
+      SlotModule::SLOT.values.each do |slot|
+        (1..3).each do |instance|
+          case slot[:slot_type]
+          when 'Armor'
+            WeightModule::WEIGHT.values.each do |weight|
+              generate_armor("#{weight[:name]} #{slot[:name]} Piece ##{instance}", slot[:id], weight[:id])
+
+              putc '.'
+              puts " #{i}/#{pieces}" if (i % 100).eql?(0) || i == pieces.to_i
+              i = i + 1
+            end
+          when 'Trinket'
+            generate_trinket("#{slot[:name]} Piece ##{instance}", slot[:id])
+
+            putc '.'
+            puts " #{i}/#{pieces}" if (i % 100).eql?(0) || i == pieces.to_i
+            i = i + 1
+          end
+        end
+      end
+    end
+
     private
+    # Delete
+    def delete_all
+      delete_outfits
+      delete_gear
+    end
+
+    def delete_outfits
+      puts "Deleting Outfits"
+      GearOutfit.delete_all
+      Outfit.delete_all
+      puts "Done\n\n"
+    end
+
+    def delete_gear
+      puts 'Deleting Armor...'
+      GearEnhancement.delete_all({gear_type: 'Armor'})
+      Armor.delete_all
+      puts 'Done'
+
+      puts 'Deleting Trinkets...'
+      GearEnhancement.delete_all({gear_type: 'Trinket'})
+      Trinket.delete_all
+      puts 'Done'
+    end
+
+    # Fake
+    def generate_armor(name, slot_id, weight_id)
+      Armor.create! do |armor|
+        armor.name = name
+        armor.weight_id = weight_id
+        armor.slot_id = slot_id
+        armor.level = rand(1..80)
+        armor.gear_enhancements.build({rating: rand(1..102)}).enhancement = Enhancement.find_by_name(:Defense)
+
+        old_offset = []
+        (1..3).each do |j|
+          begin
+            offset = rand(Enhancement.count)
+          end while old_offset.include?(offset)
+
+          armor.gear_enhancements.build({rating: rand(1..102)}).enhancement = Enhancement.first(offset: offset)
+          old_offset << offset
+        end
+      end
+    end
+
+    def generate_trinket(name, slot_id)
+      Trinket.create! do |trinket|
+        trinket.name = name
+        trinket.slot_id = slot_id
+        trinket.level = rand(1..80)
+        trinket.gear_enhancements.build({rating: rand(1..102)}).enhancement = Enhancement.find_by_name(:Defense)
+
+        old_offset = []
+        (1..3).each do |j|
+          begin
+            offset = rand(Enhancement.count)
+          end while old_offset.include?(offset)
+
+          trinket.gear_enhancements.build({rating: rand(1..102)}).enhancement = Enhancement.first(offset: offset)
+          old_offset << offset
+        end
+      end
+    end
+
+    # Real
     def collect_gear(weight)
       puts "Collecting #{weight.to_s.camelize} armor pieces..."
       collecting_start = Time.now
@@ -82,7 +169,7 @@ module Generator
       gear_possibilities
     end
 
-    def generate_outfits(gear)
+    def create_outfits(gear)
       gear_ids = {}
       gear.each { |record| gear_ids[record[0]] = record[1].map(&:id).map! { |p| { record[0] => p } } }
 
@@ -147,22 +234,6 @@ module Generator
       end
 
       puts "Took #{(Time.now - storing_start).round(4)} seconds to store.\n\n"
-    end
-
-    def old_janx!(input)
-      permutations_start = Time.now
-      puts "Generating Outfits..."
-      input.each do |key, possibilities|
-        possibilities.map!{|p| {key => p} }
-      end
-
-      digits = input.keys.map!{ |key| input[key] }
-
-      result = digits.shift.product(*digits)
-      puts "# of Generated Outfits: #{result.length}"
-      puts "Took #{(Time.now - permutations_start).round(4)} seconds to generate.\n\n"
-
-      return result
     end
   end
 end

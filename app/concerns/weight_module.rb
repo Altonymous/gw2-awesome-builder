@@ -1,8 +1,8 @@
 module WeightModule
   WEIGHT = {
-    light: 1,
-    medium: 2,
-    heavy: 3
+    light: { id: 1, name: 'Light' },
+    medium: { id: 2, name: 'Medium' },
+    heavy: { id: 3, name: 'Heavy' }
   }
 
   def self.weights
