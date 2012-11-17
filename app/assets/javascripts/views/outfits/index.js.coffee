@@ -11,13 +11,14 @@ Outfitter.Views.Outfits.Index = Backbone.View.extend
     "click .last"           : "lastPage"
 
   initialize: ->
-    @.collection.on("reset", @.render)
+    console.log("Outfits.Index#initialize @", @)
+    @.collection.on("reset", @.render, @)
+    #@.collection.on("change", @.render, @)
 
   render: ->
-    this.$el.html JST['outfits/index']
-      outfits: @.collection.toJSON()
-      pagination: @.pagination
-    return this
+    console.log("Outfits.Index#render @", @)
+    @.$el.html JST['outfits/index'](outfits: @.collection)
+    return @
 
   showOutfit: (event) ->
     row = event.currentTarget
@@ -38,9 +39,11 @@ Outfitter.Views.Outfits.Index = Backbone.View.extend
   gotoPage: (event) ->
     event.preventDefault();
     console.log "gotoPage"
+    @.collection.navigate
 
   nextPage: (event) ->
     console.log "nextPage"
+    Outfitter.Router.navigate("2", trigger: true)
 
   prevPage: (event) ->
     console.log "prevPage"

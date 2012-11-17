@@ -18,6 +18,7 @@
     .stats-outfits-container
 
 
-=javascript_include_tag "http://static-ascalon.cursecdn.com/current/js/syndication/tt.js"
+/=javascript_include_tag "http://static-ascalon.cursecdn.com/current/js/syndication/tt.js"
 :javascript
-  Outfitter.initialize(#{Rabl::Renderer.json(@outfits, 'outfits/index', :view_path => 'app/views', :scope => self)})
+  //Outfitter.initialize(#{Rabl::Renderer.json(@outfits, 'outfits/index', :view_path => 'app/views', :scope => self)})
+  Outfitter.initialize()

@@ -4,14 +4,12 @@ Outfitter.Routers.Outfits = Backbone.Router.extend
     ":id" : "page"
 
   initialize: (options) ->
-    @.collection = new Outfitter.Collections.Outfits(options.outfits)
-    @.pagination = options.pagination
+    @.collection = new Outfitter.Collections.Outfits()
+    @.view = new Outfitter.Views.Outfits.Index(collection: @.collection, el: $(".stats-outfits-container"))
 
   index: ->
-    view = new Outfitter.Views.Outfits.Index
-      collection: @.collection
-      pagination: @.pagination
-    $('.stats-outfits-container').html(view.render().$el)
+    @.collection.fetch()
+
 
   show: (id) ->
     console.log "woop"
@@ -24,7 +22,7 @@ Outfitter.Routers.Outfits = Backbone.Router.extend
     #     $('#sidebar').html(view.render().$el)
 
   page: (id) ->
-    console.log "page"
+    @.collection.fetchPage(2)
 
   # fetchCollection: (callback) ->
   #   @.collection.fetch

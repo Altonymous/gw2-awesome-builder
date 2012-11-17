@@ -5,6 +5,7 @@ window.Outfitter =
     Outfits: {}
   Routers: {}
 
+
   initialize: (data) ->
-    new Outfitter.Routers.Outfits(data)
-    Backbone.history.start()
+    @.Router = new Outfitter.Routers.Outfits()
+    Backbone.history.start(root: "/outfits/")
