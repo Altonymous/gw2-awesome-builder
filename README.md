@@ -22,15 +22,18 @@ Guild Wars 2 - Want to be awesome?  Use our builder.
   - run `rake parallel:spec`
 
 - Collect Real Gear & Generate Outfits
-  - run `rake outfitter:generate`
+  - run `rake outfitter:seed`
 
 - Generate Random Outfits & Gear
   - run `rake outfitter:randomize`
 
 - Generate Outfits (using existing gear)
-  - run `rake outfitter:generate_outfits`
+  - run `rake outfitter:create_outfits`
 
 - Collect Real Gear
-  - run `rake outfitter:collect_gear`
+  - run `rake outfitter:scrape_gear`
+
+- Generate Random Gear
+  - run `rake outfitter:randomize_gear`
 
 [![Build Status](https://secure.travis-ci.org/Altonymous/gw2-awesome-builder.png?branch=master)](https://travis-ci.org/Altonymous/gw2-awesome-builder)

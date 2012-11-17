@@ -2,24 +2,29 @@ require 'rake'
 
 namespace :outfitter do
   desc "Collect gear from external sources & generate all possible outfits."
-  task :scrape => [:environment, :delete_all] do |t, args|
-    Generator::Wrangler.new.scrape
+  task :seed => [:environment] do |t, args|
+    Generator::Wrangler.new.seed
   end
 
   desc "Create random fake outfits and gear"
-  task :randomize => [:environment, :delete_all] do |t, args|
+  task :randomize => [:environment] do |t, args|
     Generator::Wrangler.new.randomize
   end
 
-  # desc "Generate all possible outfits from known gear."
-  # task :generate_outfits => [:environment, :delete_outfits] do |t, args|
-  #   Generator::Wrangler.new.generate_outfits
-  # end
+  desc "Generate all possible outfits from known gear."
+  task :create_outfits => [:environment] do |t, args|
+    Generator::Wrangler.new.create_outfits
+  end
 
-  # desc "Collect all the gear from external sources"
-  # task :collect_gear => [:environment] do |t, args|
-  #   Generator::Wrangler.new.get_gear
-  # end
+  desc "Collect all the gear from external sources"
+  task :scrape_gear => [:environment] do |t, args|
+    Generator::Wrangler.new.scrape_gear
+  end
+
+  desc "Randomize all the gear"
+  task :randomize_gear => [:environment] do |t, args|
+    Generator::Wrangler.new.randomize_gear
+  end
 
   # desc "Clear all outfits from the database"
   # task :delete_all => [:environment] do |t, args|

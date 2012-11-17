@@ -10,7 +10,11 @@ class Outfit < ActiveRecord::Base
   # Validations
   validates :suit_id,
     presence: true
-  validates_associated :suit
+  validates :suit,
+    presence: true
+  validates :suit,
+    associated: true
+
   validates :jewelry_id,
     presence: true
   validates :jewelry,
