@@ -9,24 +9,17 @@ describe Outfit do
   context 'mass assignment' do
     it { should allow_mass_assignment_of :suit_id }
     it { should allow_mass_assignment_of :jewelry_id }
+    it { should_not allow_mass_assignment_of :suit }
+    it { should_not allow_mass_assignment_of :jewelry }
+  end
+
+  context 'validations' do
+    it { should validate_presence_of(:suit_id) }
+
+    it { should validate_presence_of(:jewelry_id) }
   end
 
   it 'has a valid factory' do
     create(:outfit).should be_valid
-  end
-
-  context 'is invalid without' do
-    it 'suit' do
-      build(:outfit, suit_id: nil).should_not be_valid
-      build(:outfit, suit: nil).should_not be_valid
-    end
-
-    it 'jewelry' do
-      build(:outfit, jewelry_id: nil).should_not be_valid
-      build(:outfit, jewelry: nil).should_not be_valid
-    end
-  end
-
-  context 'is invalid if' do
   end
 end

@@ -20,38 +20,23 @@ describe Enhancement do
     it { should_not allow_mass_assignment_of :trinkets }
   end
 
+  context 'validations' do
+    it { should validate_presence_of(:name) }
+    it { should validate_uniqueness_of(:name) }
+    it { should ensure_length_of(:name).is_at_most(32) }
+
+    it { should validate_presence_of(:multiplier) }
+    it { should validate_numericality_of(:multiplier) }
+    # it { should validate_numericality_of(:level).greater_than(0) }
+
+    it { should validate_presence_of(:statistic_id) }
+  end
+
   it 'has a valid factory' do
     create(:enhancement).should be_valid
   end
 
-  context 'is invalid without' do
-    it 'a name' do
-      build(:enhancement, name: nil).should_not be_valid
-    end
-
-    it 'a multiplier' do
-      build(:enhancement, multiplier: nil).should_not be_valid
-    end
-
-    it 'a statistic' do
-      build(:enhancement, statistic: nil).should_not be_valid
-    end
-  end
-
   context 'is invalid if' do
-    it 'name already exists' do
-      create(:enhancement, name: "Enhancement")
-      build(:enhancement, name: "Enhancement").should_not be_valid
-    end
-
-    it 'name is longer than 32 characters' do
-      build(:enhancement, name: "name".rjust(33, "0")).should_not be_valid
-    end
-
-    it 'multiplier is not a number' do
-      build(:enhancement, multiplier: "Test").should_not be_valid
-    end
-
     it 'multiplier is not greater than zero' do
       build(:enhancement, multiplier: 0).should_not be_valid
     end

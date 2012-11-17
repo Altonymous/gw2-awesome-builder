@@ -11,11 +11,11 @@ class GearEnhancement < ActiveRecord::Base
   # Validations
   validates :gear_type,
     presence: true
-  validates :enhancement_id,
-    presence: true
   validates :rating,
     presence: true,
     numericality: { only_integer: true, greater_than: 0 }
+  validates :enhancement_id,
+    presence: true
 
   # Overridden Methods
   def ==(other)

@@ -14,7 +14,7 @@ class Enhancement < ActiveRecord::Base
   validates :name,
     presence:true,
     uniqueness: true,
-    length: { maximum: 24 }
+    length: { maximum: 32 }
   validates :multiplier,
     presence: true,
     numericality: { greater_than: 0 }

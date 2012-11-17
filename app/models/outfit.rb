@@ -13,7 +13,10 @@ class Outfit < ActiveRecord::Base
   validates_associated :suit
   validates :jewelry_id,
     presence: true
-  validates_associated :jewelry
+  validates :jewelry,
+    presence: true
+  validates :jewelry,
+    associated: true
 
   # Methods
   def generate_statistics

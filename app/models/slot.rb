@@ -9,6 +9,6 @@ class Slot < ActiveRecord::Base
     uniqueness: true,
     length: { maximum: 32 }
   validates :slot_type,
-    presence:true,
+    presence: true,
     length: { maximum: 16 }
 end

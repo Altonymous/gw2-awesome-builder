@@ -3,8 +3,8 @@ require 'spec_helper'
 describe Armor do
   context 'associations' do
     it { should belong_to :weight }
-    it { should belong_to :slot}
-    it { should have_and_belong_to_many :suits}
+    it { should belong_to :slot }
+    it { should have_and_belong_to_many :suits }
 
     # Polymorphic Associations
     it { should have_many :gear_enhancements }
@@ -25,42 +25,26 @@ describe Armor do
     it { should_not allow_mass_assignment_of :enhancements }
   end
 
+  context 'validations' do
+    it { should validate_presence_of(:name) }
+    it { should validate_uniqueness_of(:name).scoped_to(:weight_id, :slot_id) }
+    it { should ensure_length_of(:name).is_at_most(96) }
+
+    it { should validate_presence_of(:level) }
+    it { should validate_numericality_of(:level).only_integer }
+    # it { should validate_numericality_of(:level).greater_than(0) }
+    # it { should validate_numericality_of(:level).less_than_or_equal_to(80) }
+
+    it { should validate_presence_of(:weight_id) }
+
+    it { should validate_presence_of(:slot_id) }
+  end
+
   it 'has a valid factory' do
     create(:armor).should be_valid
   end
 
-  context 'is invalid without' do
-    it 'a name' do
-      build(:armor, name: nil).should_not be_valid
-    end
-
-    it 'a level' do
-      build(:armor, level: nil).should_not be_valid
-    end
-
-    it 'a weight' do
-      build(:armor, weight: nil).should_not be_valid
-    end
-
-    it 'a slot' do
-      build(:armor, slot: nil).should_not be_valid
-    end
-  end
-
   context 'is invalid if' do
-    it 'name already exists' do
-      create(:armor, name: "Armor")
-      build(:armor, name: "Armor").should_not be_valid
-    end
-
-    it 'name is longer than 96 characters' do
-      build(:armor, name: "name".rjust(97, "0")).should_not be_valid
-    end
-
-    it 'level is not a number' do
-      build(:armor, level: "Test").should_not be_valid
-    end
-
     it 'level is not greater than zero' do
       build(:armor, level: 0).should_not be_valid
     end
