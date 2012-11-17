@@ -3,10 +3,6 @@
 %table
   %tr
     %th Name
-    %th Kind
-    %th Minimum
-    %th Maximum
-    %th Interval
     %th
     %th
     %th
@@ -14,10 +10,6 @@
   - @statistics.each do |statistic|
     %tr
       %td= statistic.name
-      %td= statistic.kind
-      %td= statistic.minimum
-      %td= statistic.maximum
-      %td= statistic.interval
       %td= link_to 'Show', statistic
       %td= link_to 'Edit', edit_statistic_path(statistic)
       %td= link_to 'Destroy', statistic, method: :delete, data: { confirm: 'Are you sure?' }

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121115225420) do
+ActiveRecord::Schema.define(:version => 20121117020562) do
 
   create_table "active_admin_comments", :force => true do |t|
     t.string   "resource_id",   :null => false
@@ -58,28 +58,27 @@ ActiveRecord::Schema.define(:version => 20121115225420) do
     t.integer  "condition_duration"
     t.integer  "healing_power"
     t.integer  "boon_duration"
+    t.integer  "magic_find"
     t.integer  "weight_id"
     t.integer  "slot_id"
     t.string   "gw2db_url"
     t.string   "icon_url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
-  add_index "armors", ["armor"], :name => "index_armors_on_armor"
-  add_index "armors", ["attack_power"], :name => "index_armors_on_attack_power"
-  add_index "armors", ["boon_duration"], :name => "index_armors_on_boon_duration"
-  add_index "armors", ["condition_damage"], :name => "index_armors_on_condition_damage"
-  add_index "armors", ["condition_duration"], :name => "index_armors_on_condition_duration"
-  add_index "armors", ["critical_chance"], :name => "index_armors_on_critical_chance"
-  add_index "armors", ["critical_damage"], :name => "index_armors_on_critical_damage"
-  add_index "armors", ["healing_power"], :name => "index_armors_on_healing_power"
-  add_index "armors", ["hit_points"], :name => "index_armors_on_hit_points"
   add_index "armors", ["slot_id"], :name => "index_armors_on_slot_id"
   add_index "armors", ["weight_id"], :name => "index_armors_on_weight_id"
 
+  create_table "armors_suits", :id => false, :force => true do |t|
+    t.integer "armor_id"
+    t.integer "suit_id"
+  end
+
+  add_index "armors_suits", ["armor_id", "suit_id"], :name => "index_armors_suits_on_armor_id_and_suit_id"
+
   create_table "enhancements", :force => true do |t|
-    t.string   "name",         :limit => 24
+    t.string   "name",         :limit => 32
     t.float    "multiplier"
     t.integer  "statistic_id"
     t.datetime "created_at",                 :null => false
@@ -100,18 +99,7 @@ ActiveRecord::Schema.define(:version => 20121115225420) do
   add_index "gear_enhancements", ["enhancement_id"], :name => "index_gear_enhancements_on_enhancement_id"
   add_index "gear_enhancements", ["gear_id"], :name => "index_gear_enhancements_on_gear_id"
 
-  create_table "gear_outfits", :force => true do |t|
-    t.integer  "gear_id"
-    t.string   "gear_type"
-    t.integer  "outfit_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
-  end
-
-  add_index "gear_outfits", ["gear_id"], :name => "index_gear_outfits_on_gear_id"
-  add_index "gear_outfits", ["outfit_id"], :name => "index_gear_outfits_on_outfit_id"
-
-  create_table "outfits", :force => true do |t|
+  create_table "jewelries", :force => true do |t|
     t.integer  "armor"
     t.integer  "hit_points"
     t.integer  "attack_power"
@@ -121,20 +109,37 @@ ActiveRecord::Schema.define(:version => 20121115225420) do
     t.integer  "condition_duration"
     t.integer  "healing_power"
     t.integer  "boon_duration"
-    t.datetime "created_at",                    :null => false
-    t.datetime "updated_at",                    :null => false
-    t.float    "statistics_generation_seconds"
+    t.integer  "magic_find"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
-  add_index "outfits", ["armor"], :name => "index_outfits_on_armor"
-  add_index "outfits", ["attack_power"], :name => "index_outfits_on_attack_power"
-  add_index "outfits", ["boon_duration"], :name => "index_outfits_on_boon_duration"
-  add_index "outfits", ["condition_damage"], :name => "index_outfits_on_condition_damage"
-  add_index "outfits", ["condition_duration"], :name => "index_outfits_on_condition_duration"
-  add_index "outfits", ["critical_chance"], :name => "index_outfits_on_critical_chance"
-  add_index "outfits", ["critical_damage"], :name => "index_outfits_on_critical_damage"
-  add_index "outfits", ["healing_power"], :name => "index_outfits_on_healing_power"
-  add_index "outfits", ["hit_points"], :name => "index_outfits_on_hit_points"
+  create_table "jewelries_trinkets", :id => false, :force => true do |t|
+    t.integer "jewelry_id"
+    t.integer "trinket_id"
+  end
+
+  add_index "jewelries_trinkets", ["jewelry_id", "trinket_id"], :name => "index_jewelries_trinkets_on_jewelry_id_and_trinket_id"
+
+  create_table "outfits", :force => true do |t|
+    t.integer  "jewelry_id"
+    t.integer  "suit_id"
+    t.integer  "armor"
+    t.integer  "hit_points"
+    t.integer  "attack_power"
+    t.integer  "critical_damage"
+    t.integer  "critical_chance"
+    t.integer  "condition_damage"
+    t.integer  "condition_duration"
+    t.integer  "healing_power"
+    t.integer  "boon_duration"
+    t.integer  "magic_find"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "outfits", ["jewelry_id"], :name => "index_outfits_on_jewelry_id"
+  add_index "outfits", ["suit_id"], :name => "index_outfits_on_suit_id"
 
   create_table "roles", :force => true do |t|
     t.string   "name"
@@ -148,20 +153,32 @@ ActiveRecord::Schema.define(:version => 20121115225420) do
   add_index "roles", ["name"], :name => "index_roles_on_name"
 
   create_table "slots", :force => true do |t|
-    t.string   "name",       :limit => 16
+    t.string   "name",       :limit => 32
+    t.string   "slot_type",  :limit => 16
+    t.string   "string",     :limit => 16
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
-    t.string   "slot_type",  :limit => 16
   end
 
   create_table "statistics", :force => true do |t|
     t.string   "name",       :limit => 36
-    t.string   "kind",       :limit => 12
-    t.integer  "minimum"
-    t.integer  "maximum"
-    t.integer  "interval"
     t.datetime "created_at",               :null => false
     t.datetime "updated_at",               :null => false
+  end
+
+  create_table "suits", :force => true do |t|
+    t.integer  "armor"
+    t.integer  "hit_points"
+    t.integer  "attack_power"
+    t.integer  "critical_damage"
+    t.integer  "critical_chance"
+    t.integer  "condition_damage"
+    t.integer  "condition_duration"
+    t.integer  "healing_power"
+    t.integer  "boon_duration"
+    t.integer  "magic_find"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
   end
 
   create_table "trinkets", :force => true do |t|
@@ -176,22 +193,14 @@ ActiveRecord::Schema.define(:version => 20121115225420) do
     t.integer  "condition_duration"
     t.integer  "healing_power"
     t.integer  "boon_duration"
+    t.integer  "magic_find"
     t.integer  "slot_id"
     t.string   "gw2db_url"
     t.string   "icon_url"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
   end
 
-  add_index "trinkets", ["armor"], :name => "index_trinkets_on_armor"
-  add_index "trinkets", ["attack_power"], :name => "index_trinkets_on_attack_power"
-  add_index "trinkets", ["boon_duration"], :name => "index_trinkets_on_boon_duration"
-  add_index "trinkets", ["condition_damage"], :name => "index_trinkets_on_condition_damage"
-  add_index "trinkets", ["condition_duration"], :name => "index_trinkets_on_condition_duration"
-  add_index "trinkets", ["critical_chance"], :name => "index_trinkets_on_critical_chance"
-  add_index "trinkets", ["critical_damage"], :name => "index_trinkets_on_critical_damage"
-  add_index "trinkets", ["healing_power"], :name => "index_trinkets_on_healing_power"
-  add_index "trinkets", ["hit_points"], :name => "index_trinkets_on_hit_points"
   add_index "trinkets", ["slot_id"], :name => "index_trinkets_on_slot_id"
 
   create_table "users", :force => true do |t|
@@ -231,6 +240,28 @@ ActiveRecord::Schema.define(:version => 20121115225420) do
   end
 
   add_index "users_roles", ["user_id", "role_id"], :name => "index_users_roles_on_user_id_and_role_id"
+
+  create_table "weapons", :force => true do |t|
+    t.string   "name"
+    t.integer  "level"
+    t.integer  "armor"
+    t.integer  "hit_points"
+    t.integer  "attack_power"
+    t.integer  "critical_damage"
+    t.integer  "critical_chance"
+    t.integer  "condition_damage"
+    t.integer  "condition_duration"
+    t.integer  "healing_power"
+    t.integer  "boon_duration"
+    t.integer  "magic_find"
+    t.integer  "slot_id"
+    t.string   "gw2db_url"
+    t.string   "icon_url"
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+  end
+
+  add_index "weapons", ["slot_id"], :name => "index_weapons_on_slot_id"
 
   create_table "weights", :force => true do |t|
     t.string   "name",       :limit => 16

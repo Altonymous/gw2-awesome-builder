@@ -2,6 +2,9 @@
 
 FactoryGirl.define do
   factory :outfit do
+    suit { create(:suit) }
+    jewelry { create(:jewelry) }
+
     armor 0
     attack_power 0
     hit_points 0
@@ -11,15 +14,6 @@ FactoryGirl.define do
     condition_duration 0
     healing_power 0
     boon_duration 0
-
-    ignore do
-      helm { create(:armor, :helm, :with_enhancement) }
-    end
-
-    trait :helm do
-      after(:build) do |outfit, evaluator|
-        outfit.gears << evaluator.helm
-      end
-    end
+    magic_find 0
   end
 end

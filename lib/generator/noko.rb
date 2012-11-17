@@ -67,6 +67,7 @@ module Generator
 
     def get_stat(stat)
       stat_name = stat.text.gsub(/[^a-zA-Z\s]/,'').squeeze(' ').strip
+      stat_name = stat_name.downcase.split(" ").uniq.join(" ").titleize
       stat_class = stat.attribute_nodes[0].to_s.underscore.gsub('_', '-').gsub(/^(db-)/,'')
       stat_id = stat_name.gsub(/'/, '').parameterize
       stat_id = "#{stat_class}-#{stat_id}" unless "#{stat_id}" == stat_class

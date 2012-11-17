@@ -1,24 +1,17 @@
 require 'spec_helper'
 
 describe OutfitsController do
-  let(:attack_power) { Enhancement.find_by_name('Power') }
-  let(:helm) { create(:armor, :helm, :with_enhancement, enhancement: attack_power) }
-  let(:shoulders) { create(:armor, :shoulders, :with_enhancement, enhancement: attack_power) }
-  let(:coat) { create(:armor, :coat, :with_enhancement, enhancement: attack_power) }
-  let(:gloves) { create(:armor, :gloves, :with_enhancement, enhancement: attack_power) }
-  let(:legs) { create(:armor, :legs, :with_enhancement, enhancement: attack_power) }
-  let(:boots) { create(:armor, :boots, :with_enhancement, enhancement: attack_power) }
+  let(:suit) { create(:suit) }
+  let(:jewelry) { create(:jewelry) }
+  let(:attack_power_enhancement) { Enhancement.find_by_name('Power') }
+  let(:critical_damage_enhancement) { Enhancement.find_by_name('Critical Damage') }
+  let(:attack_power_armor) { create(:armor, enhancement: attack_power_enhancement, rating: 100) }
+  let(:critical_damage_armor) { create(:armor, enhancement: critical_damage_enhancement, rating: 100) }
 
   def valid_attributes
     {
-      armors: [
-        { id: helm.id },
-        { id: shoulders.id },
-        { id: coat.id },
-        { id: gloves.id },
-        { id: legs.id },
-        { id: boots.id }
-      ]
+      suit_id: suit.id,
+      jewelry_id: jewelry.id
     }
   end
 
@@ -33,19 +26,19 @@ describe OutfitsController do
       let(:outfits) { [] }
 
       before(:each) do
-        outfits << create(:outfit)
-        outfits << create(:outfit, helm: create(:armor, :helm, :with_enhancement, enhancement: Enhancement.find_by_name('Precision')))
+        outfits << create(:outfit, suit: create(:suit, armors: [critical_damage_armor]))
+        outfits << create(:outfit, suit: create(:suit, armors: [attack_power_armor]))
       end
 
       context 'default' do
         it 'has the highest attack power at the top' do
           get :index
-          assigns(:outfits).should eq(outfits)
+          assigns(:outfits).should eq(outfits.reverse!)
         end
 
         it 'does not have the highest attack power at the bottom' do
           get :index
-          assigns(:outfits).should_not eq(outfits.reverse!)
+          assigns(:outfits).should_not eq(outfits)
         end
       end
 

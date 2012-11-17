@@ -2,9 +2,12 @@ require 'spec_helper'
 
 describe Enhancement do
   context 'associations' do
-    it { should have_many :gear_enhancements }
-    it { should have_many :armors }
     it { should belong_to :statistic }
+    it { should have_many :gear_enhancements }
+
+    # Polymorphic Associations
+    it { should have_many :armors }
+    it { should have_many :trinkets }
   end
 
   context 'mass assignment' do
@@ -12,42 +15,28 @@ describe Enhancement do
     it { should allow_mass_assignment_of :multiplier }
     it { should allow_mass_assignment_of :statistic_id }
     it { should_not allow_mass_assignment_of :statistic }
-    it { should_not allow_mass_assignment_of :armors_enhancements }
-    it { should_not allow_mass_assignment_of :enhancements }
+    it { should_not allow_mass_assignment_of :gear_enhancements }
+    it { should_not allow_mass_assignment_of :armors }
+    it { should_not allow_mass_assignment_of :trinkets }
+  end
+
+  context 'validations' do
+    it { should validate_presence_of(:name) }
+    it { should validate_uniqueness_of(:name) }
+    it { should ensure_length_of(:name).is_at_most(32) }
+
+    it { should validate_presence_of(:multiplier) }
+    it { should validate_numericality_of(:multiplier) }
+    # it { should validate_numericality_of(:level).greater_than(0) }
+
+    it { should validate_presence_of(:statistic_id) }
   end
 
   it 'has a valid factory' do
     create(:enhancement).should be_valid
   end
 
-  context 'is invalid without' do
-    it 'a name' do
-      build(:enhancement, name: nil).should_not be_valid
-    end
-
-    it 'a multiplier' do
-      build(:enhancement, multiplier: nil).should_not be_valid
-    end
-
-    it 'a statistic' do
-      build(:enhancement, statistic: nil).should_not be_valid
-    end
-  end
-
   context 'is invalid if' do
-    it 'name already exists' do
-      create(:enhancement, name: "Enhancement")
-      build(:enhancement, name: "Enhancement").should_not be_valid
-    end
-
-    it 'name is longer than 25 characters' do
-      build(:enhancement, name: "name".rjust(25, "'")).should_not be_valid
-    end
-
-    it 'multiplier is not a number' do
-      build(:enhancement, multiplier: "Test").should_not be_valid
-    end
-
     it 'multiplier is not greater than zero' do
       build(:enhancement, multiplier: 0).should_not be_valid
     end

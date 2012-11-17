@@ -1,7 +1,7 @@
 class CreateEnhancements < ActiveRecord::Migration
   def change
     create_table :enhancements do |t|
-      t.string :name, limit: 24
+      t.string :name, limit: 32
       t.float :multiplier
       t.belongs_to :statistic
 

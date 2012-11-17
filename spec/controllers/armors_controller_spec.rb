@@ -44,7 +44,7 @@ describe ArmorsController do
 
   describe "GET index" do
     it "assigns all armors as @armors" do
-      armor = create(:armor, :with_enhancement)
+      armor = create(:armor)
       get :index, {}, valid_session
       assigns(:armors).should eq([armor])
     end
@@ -52,7 +52,7 @@ describe ArmorsController do
 
   describe "GET show" do
     it "assigns the requested armor as @armor" do
-      armor = create(:armor, :with_enhancement)
+      armor = create(:armor)
       get :show, {id: armor.to_param}, valid_session
       assigns(:armor).should eq(armor)
     end
@@ -67,7 +67,7 @@ describe ArmorsController do
 
   describe "GET edit" do
     it "assigns the requested armor as @armor" do
-      armor = create(:armor, :with_enhancement)
+      armor = create(:armor)
       get :edit, {id: armor.to_param}, valid_session
       assigns(:armor).should eq(armor)
     end
@@ -77,7 +77,7 @@ describe ArmorsController do
     describe "with valid params" do
       it "creates a new Armor" do
         expect {
-          post :create, {armor: (valid_attributes)}, valid_session
+          post :create, { armor: (valid_attributes) }, valid_session
         }.to change(Armor, :count).by(1)
       end
 
@@ -113,23 +113,23 @@ describe ArmorsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested armor" do
-        armor = create(:armor, :with_enhancement)
+        armor = create(:armor)
         # Assuming there are no other armors in the database, this
         # specifies that the Armor created on the previous line
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
-        Armor.any_instance.should_receive(:update_attributes).with({"level" => "2", "interval" => "1"})
-        put :update, {id: armor.to_param, armor: {"level" => "2", "interval" => "1"}}, valid_session
+        Armor.any_instance.should_receive(:update_attributes).with({"level" => "2"})
+        put :update, {id: armor.to_param, armor: {"level" => "2"}}, valid_session
       end
 
       it "assigns the requested armor as @armor" do
-        armor = create(:armor, :with_enhancement)
+        armor = create(:armor)
         put :update, {id: armor.to_param, armor: (valid_attributes)}, valid_session
         assigns(:armor).should eq(armor)
       end
 
       it "redirects to the armor" do
-        armor = create(:armor, :with_enhancement)
+        armor = create(:armor)
         put :update, {id: armor.to_param, armor: (valid_attributes)}, valid_session
         response.should redirect_to(armor)
       end
@@ -137,7 +137,7 @@ describe ArmorsController do
 
     describe "with invalid params" do
       it "assigns the armor as @armor" do
-        armor = create(:armor, :with_enhancement)
+        armor = create(:armor)
         # Trigger the behavior that occurs when invalid params are submitted
         Armor.any_instance.stub(:save).and_return(false)
         put :update, {id: armor.to_param, armor: {}}, valid_session
@@ -145,7 +145,7 @@ describe ArmorsController do
       end
 
       it "redirects to the 'armors#show' action" do
-        armor = create(:armor, :with_enhancement)
+        armor = create(:armor)
         # Trigger the behavior that occurs when invalid params are submitted
         Armor.any_instance.stub(:save).and_return(false)
         put :update, {id: armor.to_param, armor: {}}, valid_session
@@ -156,14 +156,14 @@ describe ArmorsController do
 
   describe "DELETE destroy" do
     it "destroys the requested armor" do
-      armor = create(:armor, :with_enhancement)
+      armor = create(:armor)
       expect {
         delete :destroy, {id: armor.to_param}, valid_session
       }.to change(Armor, :count).by(-1)
     end
 
     it "redirects to the armors list" do
-      armor = create(:armor, :with_enhancement)
+      armor = create(:armor)
       delete :destroy, {id: armor.to_param}, valid_session
       response.should redirect_to(armors_url)
     end

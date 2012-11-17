@@ -1,4 +1,10 @@
 Gw2AwesomeBuilder::Application.routes.draw do
+  resources :weapons
+
+  resources :jewelries
+
+  resources :suits
+
   resources :trinkets do
     get 'page/:page', :action => :index, :on => :collection
   end

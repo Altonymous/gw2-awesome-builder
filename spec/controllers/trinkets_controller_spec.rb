@@ -43,7 +43,7 @@ describe TrinketsController do
 
   describe "GET index" do
     it "assigns all trinkets as @trinkets" do
-      trinket = create(:trinket, :with_enhancement)
+      trinket = create(:trinket)
       get :index, {}, valid_session
       assigns(:trinkets).should eq([trinket])
     end
@@ -51,7 +51,7 @@ describe TrinketsController do
 
   describe "GET show" do
     it "assigns the requested trinket as @trinket" do
-      trinket = create(:trinket, :with_enhancement)
+      trinket = create(:trinket)
       get :show, {:id => trinket.to_param}, valid_session
       assigns(:trinket).should eq(trinket)
     end
@@ -66,7 +66,7 @@ describe TrinketsController do
 
   describe "GET edit" do
     it "assigns the requested trinket as @trinket" do
-      trinket = create(:trinket, :with_enhancement)
+      trinket = create(:trinket)
       get :edit, {:id => trinket.to_param}, valid_session
       assigns(:trinket).should eq(trinket)
     end
@@ -112,7 +112,7 @@ describe TrinketsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested trinket" do
-        trinket = create(:trinket, :with_enhancement)
+        trinket = create(:trinket)
         # Assuming there are no other trinkets in the database, this
         # specifies that the Trinket created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -122,13 +122,13 @@ describe TrinketsController do
       end
 
       it "assigns the requested trinket as @trinket" do
-        trinket = create(:trinket, :with_enhancement)
+        trinket = create(:trinket)
         put :update, {:id => trinket.to_param, :trinket => valid_attributes}, valid_session
         assigns(:trinket).should eq(trinket)
       end
 
       it "redirects to the trinket" do
-        trinket = create(:trinket, :with_enhancement)
+        trinket = create(:trinket)
         put :update, {:id => trinket.to_param, :trinket => valid_attributes}, valid_session
         response.should redirect_to(trinket)
       end
@@ -136,7 +136,7 @@ describe TrinketsController do
 
     describe "with invalid params" do
       it "assigns the trinket as @trinket" do
-        trinket = create(:trinket, :with_enhancement)
+        trinket = create(:trinket)
         # Trigger the behavior that occurs when invalid params are submitted
         Trinket.any_instance.stub(:save).and_return(false)
         put :update, {:id => trinket.to_param, :trinket => {}}, valid_session
@@ -144,7 +144,7 @@ describe TrinketsController do
       end
 
       it "redirects to the 'trinkets#show' action" do
-        trinket = create(:trinket, :with_enhancement)
+        trinket = create(:trinket)
         # Trigger the behavior that occurs when invalid params are submitted
         Trinket.any_instance.stub(:save).and_return(false)
         put :update, {:id => trinket.to_param, :trinket => {}}, valid_session
@@ -155,14 +155,14 @@ describe TrinketsController do
 
   describe "DELETE destroy" do
     it "destroys the requested trinket" do
-      trinket = create(:trinket, :with_enhancement)
+      trinket = create(:trinket)
       expect {
         delete :destroy, {:id => trinket.to_param}, valid_session
       }.to change(Trinket, :count).by(-1)
     end
 
     it "redirects to the trinkets list" do
-      trinket = create(:trinket, :with_enhancement)
+      trinket = create(:trinket)
       delete :destroy, {:id => trinket.to_param}, valid_session
       response.should redirect_to(trinkets_url)
     end

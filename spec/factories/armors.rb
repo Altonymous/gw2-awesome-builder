@@ -3,21 +3,30 @@
 FactoryGirl.define do
   factory :armor do
     sequence(:name) { |n| "Armor ##{n}" }
-    level 1
+    level 80
 
     weight { Weight.first }
     slot { Slot.find_by_name('Helm') }
 
+    armor 1
+    hit_points 1
+    attack_power 1
+    critical_damage 1
+    critical_chance 1
+    condition_damage 1
+    condition_duration 1
+    healing_power 1
+    boon_duration 1
+    magic_find 1
+
     ignore do
       rating 1
       enhancement { Enhancement.find_by_name('Toughness') }
-      outfit { create(:outfit) }
+      suit { create(:suit) }
     end
 
-    trait :with_enhancement do
-      after(:build) do |armor, evaluator|
-        armor.gear_enhancements.build({rating: evaluator.rating}).enhancement = evaluator.enhancement
-      end
+    after(:build) do |armor, evaluator|
+      armor.gear_enhancements.build({rating: evaluator.rating}).enhancement = evaluator.enhancement
     end
 
     trait :with_all_enhancements do
@@ -28,9 +37,9 @@ FactoryGirl.define do
       end
     end
 
-    trait :with_outfit do
+    trait :with_suit do
       after(:build) do |armor, evaluator|
-        armor.outfits << evaluator.outfit
+        armor.suit = evaluator.suit
       end
     end
 

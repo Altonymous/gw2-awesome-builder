@@ -1,0 +1,40 @@
+= form_for @suit do |f|
+  - if @suit.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@suit.errors.count, "error")} prohibited this suit from being saved:"
+      %ul
+        - @suit.errors.full_messages.each do |msg|
+          %li= msg
+
+  .field
+    = f.label :armor
+    = f.number_field :armor
+  .field
+    = f.label :hit_points
+    = f.number_field :hit_points
+  .field
+    = f.label :attack_power
+    = f.number_field :attack_power
+  .field
+    = f.label :critical_damage
+    = f.number_field :critical_damage
+  .field
+    = f.label :critical_chance
+    = f.number_field :critical_chance
+  .field
+    = f.label :condition_damage
+    = f.number_field :condition_damage
+  .field
+    = f.label :condition_duration
+    = f.number_field :condition_duration
+  .field
+    = f.label :healing_power
+    = f.number_field :healing_power
+  .field
+    = f.label :boon_duration
+    = f.number_field :boon_duration
+  .field
+    = f.label :magic_find
+    = f.number_field :magic_find
+  .actions
+    = f.submit 'Save'

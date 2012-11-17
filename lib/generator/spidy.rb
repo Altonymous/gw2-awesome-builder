@@ -64,13 +64,14 @@ module Generator
       @base_url = "http://www.gw2spidy.com/api/v0.9/json"
     end
 
-    def destroy_all
-      Armor.destroy_all
-      Trinket.destroy_all
+    def delete_all
+      GearEnhancement.delete_all
+      Armor.delete_all
+      Trinket.delete_all
     end
 
-    def get_all_items(delete_armors = false)
-      destroy_all if delete_armors
+    def get_all_items()
+      delete_all
 
       get_items(:armor)
       get_items(:trinket)

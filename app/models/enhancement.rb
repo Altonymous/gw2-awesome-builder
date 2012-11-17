@@ -2,8 +2,8 @@ class Enhancement < ActiveRecord::Base
   resourcify
   attr_accessible :name, :multiplier, :statistic_id
 
+  # Associations
   belongs_to :statistic
-
   has_many :gear_enhancements
 
   # Polymorphic Associations
@@ -14,11 +14,10 @@ class Enhancement < ActiveRecord::Base
   validates :name,
     presence:true,
     uniqueness: true,
-    length: { maximum: 24 }
+    length: { maximum: 32 }
   validates :multiplier,
     presence: true,
     numericality: { greater_than: 0 }
-
-  validates_associated :statistic
-  validates_presence_of :statistic_id
+  validates :statistic_id,
+    presence: true
 end

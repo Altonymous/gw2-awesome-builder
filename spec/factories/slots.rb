@@ -3,5 +3,6 @@
 FactoryGirl.define do
   factory :slot do
     sequence(:name) { |n| "Slot ##{n}" }
+    slot_type "Armor"
   end
 end

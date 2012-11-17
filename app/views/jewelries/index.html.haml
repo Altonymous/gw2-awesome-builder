@@ -1,0 +1,37 @@
+%h1 Listing jewelries
+
+%table
+  %tr
+    %th Armor
+    %th Hit points
+    %th Attack power
+    %th Critical damage
+    %th Critical chance
+    %th Condition damage
+    %th Condition duration
+    %th Healing power
+    %th Boon duration
+    %th Magic find
+    %th
+    %th
+    %th
+
+  - @jewelries.each do |jewelry|
+    %tr
+      %td= jewelry.armor
+      %td= jewelry.hit_points
+      %td= jewelry.attack_power
+      %td= jewelry.critical_damage
+      %td= jewelry.critical_chance
+      %td= jewelry.condition_damage
+      %td= jewelry.condition_duration
+      %td= jewelry.healing_power
+      %td= jewelry.boon_duration
+      %td= jewelry.magic_find
+      %td= link_to 'Show', jewelry
+      %td= link_to 'Edit', edit_jewelry_path(jewelry)
+      %td= link_to 'Destroy', jewelry, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Jewelry', new_jewelry_path

@@ -1,0 +1,36 @@
+%p#notice= notice
+
+%p
+  %b Armor:
+  = @jewelry.armor
+%p
+  %b Hit points:
+  = @jewelry.hit_points
+%p
+  %b Attack power:
+  = @jewelry.attack_power
+%p
+  %b Critical damage:
+  = @jewelry.critical_damage
+%p
+  %b Critical chance:
+  = @jewelry.critical_chance
+%p
+  %b Condition damage:
+  = @jewelry.condition_damage
+%p
+  %b Condition duration:
+  = @jewelry.condition_duration
+%p
+  %b Healing power:
+  = @jewelry.healing_power
+%p
+  %b Boon duration:
+  = @jewelry.boon_duration
+%p
+  %b Magic find:
+  = @jewelry.magic_find
+
+= link_to 'Edit', edit_jewelry_path(@jewelry)
+\|
+= link_to 'Back', jewelries_path

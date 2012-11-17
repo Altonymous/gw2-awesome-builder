@@ -1,12 +1,12 @@
 class ArmorsController < ApplicationController
   include SortModule
-  include GearEnhancementModule
+  include ChildExtractionModule
 
   # GET /armors
   # GET /armors.json
   def index
     @sort ||= 'attack_power desc'
-    @armors = Armor.includes(:gear_enhancements, :weight, :slot).order(@sort).page(params[:page])
+    @armors = Armor.order(@sort).page(params[:page])
 
     respond_with @armors
   end
@@ -14,7 +14,7 @@ class ArmorsController < ApplicationController
   # GET /armors/1
   # GET /armors/1.json
   def show
-    @armor = Armor.includes(:gear_enhancements, :enhancements).find(params[:id])
+    @armor = Armor.includes(:gear_enhancements, :enhancements, :weight, :slot).find(params[:id])
 
     respond_with @armor
   end
@@ -39,7 +39,7 @@ class ArmorsController < ApplicationController
   def create
     params_gear_enhancements = params[:armor].delete(:gear_enhancements)
     @armor = Armor.create(params[:armor]) do |armor|
-      gear_enhancements!(armor, params_gear_enhancements)
+      hydrate_child_relationship!(armor, params_gear_enhancements, :gear_enhancements)
     end
 
     respond_with @armor
@@ -48,10 +48,10 @@ class ArmorsController < ApplicationController
   # PUT /armors/1
   # PUT /armors/1.json
   def update
+    @armor = Armor.find(params[:id])
+
     params_gear_enhancements = params[:armor].delete(:gear_enhancements)
-    @armor = Armor.find(params[:id]) do |armor|
-      gear_enhancements!(armor, params_gear_enhancements)
-    end
+    hydrate_child_relationship!(@armor, params_gear_enhancements, :gear_enhancements)
 
     @armor.update_attributes(params[:armor])
 

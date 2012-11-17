@@ -48,3 +48,8 @@ boon_duration:
   name: Boon Duration
   multiplier: 1
   statistic_id: 9
+magic_find:
+  id: 11
+  name: Magic Find
+  multiplier: 1
+  statistic_id: 10

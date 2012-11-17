@@ -1,0 +1,51 @@
+%p#notice= notice
+
+%p
+  %b Name:
+  = @weapon.name
+%p
+  %b Level:
+  = @weapon.level
+%p
+  %b Armor:
+  = @weapon.armor
+%p
+  %b Hit points:
+  = @weapon.hit_points
+%p
+  %b Attack power:
+  = @weapon.attack_power
+%p
+  %b Critical damage:
+  = @weapon.critical_damage
+%p
+  %b Critical chance:
+  = @weapon.critical_chance
+%p
+  %b Condition damage:
+  = @weapon.condition_damage
+%p
+  %b Condition duration:
+  = @weapon.condition_duration
+%p
+  %b Healing power:
+  = @weapon.healing_power
+%p
+  %b Boon duration:
+  = @weapon.boon_duration
+%p
+  %b Magic find:
+  = @weapon.magic_find
+%p
+  %b Slot:
+  = @weapon.slot
+%p
+  %b Gw2db url:
+  = @weapon.gw2db_url
+%p
+  %b Icon url:
+  = @weapon.icon_url
+
+= link_to 'Edit', edit_weapon_path(@weapon)
+\|
+= link_to 'Back', weapons_path
