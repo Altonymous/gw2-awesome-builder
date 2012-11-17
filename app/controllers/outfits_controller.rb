@@ -9,7 +9,7 @@ class OutfitsController < ApplicationController
   end
 
   def show
-    @outfit = Outfit.includes(:armors).find(params[:id])
+    @outfit = Outfit.includes(:suit, :jewelry).find(params[:id])
 
     respond_with @outfit
   end
@@ -25,11 +25,7 @@ class OutfitsController < ApplicationController
   end
 
   def create
-    armors = params[:outfit].delete(:armors)
-
-    @outfit = Outfit.create(params[:outfit]) do |outfit|
-      outfit.armors = armors.map! { |armor| Armor.find(armor[:id]) } unless armors.blank?
-    end
+    @outfit = Outfit.create(params[:outfit])
 
     respond_with @outfit
   end

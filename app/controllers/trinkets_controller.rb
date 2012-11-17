@@ -14,7 +14,7 @@ class TrinketsController < ApplicationController
   # GET /trinkets/1
   # GET /trinkets/1.json
   def show
-    @trinket = Trinket.find(params[:id])
+    @trinket = Trinket.includes(:gear_enhancements, :enhancements).find(params[:id])
 
     respond_with @trinket
   end
@@ -48,10 +48,10 @@ class TrinketsController < ApplicationController
   # PUT /trinkets/1
   # PUT /trinkets/1.json
   def update
+    @trinket = Trinket.find(params[:id])
+
     params_gear_enhancements = params[:trinket].delete(:gear_enhancements)
-    @trinket = Trinket.find(params[:id]) do |trinket|
-      gear_enhancements!(trinket, params_gear_enhancements)
-    end
+    gear_enhancements!(@trinket, params_gear_enhancements)
 
     @trinket.update_attributes(params[:trinket])
 

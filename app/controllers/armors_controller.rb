@@ -48,10 +48,10 @@ class ArmorsController < ApplicationController
   # PUT /armors/1
   # PUT /armors/1.json
   def update
+    @armor = Armor.find(params[:id])
+
     params_gear_enhancements = params[:armor].delete(:gear_enhancements)
-    @armor = Armor.find(params[:id]) do |armor|
-      gear_enhancements!(armor, params_gear_enhancements)
-    end
+    gear_enhancements!(@armor, params_gear_enhancements)
 
     @armor.update_attributes(params[:armor])
 

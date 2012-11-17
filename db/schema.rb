@@ -37,15 +37,12 @@ ActiveRecord::Schema.define(:version => 20121117020562) do
   add_index "armors", ["slot_id"], :name => "index_armors_on_slot_id"
   add_index "armors", ["weight_id"], :name => "index_armors_on_weight_id"
 
-  create_table "armors_suits", :force => true do |t|
-    t.integer  "armor_id"
-    t.integer  "suit_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "armors_suits", :id => false, :force => true do |t|
+    t.integer "armor_id"
+    t.integer "suit_id"
   end
 
-  add_index "armors_suits", ["armor_id"], :name => "index_armors_suits_on_armor_id"
-  add_index "armors_suits", ["suit_id"], :name => "index_armors_suits_on_suit_id"
+  add_index "armors_suits", ["armor_id", "suit_id"], :name => "index_armors_suits_on_armor_id_and_suit_id"
 
   create_table "enhancements", :force => true do |t|
     t.string   "name",         :limit => 32
@@ -84,15 +81,12 @@ ActiveRecord::Schema.define(:version => 20121117020562) do
     t.datetime "updated_at",         :null => false
   end
 
-  create_table "jewelries_trinkets", :force => true do |t|
-    t.integer  "jewelry_id"
-    t.integer  "trinket_id"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+  create_table "jewelries_trinkets", :id => false, :force => true do |t|
+    t.integer "jewelry_id"
+    t.integer "trinket_id"
   end
 
-  add_index "jewelries_trinkets", ["jewelry_id"], :name => "index_jewelries_trinkets_on_jewelry_id"
-  add_index "jewelries_trinkets", ["trinket_id"], :name => "index_jewelries_trinkets_on_trinket_id"
+  add_index "jewelries_trinkets", ["jewelry_id", "trinket_id"], :name => "index_jewelries_trinkets_on_jewelry_id_and_trinket_id"
 
   create_table "outfits", :force => true do |t|
     t.integer  "jewelry_id"

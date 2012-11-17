@@ -17,6 +17,6 @@ module EnhancementModule
   end
 
   def self.find_by_enhancement_id(enhancement_id)
-    ENHANCEMENT.key(enhancement_id)
+    ENHANCEMENT.find{|key,value| value[:id] == enhancement_id}.first
   end
 end

@@ -2,6 +2,14 @@
 
 FactoryGirl.define do
   factory :suit do
+    ignore do
+      gear { create(:armor) }
+    end
+
+    after(:build) do |suit, evaluator|
+      suit.armors << evaluator.gear
+    end
+
     armor 1
     hit_points 1
     attack_power 1

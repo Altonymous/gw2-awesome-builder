@@ -2,9 +2,12 @@ require 'spec_helper'
 
 describe Enhancement do
   context 'associations' do
-    it { should have_many :gear_enhancements }
-    it { should have_many :armors }
     it { should belong_to :statistic }
+    it { should have_many :gear_enhancements }
+
+    # Polymorphic Associations
+    it { should have_many :armors }
+    it { should have_many :trinkets }
   end
 
   context 'mass assignment' do
@@ -12,8 +15,9 @@ describe Enhancement do
     it { should allow_mass_assignment_of :multiplier }
     it { should allow_mass_assignment_of :statistic_id }
     it { should_not allow_mass_assignment_of :statistic }
-    it { should_not allow_mass_assignment_of :armors_enhancements }
-    it { should_not allow_mass_assignment_of :enhancements }
+    it { should_not allow_mass_assignment_of :gear_enhancements }
+    it { should_not allow_mass_assignment_of :armors }
+    it { should_not allow_mass_assignment_of :trinkets }
   end
 
   it 'has a valid factory' do
@@ -40,8 +44,8 @@ describe Enhancement do
       build(:enhancement, name: "Enhancement").should_not be_valid
     end
 
-    it 'name is longer than 25 characters' do
-      build(:enhancement, name: "name".rjust(25, "'")).should_not be_valid
+    it 'name is longer than 32 characters' do
+      build(:enhancement, name: "name".rjust(33, "0")).should_not be_valid
     end
 
     it 'multiplier is not a number' do

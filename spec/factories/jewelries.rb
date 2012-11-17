@@ -2,6 +2,14 @@
 
 FactoryGirl.define do
   factory :jewelry do
+    ignore do
+      gear { create(:trinket)}
+    end
+
+    after(:build) do |jewelry, evaluator|
+      jewelry.trinkets << evaluator.gear
+    end
+
     armor 1
     hit_points 1
     attack_power 1

@@ -16,18 +16,12 @@ legs:
 boots:
   id: 6
   name: Boots
-ring_1:
+ring:
   id: 7
   name: Ring 1
-ring_2:
+accessory:
   id: 8
-  name: Ring 2
-accessory_1:
-  id: 9
   name: Accessory 1
-accessory_2:
-  id: 10
-  name: Accessory 2
 amulet:
-  id: 11
+  id: 9
   name: Amulet

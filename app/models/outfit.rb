@@ -1,52 +1,19 @@
 class Outfit < ActiveRecord::Base
   resourcify
-  after_initialize :defaults
+  attr_accessible :suit_id, :jewelry_id
+
   before_save :generate_statistics
 
-  has_and_belongs_to_many :armors
-  has_and_belongs_to_many :trinkets
-
-  # Polymorphic Associations
-  # has_many :gear_outfits, :dependent => :destroy
-  # has_many :armors, through: :gear_outfits, source: :gear, source_type: 'Armor'
-  # has_many :trinkets, through: :gear_outfits, source: :gear, source_type: 'Trinket'
+  belongs_to :suit
+  belongs_to :jewelry
 
   # Validations
-  validates :armor,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  validates :attack_power,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  validates :hit_points,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  validates :critical_chance,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  validates :critical_damage,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  validates :condition_damage,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  validates :condition_duration,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  validates :healing_power,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
-
-  validates :boon_duration,
-    presence: true,
-    numericality: { only_integer: true, greater_than_or_equal_to: 0 }
+  validates :suit_id,
+    presence: true
+  validates_associated :suit
+  validates :jewelry_id,
+    presence: true
+  validates_associated :jewelry
 
   # Methods
   def generate_statistics
@@ -54,23 +21,8 @@ class Outfit < ActiveRecord::Base
       # Set the statistic to 0 before we recalculate
       write_attribute(statistic, 0)
 
-      armors.each do |armor|
-        write_attribute(statistic, read_attribute(statistic) + armor[statistic])
-      end
-
-      trinkets.each do |trinket|
-        write_attribute(statistic, read_attribute(statistic) + trinket[statistic])
-      end
+      write_attribute(statistic, read_attribute(statistic) + suit[statistic])
+      write_attribute(statistic, read_attribute(statistic) + jewelry[statistic])
     end
   end
-
-  private
-  def defaults
-    # Set statistics to zero
-    StatisticModule::statistics.each do |statistic|
-      write_attribute(statistic, 0) if read_attribute(statistic).nil?
-    end
-  end
-
-  include StatisticModule
 end

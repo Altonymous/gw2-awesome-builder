@@ -17,6 +17,20 @@ module StatisticModule
   end
 
   def self.find_by_statistic_id(statistic_id)
-    STATISTIC.key(statistic_id)
+    STATISTIC.find{|key,value| value[:id] == statistic_id}.first
+  end
+
+  def generate_statistics
+    StatisticModule::statistics.each do |statistic|
+      write_attribute(statistic, 0)
+    end
+
+    self.gear_enhancements.each do |gear_enhancement|
+      current_statistic = gear_enhancement.rating.zero? ?
+        0 : gear_enhancement.rating * gear_enhancement.enhancement.multiplier
+
+      statistic = StatisticModule::find_by_statistic_id(gear_enhancement.enhancement.statistic_id)
+      write_attribute(statistic, read_attribute(statistic) + current_statistic.to_i)
+    end
   end
 end

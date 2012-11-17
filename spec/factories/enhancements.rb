@@ -2,7 +2,7 @@
 
 FactoryGirl.define do
   factory :enhancement do
-    sequence(:name) { |n| "Enhancement #{n}" }
+    sequence(:name) { |n| "Enhancement ##{n}" }
     multiplier 1
 
     statistic_id { Statistic.first.id }

@@ -2,19 +2,16 @@ class Armor < ActiveRecord::Base
   resourcify
   attr_accessible :name, :level, :slot_id, :weight_id, :gw2db_url, :icon_url
 
-  after_initialize :defaults
-  before_save :generate_statistics
+  before_validation :generate_statistics
 
   # Associations
   belongs_to :weight
   belongs_to :slot
+  has_and_belongs_to_many :suits
 
   # Polymorphic Associations
   has_many :gear_enhancements, as: :gear, :dependent => :destroy
   has_many :enhancements, through: :gear_enhancements
-
-  has_many :gear_outfits, as: :gear, :dependent => :destroy
-  has_many :outfits, through: :gear_outfits
 
   # Validations
   validates :name,
@@ -24,13 +21,11 @@ class Armor < ActiveRecord::Base
   validates :level,
     presence: true,
     numericality: { only_integer: true, greater_than: 0, less_than_or_equal_to: 80 }
-
-  validates_associated :weight
-  validates_presence_of :weight_id
-  validates_associated :slot
-  validates_presence_of :slot_id
-  validates_associated :enhancements
-  validates_associated :outfits
+  validates :weight_id,
+    presence: true
+  validates :slot_id,
+    presence: true
+  validates_associated :gear_enhancements
 
   # Scopes
   scope :helm, where(slot_id: SlotModule::SLOT[:helm][:id])
@@ -44,26 +39,6 @@ class Armor < ActiveRecord::Base
   scope :medium, where(weight_id: WeightModule::WEIGHT[:medium][:id])
   scope :heavy, where(weight_id: WeightModule::WEIGHT[:heavy][:id])
 
-  # Methods
-  def generate_statistics
-    StatisticModule::statistics.each do |statistic|
-      write_attribute(statistic, 0)
-    end
-
-    self.gear_enhancements.each do |gear_enhancement|
-      current_statistic = gear_enhancement.rating.zero? ?
-        0 : gear_enhancement.rating * gear_enhancement.enhancement.multiplier
-
-      statistic = StatisticModule::find_by_statistic_id(gear_enhancement.enhancement.statistic_id)
-      write_attribute(statistic, read_attribute(statistic) + current_statistic)
-    end
-  end
-
-  private
-  def defaults
-    # Set statistics to zero
-    StatisticModule::statistics.each do |statistic|
-      write_attribute(statistic, 0) if read_attribute(statistic).nil?
-    end
-  end
+  # Includes
+  include StatisticModule
 end
