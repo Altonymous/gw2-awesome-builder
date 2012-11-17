@@ -1,0 +1,37 @@
+%h1 Listing suits
+
+%table
+  %tr
+    %th Armor
+    %th Hit points
+    %th Attack power
+    %th Critical damage
+    %th Critical chance
+    %th Condition damage
+    %th Condition duration
+    %th Healing power
+    %th Boon duration
+    %th Magic find
+    %th
+    %th
+    %th
+
+  - @suits.each do |suit|
+    %tr
+      %td= suit.armor
+      %td= suit.hit_points
+      %td= suit.attack_power
+      %td= suit.critical_damage
+      %td= suit.critical_chance
+      %td= suit.condition_damage
+      %td= suit.condition_duration
+      %td= suit.healing_power
+      %td= suit.boon_duration
+      %td= suit.magic_find
+      %td= link_to 'Show', suit
+      %td= link_to 'Edit', edit_suit_path(suit)
+      %td= link_to 'Destroy', suit, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Suit', new_suit_path

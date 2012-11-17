@@ -1,0 +1,36 @@
+%p#notice= notice
+
+%p
+  %b Armor:
+  = @suit.armor
+%p
+  %b Hit points:
+  = @suit.hit_points
+%p
+  %b Attack power:
+  = @suit.attack_power
+%p
+  %b Critical damage:
+  = @suit.critical_damage
+%p
+  %b Critical chance:
+  = @suit.critical_chance
+%p
+  %b Condition damage:
+  = @suit.condition_damage
+%p
+  %b Condition duration:
+  = @suit.condition_duration
+%p
+  %b Healing power:
+  = @suit.healing_power
+%p
+  %b Boon duration:
+  = @suit.boon_duration
+%p
+  %b Magic find:
+  = @suit.magic_find
+
+= link_to 'Edit', edit_suit_path(@suit)
+\|
+= link_to 'Back', suits_path

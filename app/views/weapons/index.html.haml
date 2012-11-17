@@ -1,0 +1,47 @@
+%h1 Listing weapons
+
+%table
+  %tr
+    %th Name
+    %th Level
+    %th Armor
+    %th Hit points
+    %th Attack power
+    %th Critical damage
+    %th Critical chance
+    %th Condition damage
+    %th Condition duration
+    %th Healing power
+    %th Boon duration
+    %th Magic find
+    %th Slot
+    %th Gw2db url
+    %th Icon url
+    %th
+    %th
+    %th
+
+  - @weapons.each do |weapon|
+    %tr
+      %td= weapon.name
+      %td= weapon.level
+      %td= weapon.armor
+      %td= weapon.hit_points
+      %td= weapon.attack_power
+      %td= weapon.critical_damage
+      %td= weapon.critical_chance
+      %td= weapon.condition_damage
+      %td= weapon.condition_duration
+      %td= weapon.healing_power
+      %td= weapon.boon_duration
+      %td= weapon.magic_find
+      %td= weapon.slot
+      %td= weapon.gw2db_url
+      %td= weapon.icon_url
+      %td= link_to 'Show', weapon
+      %td= link_to 'Edit', edit_weapon_path(weapon)
+      %td= link_to 'Destroy', weapon, method: :delete, data: { confirm: 'Are you sure?' }
+
+%br
+
+= link_to 'New Weapon', new_weapon_path

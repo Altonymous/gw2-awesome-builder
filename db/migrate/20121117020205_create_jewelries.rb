@@ -1,9 +1,6 @@
-class CreateTrinkets < ActiveRecord::Migration
+class CreateJewelries < ActiveRecord::Migration
   def change
-    create_table :trinkets do |t|
-      t.string :name, limit: 96
-      t.integer :level
-
+    create_table :jewelries do |t|
       t.integer :armor
       t.integer :hit_points
       t.integer :attack_power
@@ -15,14 +12,7 @@ class CreateTrinkets < ActiveRecord::Migration
       t.integer :boon_duration
       t.integer :magic_find
 
-      t.belongs_to :slot
-
-      t.string :gw2db_url
-      t.string :icon_url
-
       t.timestamps
     end
-
-    add_index :trinkets, :slot_id
   end
 end

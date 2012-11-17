@@ -1,7 +1,7 @@
-class CreateTrinkets < ActiveRecord::Migration
+class CreateWeapons < ActiveRecord::Migration
   def change
-    create_table :trinkets do |t|
-      t.string :name, limit: 96
+    create_table :weapons do |t|
+      t.string :name
       t.integer :level
 
       t.integer :armor
@@ -23,6 +23,6 @@ class CreateTrinkets < ActiveRecord::Migration
       t.timestamps
     end
 
-    add_index :trinkets, :slot_id
+    add_index :weapons, :slot_id
   end
 end

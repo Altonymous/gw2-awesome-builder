@@ -3,10 +3,13 @@ class Outfit < ActiveRecord::Base
   after_initialize :defaults
   before_save :generate_statistics
 
+  has_and_belongs_to_many :armors
+  has_and_belongs_to_many :trinkets
+
   # Polymorphic Associations
-  has_many :gear_outfits, :dependent => :destroy
-  has_many :armors, through: :gear_outfits, source: :gear, source_type: 'Armor'
-  has_many :trinkets, through: :gear_outfits, source: :gear, source_type: 'Trinket'
+  # has_many :gear_outfits, :dependent => :destroy
+  # has_many :armors, through: :gear_outfits, source: :gear, source_type: 'Armor'
+  # has_many :trinkets, through: :gear_outfits, source: :gear, source_type: 'Trinket'
 
   # Validations
   validates :armor,
