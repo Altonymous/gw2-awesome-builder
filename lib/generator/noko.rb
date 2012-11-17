@@ -23,7 +23,6 @@ module Generator
     end
 
     def get_item(url)
-      url = "#{url}"
       page = Nokogiri::HTML(open url)
 
       item = Hash.new
@@ -48,7 +47,7 @@ module Generator
       return item
     end
 
-    def get_gear_enhancements(url)
+    def get_gear_enhancements(name, url)
       item = get_item(url)
 
       weight = ''
