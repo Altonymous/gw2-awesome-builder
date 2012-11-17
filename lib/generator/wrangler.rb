@@ -140,13 +140,14 @@ module Generator
 
           # If some armor already matches the statistics, we don't need to add it to the list of possible pieces
           approved_gear_pieces.each do |approved_gear_piece|
-            if SlotModule::SLOT[slot][:slot_type] == 'Armor' && approved_gear_piece.weight_id == possible_gear_piece.weight_id
+            case SlotModule::SLOT[slot][:slot_type]
+            when 'Armor'
+              duplicate = approved_gear_piece.gear_enhancements == possible_gear_piece.gear_enhancements && approved_gear_piece.weight_id == possible_gear_piece.weight_id
+            when 'Trinket'
               duplicate = approved_gear_piece.gear_enhancements == possible_gear_piece.gear_enhancements
-              if duplicate
-                # puts "# Duplicate Found: select * from armors where id in (#{approved_gear_piece.id}, #{possible_gear_piece.id});"
-                break
-              end
             end
+
+            break if duplicate
           end
 
           approved_gear_pieces << possible_gear_piece unless duplicate
@@ -163,9 +164,11 @@ module Generator
       end
       puts "Took #{(Time.now - collecting_start).round(4)} seconds to collect.\n\n"
 
+      puts "#{gear_possibilities.values.inject(:*)} combinations found."
       gear_possibilities.each do |key, values|
         puts "#{key} - #{values.map(&:id)}"
       end
+
       gear_possibilities
     end
 
