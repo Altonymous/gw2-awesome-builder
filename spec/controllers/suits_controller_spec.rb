@@ -19,12 +19,28 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe SuitsController do
+  let(:attack_power_enhancement) { Enhancement.find_by_name('Power') }
+  let(:helm) { create(:armor, :helm, enhancement: attack_power_enhancement) }
+  let(:shoulders) { create(:armor, :shoulders, enhancement: attack_power_enhancement) }
+  let(:coat) { create(:armor, :coat, enhancement: attack_power_enhancement) }
+  let(:gloves) { create(:armor, :gloves, enhancement: attack_power_enhancement) }
+  let(:legs) { create(:armor, :legs, enhancement: attack_power_enhancement) }
+  let(:boots) { create(:armor, :boots, enhancement: attack_power_enhancement) }
 
   # This should return the minimal set of attributes required to create a valid
   # Suit. As you add validations to Suit, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {
+      armors: [
+        { id: helm.id },
+        { id: shoulders.id },
+        { id: coat.id },
+        { id: gloves.id },
+        { id: legs.id },
+        { id: boots.id }
+      ]
+    }
   end
 
   # This should return the minimal set of values that should be in the session
@@ -36,7 +52,7 @@ describe SuitsController do
 
   describe "GET index" do
     it "assigns all suits as @suits" do
-      suit = Suit.create! valid_attributes
+      suit = create(:suit)
       get :index, {}, valid_session
       assigns(:suits).should eq([suit])
     end
@@ -44,7 +60,7 @@ describe SuitsController do
 
   describe "GET show" do
     it "assigns the requested suit as @suit" do
-      suit = Suit.create! valid_attributes
+      suit = create(:suit)
       get :show, {:id => suit.to_param}, valid_session
       assigns(:suit).should eq(suit)
     end
@@ -59,7 +75,7 @@ describe SuitsController do
 
   describe "GET edit" do
     it "assigns the requested suit as @suit" do
-      suit = Suit.create! valid_attributes
+      suit = create(:suit)
       get :edit, {:id => suit.to_param}, valid_session
       assigns(:suit).should eq(suit)
     end
@@ -93,11 +109,11 @@ describe SuitsController do
         assigns(:suit).should be_a_new(Suit)
       end
 
-      it "re-renders the 'new' template" do
+      it "redirects to the 'suits#index' action" do
         # Trigger the behavior that occurs when invalid params are submitted
         Suit.any_instance.stub(:save).and_return(false)
         post :create, {:suit => {}}, valid_session
-        response.should render_template("new")
+        response.should redirect_to(controller: :suits, action: :index)
       end
     end
   end
@@ -105,7 +121,7 @@ describe SuitsController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested suit" do
-        suit = Suit.create! valid_attributes
+        suit = create(:suit)
         # Assuming there are no other suits in the database, this
         # specifies that the Suit created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -115,13 +131,13 @@ describe SuitsController do
       end
 
       it "assigns the requested suit as @suit" do
-        suit = Suit.create! valid_attributes
+        suit = create(:suit)
         put :update, {:id => suit.to_param, :suit => valid_attributes}, valid_session
         assigns(:suit).should eq(suit)
       end
 
       it "redirects to the suit" do
-        suit = Suit.create! valid_attributes
+        suit = create(:suit)
         put :update, {:id => suit.to_param, :suit => valid_attributes}, valid_session
         response.should redirect_to(suit)
       end
@@ -129,33 +145,33 @@ describe SuitsController do
 
     describe "with invalid params" do
       it "assigns the suit as @suit" do
-        suit = Suit.create! valid_attributes
+        suit = create(:suit)
         # Trigger the behavior that occurs when invalid params are submitted
         Suit.any_instance.stub(:save).and_return(false)
         put :update, {:id => suit.to_param, :suit => {}}, valid_session
         assigns(:suit).should eq(suit)
       end
 
-      it "re-renders the 'edit' template" do
-        suit = Suit.create! valid_attributes
+      it "redirects to the 'suits#show' action" do
+        suit = create(:suit)
         # Trigger the behavior that occurs when invalid params are submitted
         Suit.any_instance.stub(:save).and_return(false)
         put :update, {:id => suit.to_param, :suit => {}}, valid_session
-        response.should render_template("edit")
+        response.should redirect_to(controller: :suits, action: :show)
       end
     end
   end
 
   describe "DELETE destroy" do
     it "destroys the requested suit" do
-      suit = Suit.create! valid_attributes
+      suit = create(:suit)
       expect {
         delete :destroy, {:id => suit.to_param}, valid_session
       }.to change(Suit, :count).by(-1)
     end
 
     it "redirects to the suits list" do
-      suit = Suit.create! valid_attributes
+      suit = create(:suit)
       delete :destroy, {:id => suit.to_param}, valid_session
       response.should redirect_to(suits_url)
     end

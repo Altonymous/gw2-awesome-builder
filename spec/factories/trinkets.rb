@@ -24,10 +24,8 @@ FactoryGirl.define do
       jewelry { create(:jewelry) }
     end
 
-    trait :with_enhancement do
-      after(:build) do |trinket, evaluator|
-        trinket.gear_enhancements.build({rating: evaluator.rating}).enhancement = evaluator.enhancement
-      end
+    after(:build) do |trinket, evaluator|
+      trinket.gear_enhancements.build({rating: evaluator.rating}).enhancement = evaluator.enhancement
     end
 
     trait :with_all_enhancements do

@@ -1,7 +1,6 @@
 require 'spec_helper'
 
 describe OutfitsController do
-  let(:attack_power) { Enhancement.find_by_name('Power') }
   let(:suit) { create(:suit) }
   let(:jewelry) { create(:jewelry) }
   let(:attack_power_enhancement) { Enhancement.find_by_name('Power') }

@@ -12,6 +12,7 @@ describe Jewelry do
   end
 
   context 'validations' do
+    it { should validate_presence_of(:trinkets) }
   end
 
   it 'has a valid factory' do

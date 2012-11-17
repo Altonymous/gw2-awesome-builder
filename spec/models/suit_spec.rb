@@ -12,6 +12,7 @@ describe Suit do
   end
 
   context 'validations' do
+    it { should validate_presence_of(:armors) }
   end
 
   it 'has a valid factory' do

@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :jewelry do
     ignore do
-      gear { create(:trinket)}
+      gear { create(:trinket) }
     end
 
     after(:build) do |jewelry, evaluator|

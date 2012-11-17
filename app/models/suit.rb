@@ -7,7 +7,8 @@ class Suit < ActiveRecord::Base
   has_and_belongs_to_many :armors
 
   # Validations
-  validates_associated :armors
+  validates_presence_of :armors
+  # validates_associated :armors
 
   # Methods
   def generate_statistics

@@ -1,6 +1,6 @@
 class TrinketsController < ApplicationController
   include SortModule
-  include GearEnhancementModule
+  include ChildExtractionModule
 
   # GET /trinkets
   # GET /trinkets.json
@@ -39,7 +39,7 @@ class TrinketsController < ApplicationController
   def create
     params_gear_enhancements = params[:trinket].delete(:gear_enhancements)
     @trinket = Trinket.create(params[:trinket]) do |trinket|
-      gear_enhancements!(trinket, params_gear_enhancements)
+      hydrate_child_relationship!(trinket, params_gear_enhancements, :gear_enhancements)
     end
 
     respond_with @trinket
@@ -51,7 +51,7 @@ class TrinketsController < ApplicationController
     @trinket = Trinket.find(params[:id])
 
     params_gear_enhancements = params[:trinket].delete(:gear_enhancements)
-    gear_enhancements!(@trinket, params_gear_enhancements)
+    hydrate_child_relationship!(@trinket, params_gear_enhancements, :gear_enhancements)
 
     @trinket.update_attributes(params[:trinket])
 

@@ -3,8 +3,25 @@ module Generator
     def initialize
     end
 
+    def scrape
+      delete_all
+      gather_gear
+      generate_outfits
+    end
+
+    def randomize
+      delete_all
+      randomize_gear
+      generate_outfits
+    end
+
+    def get_gear
+      Generator::Spidy.new.get_all_items(true)
+    end
+
+    private
     # Outfits
-    def generate_outfits()
+    def generate_outfits
       puts "Generating outfits..."
       start = Time.now
 
@@ -56,29 +73,45 @@ module Generator
     # Delete
     def delete_all
       delete_outfits
-      delete_gear
     end
 
     def delete_outfits
       puts "Deleting Outfits"
-      GearOutfit.delete_all
       Outfit.delete_all
+      puts "Done\n\n"
+
+      delete_suits
+      delete_jewelries
+    end
+
+    def delete_suits
+      puts "Deleting Suits"
+      Suit.delete_all
+      puts "Done\n\n"
+
+      delete_armors
+    end
+
+    def delete_armors
+      puts "Deleting Armors"
+      Armor.delete_all
       puts "Done\n\n"
     end
 
-    def delete_gear
-      puts 'Deleting Armor...'
-      GearEnhancement.delete_all({gear_type: 'Armor'})
-      Armor.delete_all
-      puts 'Done'
+    def delete_jewelries
+      puts "Deleting Jewelries"
+      Jewelry.delete_all
+      puts "Done\n\n"
 
-      puts 'Deleting Trinkets...'
-      GearEnhancement.delete_all({gear_type: 'Trinket'})
-      Trinket.delete_all
-      puts 'Done'
+      delete_trinkets
     end
 
-    private
+    def delete_trinkets
+      puts "Deleting Trinkets"
+      Trinket.delete_all
+      puts "Done\n\n"
+    end
+
     # Fake
     def generate_armor(name, slot_id, weight_id)
       Armor.create! do |armor|

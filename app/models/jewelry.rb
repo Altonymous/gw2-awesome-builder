@@ -7,6 +7,7 @@ class Jewelry < ActiveRecord::Base
   has_and_belongs_to_many :trinkets
 
   # Validations
+  validates_presence_of :trinkets
   validates_associated :trinkets
 
   # Methods

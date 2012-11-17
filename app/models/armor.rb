@@ -26,6 +26,7 @@ class Armor < ActiveRecord::Base
   validates :slot_id,
     presence: true
   validates_associated :gear_enhancements
+  validates_presence_of :gear_enhancements
 
   # Scopes
   scope :helm, where(slot_id: SlotModule::SLOT[:helm][:id])

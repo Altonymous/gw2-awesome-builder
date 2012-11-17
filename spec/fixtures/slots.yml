@@ -18,10 +18,10 @@ boots:
   name: Boots
 ring:
   id: 7
-  name: Ring 1
+  name: Ring
 accessory:
   id: 8
-  name: Accessory 1
+  name: Accessory
 amulet:
   id: 9
   name: Amulet

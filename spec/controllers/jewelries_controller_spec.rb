@@ -19,12 +19,22 @@ require 'spec_helper'
 # that an instance is receiving a specific message.
 
 describe JewelriesController do
+  let(:attack_power_enhancement) { Enhancement.find_by_name('Power') }
+  let(:amulet) { create(:trinket, :amulet, enhancement: attack_power_enhancement) }
+  let(:ring) { create(:trinket, :ring, enhancement: attack_power_enhancement) }
+  let(:accessory) { create(:trinket, :accessory, enhancement: attack_power_enhancement) }
 
   # This should return the minimal set of attributes required to create a valid
   # Jewelry. As you add validations to Jewelry, be sure to
   # update the return value of this method accordingly.
   def valid_attributes
-    {}
+    {
+      trinkets: [
+        { id: amulet.id },
+        { id: ring.id },
+        { id: accessory.id }
+      ]
+    }
   end
 
   # This should return the minimal set of values that should be in the session
@@ -36,7 +46,7 @@ describe JewelriesController do
 
   describe "GET index" do
     it "assigns all jewelries as @jewelries" do
-      jewelry = Jewelry.create! valid_attributes
+      jewelry = create(:jewelry)
       get :index, {}, valid_session
       assigns(:jewelries).should eq([jewelry])
     end
@@ -44,7 +54,7 @@ describe JewelriesController do
 
   describe "GET show" do
     it "assigns the requested jewelry as @jewelry" do
-      jewelry = Jewelry.create! valid_attributes
+      jewelry = create(:jewelry)
       get :show, {:id => jewelry.to_param}, valid_session
       assigns(:jewelry).should eq(jewelry)
     end
@@ -59,7 +69,7 @@ describe JewelriesController do
 
   describe "GET edit" do
     it "assigns the requested jewelry as @jewelry" do
-      jewelry = Jewelry.create! valid_attributes
+      jewelry = create(:jewelry)
       get :edit, {:id => jewelry.to_param}, valid_session
       assigns(:jewelry).should eq(jewelry)
     end
@@ -93,11 +103,11 @@ describe JewelriesController do
         assigns(:jewelry).should be_a_new(Jewelry)
       end
 
-      it "re-renders the 'new' template" do
+      it "redirects to the 'jewelries#index' action" do
         # Trigger the behavior that occurs when invalid params are submitted
         Jewelry.any_instance.stub(:save).and_return(false)
         post :create, {:jewelry => {}}, valid_session
-        response.should render_template("new")
+        response.should redirect_to(controller: :jewelries, action: :index)
       end
     end
   end
@@ -105,7 +115,7 @@ describe JewelriesController do
   describe "PUT update" do
     describe "with valid params" do
       it "updates the requested jewelry" do
-        jewelry = Jewelry.create! valid_attributes
+        jewelry = create(:jewelry)
         # Assuming there are no other jewelries in the database, this
         # specifies that the Jewelry created on the previous line
         # receives the :update_attributes message with whatever params are
@@ -115,13 +125,13 @@ describe JewelriesController do
       end
 
       it "assigns the requested jewelry as @jewelry" do
-        jewelry = Jewelry.create! valid_attributes
+        jewelry = create(:jewelry)
         put :update, {:id => jewelry.to_param, :jewelry => valid_attributes}, valid_session
         assigns(:jewelry).should eq(jewelry)
       end
 
       it "redirects to the jewelry" do
-        jewelry = Jewelry.create! valid_attributes
+        jewelry = create(:jewelry)
         put :update, {:id => jewelry.to_param, :jewelry => valid_attributes}, valid_session
         response.should redirect_to(jewelry)
       end
@@ -129,33 +139,33 @@ describe JewelriesController do
 
     describe "with invalid params" do
       it "assigns the jewelry as @jewelry" do
-        jewelry = Jewelry.create! valid_attributes
+        jewelry = create(:jewelry)
         # Trigger the behavior that occurs when invalid params are submitted
         Jewelry.any_instance.stub(:save).and_return(false)
         put :update, {:id => jewelry.to_param, :jewelry => {}}, valid_session
         assigns(:jewelry).should eq(jewelry)
       end
 
-      it "re-renders the 'edit' template" do
-        jewelry = Jewelry.create! valid_attributes
+      it "redirects to the 'jewelries#show' action" do
+        jewelry = create(:jewelry)
         # Trigger the behavior that occurs when invalid params are submitted
         Jewelry.any_instance.stub(:save).and_return(false)
         put :update, {:id => jewelry.to_param, :jewelry => {}}, valid_session
-        response.should render_template("edit")
+        response.should redirect_to(controller: :jewelries, action: :show)
       end
     end
   end
 
   describe "DELETE destroy" do
     it "destroys the requested jewelry" do
-      jewelry = Jewelry.create! valid_attributes
+      jewelry = create(:jewelry)
       expect {
         delete :destroy, {:id => jewelry.to_param}, valid_session
       }.to change(Jewelry, :count).by(-1)
     end
 
     it "redirects to the jewelries list" do
-      jewelry = Jewelry.create! valid_attributes
+      jewelry = create(:jewelry)
       delete :destroy, {:id => jewelry.to_param}, valid_session
       response.should redirect_to(jewelries_url)
     end

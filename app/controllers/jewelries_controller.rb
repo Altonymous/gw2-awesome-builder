@@ -1,24 +1,22 @@
 class JewelriesController < ApplicationController
+  include SortModule
+  include ChildExtractionModule
+
   # GET /jewelries
   # GET /jewelries.json
   def index
-    @jewelries = Jewelry.all
+    @sort ||= 'attack_power desc'
+    @jewelries = Jewelry.order(@sort).page(params[:page])
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @jewelries }
-    end
+    respond_with @jewelries
   end
 
   # GET /jewelries/1
   # GET /jewelries/1.json
   def show
-    @jewelry = Jewelry.find(params[:id])
+    @jewelry = Jewelry.includes(:trinkets).find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @jewelry }
-    end
+    respond_with @jewelry
   end
 
   # GET /jewelries/new
@@ -26,31 +24,25 @@ class JewelriesController < ApplicationController
   def new
     @jewelry = Jewelry.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @jewelry }
-    end
+    respond_with @jewelry
   end
 
   # GET /jewelries/1/edit
   def edit
     @jewelry = Jewelry.find(params[:id])
+
+    respond_with @jewelry
   end
 
   # POST /jewelries
   # POST /jewelries.json
   def create
-    @jewelry = Jewelry.new(params[:jewelry])
-
-    respond_to do |format|
-      if @jewelry.save
-        format.html { redirect_to @jewelry, notice: 'Jewelry was successfully created.' }
-        format.json { render json: @jewelry, status: :created, location: @jewelry }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @jewelry.errors, status: :unprocessable_entity }
-      end
+    params_trinkets = params[:jewelry].delete(:trinkets)
+    @jewelry = Jewelry.create(params[:jewelry]) do |jewelry|
+      hydrate_children!(jewelry, params_trinkets, :trinkets, Trinket)
     end
+
+    respond_with @jewelry
   end
 
   # PUT /jewelries/1
@@ -58,26 +50,19 @@ class JewelriesController < ApplicationController
   def update
     @jewelry = Jewelry.find(params[:id])
 
-    respond_to do |format|
-      if @jewelry.update_attributes(params[:jewelry])
-        format.html { redirect_to @jewelry, notice: 'Jewelry was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @jewelry.errors, status: :unprocessable_entity }
-      end
-    end
+    params_trinkets = params[:jewelry].delete(:trinkets)
+    hydrate_children!(@jewelry, params_trinkets, :trinkets, Trinket)
+
+    @jewelry.update_attributes(params[:jewelry])
+
+    respond_with @jewelry
   end
 
   # DELETE /jewelries/1
   # DELETE /jewelries/1.json
   def destroy
-    @jewelry = Jewelry.find(params[:id])
-    @jewelry.destroy
+    @jewelry = Jewelry.destroy(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to jewelries_url }
-      format.json { head :no_content }
-    end
+    respond_with @jewelry
   end
 end

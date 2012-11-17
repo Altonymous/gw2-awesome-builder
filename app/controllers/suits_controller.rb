@@ -1,24 +1,22 @@
 class SuitsController < ApplicationController
+  include SortModule
+  include ChildExtractionModule
+
   # GET /suits
   # GET /suits.json
   def index
-    @suits = Suit.all
+    @sort ||= 'attack_power desc'
+    @suits = Suit.order(@sort).page(params[:page])
 
-    respond_to do |format|
-      format.html # index.html.erb
-      format.json { render json: @suits }
-    end
+    respond_with @suits
   end
 
   # GET /suits/1
   # GET /suits/1.json
   def show
-    @suit = Suit.find(params[:id])
+    @suit = Suit.includes(:armors).find(params[:id])
 
-    respond_to do |format|
-      format.html # show.html.erb
-      format.json { render json: @suit }
-    end
+    respond_with @suit
   end
 
   # GET /suits/new
@@ -26,31 +24,25 @@ class SuitsController < ApplicationController
   def new
     @suit = Suit.new
 
-    respond_to do |format|
-      format.html # new.html.erb
-      format.json { render json: @suit }
-    end
+    respond_with @suit
   end
 
   # GET /suits/1/edit
   def edit
     @suit = Suit.find(params[:id])
+
+    respond_with @suit
   end
 
   # POST /suits
   # POST /suits.json
   def create
-    @suit = Suit.new(params[:suit])
-
-    respond_to do |format|
-      if @suit.save
-        format.html { redirect_to @suit, notice: 'Suit was successfully created.' }
-        format.json { render json: @suit, status: :created, location: @suit }
-      else
-        format.html { render action: "new" }
-        format.json { render json: @suit.errors, status: :unprocessable_entity }
-      end
+    params_armors = params[:suit].delete(:armors)
+    @suit = Suit.create(params[:suit]) do |suit|
+      hydrate_children!(suit, params_armors, :armors, Armor)
     end
+
+    respond_with @suit
   end
 
   # PUT /suits/1
@@ -58,26 +50,19 @@ class SuitsController < ApplicationController
   def update
     @suit = Suit.find(params[:id])
 
-    respond_to do |format|
-      if @suit.update_attributes(params[:suit])
-        format.html { redirect_to @suit, notice: 'Suit was successfully updated.' }
-        format.json { head :no_content }
-      else
-        format.html { render action: "edit" }
-        format.json { render json: @suit.errors, status: :unprocessable_entity }
-      end
-    end
+    params_armors = params[:suit].delete(:armors)
+    hydrate_children!(@suit, params_armors, :armors, Armor)
+
+    @suit.update_attributes(params[:suit])
+
+    respond_with @suit
   end
 
   # DELETE /suits/1
   # DELETE /suits/1.json
   def destroy
-    @suit = Suit.find(params[:id])
-    @suit.destroy
+    @suit = Suit.destroy(params[:id])
 
-    respond_to do |format|
-      format.html { redirect_to suits_url }
-      format.json { head :no_content }
-    end
+    respond_with @suit
   end
 end

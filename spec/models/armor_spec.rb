@@ -38,6 +38,8 @@ describe Armor do
     it { should validate_presence_of(:weight_id) }
 
     it { should validate_presence_of(:slot_id) }
+
+    it { should validate_presence_of(:gear_enhancements) }
   end
 
   it 'has a valid factory' do

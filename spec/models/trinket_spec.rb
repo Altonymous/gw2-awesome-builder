@@ -34,6 +34,8 @@ describe Trinket do
     # it { should validate_numericality_of(:level).less_than_or_equal_to(80) }
 
     it { should validate_presence_of(:slot_id) }
+
+    it { should validate_presence_of(:gear_enhancements) }
   end
 
   it 'has a valid factory' do
@@ -55,7 +57,7 @@ describe Trinket do
 
     let(:trinket) { create(:trinket, :with_all_enhancements, :rating => 10) }
 
-    it { subject.armor.should equal(20) }
+    it { subject.armor.should equal(30) }
     it { subject.hit_points.should equal(100) }
     it { subject.attack_power.should equal(10) }
     it { subject.critical_damage.should equal(10) }
