@@ -58,7 +58,7 @@
 
             var cells = $([]);
             if (helperCellCount != 1) {
-                cells = table.children().find('>.stats-row:not(.ui-sortable)>.stats-item:nth-child(' + index + ')');
+                cells = table.children().find('.stats-row:not(.ui-sortable)>.stats-item:nth-child(' + index + ')');
                 if (helperCellCount < 0) {
                     cells = cells.slice(0, cells.length + helperCellCount);
                 }
@@ -146,7 +146,7 @@
             /* Find children thead and tbody.
             * Only to process the immediate tr-children. Bugfix for inner tables
             */
-            var trs = this._table.children().find('> .stats-row:not(.ui-sortable)');
+            var trs = this._table.children().find(' .stats-row:not(.ui-sortable)');
             if (from < to) {
                 for (var i = from; i < to; i++) {
                     var row1 = trs.find('>.stats-item:nth-child(' + i + '),>.stats-slider:nth-child(' + i + ')');
