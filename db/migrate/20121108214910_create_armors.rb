@@ -19,7 +19,7 @@ class CreateArmors < ActiveRecord::Migration
       t.belongs_to :slot
 
       t.string :gw2db_url
-      t.string :icon_ur
+      t.string :icon_url
 
       t.timestamps
     end

@@ -29,7 +29,7 @@ ActiveRecord::Schema.define(:version => 20121117020562) do
     t.integer  "weight_id"
     t.integer  "slot_id"
     t.string   "gw2db_url"
-    t.string   "icon_ur"
+    t.string   "icon_url"
     t.datetime "created_at",                       :null => false
     t.datetime "updated_at",                       :null => false
   end

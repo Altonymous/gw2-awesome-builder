@@ -9,7 +9,8 @@ module EnhancementModule
     condition_damage: { id: 7, name: 'Condition Damage', multiplier: 1, statistic_id: StatisticModule::STATISTIC[:condition_damage][:id] },
     healing_power: { id: 8, name: 'Healing Power', multiplier: 1, statistic_id: StatisticModule::STATISTIC[:healing_power][:id] },
     condition_duration: { id: 9, name: 'Condition Duration', multiplier: 1, statistic_id: StatisticModule::STATISTIC[:condition_duration][:id] },
-    boon_duration: { id: 10, name: 'Boon Duration', multiplier: 1, statistic_id: StatisticModule::STATISTIC[:boon_duration][:id] }
+    boon_duration: { id: 10, name: 'Boon Duration', multiplier: 1, statistic_id: StatisticModule::STATISTIC[:boon_duration][:id] },
+    magic_find: { id: 11, name: 'Magic Find', multiplier: 1, statistic_id: StatisticModule::STATISTIC[:magic_find][:id] }
   }
 
   def self.enhancements
