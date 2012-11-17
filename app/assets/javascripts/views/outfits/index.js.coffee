@@ -13,28 +13,21 @@ Outfitter.Views.Outfits.Index = Backbone.View.extend
   initialize: ->
     console.log("Outfits.Index#initialize @", @)
     @.collection.on("reset", @.render, @)
-    #@.collection.on("change", @.render, @)
 
   render: ->
-    console.log("Outfits.Index#render @", @)
+    console.log("Outfits.Index#render @", @.$el)
     @.$el.html JST['outfits/index'](outfits: @.collection)
     return @
 
   showOutfit: (event) ->
+    console.log "showOutfit, ", @
     row = event.currentTarget
     outfitID = $(row).data("id")
 
-    # router = new Outfitter.Routers.Outfits
-    #   outfits: @.collection
-    # router.navigate(outfitID, true)
-
     outfit = @.collection.get(outfitID)
-    outfit.fetch
-      success: ->
-        view = new Outfitter.Views.Outfits.Show
-          collection: @.collection
-          outfit: outfit
-        $('#sidebar').html(view.render().$el)
+    view = new Outfitter.Views.Outfits.Show(model: outfit, el: $('#sidebar'))
+
+    outfit.fetch()
 
   gotoPage: (event) ->
     event.preventDefault();
@@ -42,7 +35,7 @@ Outfitter.Views.Outfits.Index = Backbone.View.extend
     @.collection.navigate
 
   nextPage: (event) ->
-    console.log "nextPage"
+    console.log "nextPage", @.pagination
     Outfitter.Router.navigate("2", trigger: true)
 
   prevPage: (event) ->

@@ -1,10 +1,13 @@
 Outfitter.Views.Outfits.Show = Backbone.View.extend
 
+  # model: Outfitter.Models.Outfit
+
   initialize: (options) ->
-    @.outfit = options.outfit
+    console.log("Outfits.Show#initialize @", @.model)
+    @.model.on("change", @.render, @)
 
   render: ->
-    this.$el.html JST['outfits/show']
-      outfit: @.outfit.toJSON()
+    console.log("Outfits.Show#render @", @)
+    @.$el.html JST['outfits/show'](outfit: @.model.toJSON())
     return this
 
