@@ -10,6 +10,11 @@ class Suit < ActiveRecord::Base
   validates_presence_of :armors
   # validates_associated :armors
 
+  # Scopes
+  scope :light, joins(:armors).where(armors: { weight_id: WeightModule::WEIGHT[:light][:id] }).group('suits.id')
+  scope :medium, joins(:armors).where(armors: { weight_id: WeightModule::WEIGHT[:medium][:id] }).group('suits.id')
+  scope :heavy, joins(:armors).where(armors: { weight_id: WeightModule::WEIGHT[:heavy][:id] }).group('suits.id')
+
   # Methods
   def generate_statistics
     StatisticModule::statistics.each do |statistic|

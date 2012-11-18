@@ -59,22 +59,16 @@ module Generator
       end
     end
 
-    # private
-    def temp
-      outfits = collect_outfits
-      create_outfits_sets(outfits)
-    end
-
     def generate_outfits
       puts "Generating outfits..."
       start = Time.now
 
-      outfits = collect_outfits
-      create_outfits_sets(outfits)
+      collect_outfits
 
       puts "Took #{(Time.now - start).round(4)} seconds to generate outfits.\n\n"
     end
 
+    # private
     # BEGIN OUTFIT CREATION
     def generate_suits
       puts "Generating suits..."
@@ -158,20 +152,27 @@ module Generator
       puts "Collecting outfit pieces..."
       start = Time.now
 
-      outfit_possibilities = {
-        jewelry: Jewelry.includes(:trinkets).all,
-        suit: Suit.includes(:armors).all
-      }
+      # Iterate over the Jewelry pages to combine with the suits
+      jewelries = Jewelry.order(&:id).page(1).per(5)
+      jewelries_pages = jewelries.num_pages
+      (1..jewelries_pages).each do |jewelries_page|
+        # Iterate over the Suit pages to combine with the subset of jewelry
+        suits = Suit.order(&:id).page(1).per(15)
+        suits_pages = suits.num_pages
+        (1..suits_pages).each do |suits_page|
+          outfit_possibilities = {
+            jewelry: jewelries,
+            suit: suits
+          }
 
-      # puts "#{outfit_possibilities.values.inject(:*)} combinations found."
+          create_outfits_sets(outfit_possibilities)
+          suits = Suit.order(&:id).page(suits_page).per(15)
+        end
+
+        jewelries = Jewelry.order(&:id).page(jewelries_page).per(5)
+      end
+
       puts "Took #{(Time.now - start).round(4)} seconds to collect.\n\n"
-
-      # Show the possible combinations
-      # outfit_possibilities.each do |key, values|
-      #   puts "#{key} - #{values.map(&:id)}"
-      # end
-
-      outfit_possibilities
     end
 
     def collect_armor(weight)
