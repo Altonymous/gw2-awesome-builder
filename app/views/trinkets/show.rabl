@@ -1,13 +1,8 @@
-object @armor
+object @trinket
 attribute :id
 attribute :name
 
 child(:slot) do
-  attribute :id
-  attribute :name
-end
-
-child(:weight) do
   attribute :id
   attribute :name
 end
@@ -22,8 +17,8 @@ attribute :critical_chance
 attribute :condition_duration
 attribute :boon_duration
 
-node(:enhancements) do |armor|
-  armor.gear_enhancements.map do |ge|
+node(:enhancements) do |trinket|
+  trinket.gear_enhancements.map do |ge|
     {
       enhancement: ge.enhancement.name,
       rating: ge.rating

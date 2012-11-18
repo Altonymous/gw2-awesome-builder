@@ -1,4 +1,4 @@
-object @outfit
+object @suit
 attributes :armor,
            :attack_power,
            :hit_points,
@@ -9,10 +9,6 @@ attributes :armor,
            :critical_damage,
            :boon_duration
 
-child(:suit) do
-  extends "suits/show"
-end
-
-child(:jewelry) do
-  extends "jewelries/show"
+child(:armors) do
+  extends "armors/show"
 end
