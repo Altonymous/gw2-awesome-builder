@@ -63,7 +63,25 @@ module Generator
       puts "Generating outfits..."
       start = Time.now
 
-      collect_outfits
+      # Iterate over the Jewelry pages to combine with the suits
+      jewelries = Jewelry.order(&:id).page(1).per(5)
+      jewelries_pages = jewelries.num_pages
+      (2..jewelries_pages).each do |jewelries_page|
+        # Iterate over the Suit pages to combine with the subset of jewelry
+        suits = Suit.order(&:id).page(1).per(2000)
+        suits_pages = suits.num_pages
+        (2..suits_pages).each do |suits_page|
+          outfit_possibilities = {
+            jewelry: jewelries,
+            suit: suits
+          }
+
+          create_outfits_sets(outfit_possibilities)
+          suits = Suit.order(&:id).page(suits_page).per(2000)
+        end
+
+        jewelries = Jewelry.order(&:id).page(jewelries_page).per(5)
+      end
 
       puts "Took #{(Time.now - start).round(4)} seconds to generate outfits.\n\n"
     end
@@ -146,33 +164,6 @@ module Generator
         # Completing armor set generation
         puts "Took #{(Time.now - start).round(4)} seconds to generate #{weight.to_s.camelize} armor sets.\n\n"
       end
-    end
-
-    def collect_outfits()
-      puts "Collecting outfit pieces..."
-      start = Time.now
-
-      # Iterate over the Jewelry pages to combine with the suits
-      jewelries = Jewelry.order(&:id).page(1).per(5)
-      jewelries_pages = jewelries.num_pages
-      (1..jewelries_pages).each do |jewelries_page|
-        # Iterate over the Suit pages to combine with the subset of jewelry
-        suits = Suit.order(&:id).page(1).per(15)
-        suits_pages = suits.num_pages
-        (1..suits_pages).each do |suits_page|
-          outfit_possibilities = {
-            jewelry: jewelries,
-            suit: suits
-          }
-
-          create_outfits_sets(outfit_possibilities)
-          suits = Suit.order(&:id).page(suits_page).per(15)
-        end
-
-        jewelries = Jewelry.order(&:id).page(jewelries_page).per(5)
-      end
-
-      puts "Took #{(Time.now - start).round(4)} seconds to collect.\n\n"
     end
 
     def collect_armor(weight)

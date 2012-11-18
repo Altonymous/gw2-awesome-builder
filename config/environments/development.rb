@@ -43,7 +43,7 @@ Gw2AwesomeBuilder::Application.configure do
 
   config.gem "newrelic_rpm"
 
-  if ENV['LOADING'] == true
+  if ENV['LOADING'] == "true"
     config.log_level = :info
     config.cache_classes = true
     config.consider_all_requests_local = false

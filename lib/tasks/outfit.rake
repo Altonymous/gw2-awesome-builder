@@ -11,9 +11,14 @@ namespace :outfitter do
     Generator::Wrangler.new.randomize
   end
 
-  desc "Generate all possible outfits from known gear."
-  task :create_outfits => [:environment] do |t, args|
+  desc "Generate all possible outfits, suits, & jewelries from known gear."
+  task :generage_all => [:environment] do |t, args|
     Generator::Wrangler.new.create_outfits
+  end
+
+  desc "Generate all possible outfits from known suits & jewelries."
+  task :generate_outfits => [:environment] do |t, args|
+    Generator::Wrangler.new.generate_outfits
   end
 
   desc "Collect all the gear from external sources"
