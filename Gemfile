@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-gem 'rails', '3.2.8'
+gem 'rails', '>= 3.2.8'
 
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
@@ -39,4 +39,4 @@ gem 'kaminari', '>= 0.14.1'
 gem 'patron', '>= 0.4.18'
 gem 'meta_search', '>= 1.1.3'
 gem 'parallel_tests', '>= 0.8.14', group: :development
-gem 'rake', '>= 0.9.2.2', :group => [:development, :test]
+gem 'rake', '>= 10.0.2', :group => [:development, :test]
