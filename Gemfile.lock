@@ -224,7 +224,7 @@ PLATFORMS
 DEPENDENCIES
   awesome_print (>= 1.1.0)
   cancan (>= 1.6.8)
-  capybara (>= 1.1.2)
+  capybara (= 2.0.0)
   coffee-rails (~> 3.2.1)
   compass-rails (>= 1.0.3)
   database_cleaner (>= 0.9.1)
@@ -249,7 +249,7 @@ DEPENDENCIES
   rake (>= 10.0.2)
   rolify (>= 3.2.0)
   rspec-rails (>= 2.11.4)
-  ruby_parser (>= 2.3.1)
+  ruby_parser (= 3.0.1)
   sass-rails (~> 3.2.3)
   shoulda (>= 3.3.2)
   simplecov (= 0.6.4)

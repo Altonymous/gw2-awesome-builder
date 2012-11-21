@@ -11,8 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121117020562) do
-
+ActiveRecord::Schema.define(:version => 20121120195342) do
   create_table "armors", :force => true do |t|
     t.string   "name",               :limit => 96
     t.integer  "level"
@@ -101,8 +100,9 @@ ActiveRecord::Schema.define(:version => 20121117020562) do
     t.integer  "healing_power"
     t.integer  "boon_duration"
     t.integer  "magic_find"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.integer  "weight_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   add_index "outfits", ["jewelry_id"], :name => "index_outfits_on_jewelry_id"
@@ -144,8 +144,9 @@ ActiveRecord::Schema.define(:version => 20121117020562) do
     t.integer  "healing_power"
     t.integer  "boon_duration"
     t.integer  "magic_find"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.integer  "weight_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "trinkets", :force => true do |t|
