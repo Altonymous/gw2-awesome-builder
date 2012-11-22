@@ -21,4 +21,14 @@ class Jewelry < ActiveRecord::Base
       end
     end
   end
+
+  # Overridden Methods
+  def ==(other)
+    StatisticModule::statistics.each do |statistic|
+      return false unless read_attribute(statistic) == other[statistic]
+    end
+
+    return true
+  end
+  alias :eql? :==
 end

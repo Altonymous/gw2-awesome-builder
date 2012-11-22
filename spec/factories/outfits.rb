@@ -2,6 +2,7 @@
 
 FactoryGirl.define do
   factory :outfit do
+    weight { Weight.first }
     suit { create(:suit) }
     jewelry { create(:jewelry) }
 

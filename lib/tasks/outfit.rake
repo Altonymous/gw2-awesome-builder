@@ -12,7 +12,7 @@ namespace :outfitter do
   end
 
   desc "Generate all possible outfits, suits, & jewelries from known gear."
-  task :generage_all => [:environment] do |t, args|
+  task :generate_all => [:environment] do |t, args|
     Generator::Wrangler.new.create_outfits
   end
 

@@ -17,6 +17,10 @@ class GearEnhancement < ActiveRecord::Base
   validates :enhancement_id,
     presence: true
 
+  # Scopes
+  scope :armors, where(gear_type: 'Armor')
+  scope :trinkets, where(gear_type: 'Trinket')
+
   # Overridden Methods
   def ==(other)
     return self.gear_type == other.gear_type && self.enhancement_id == other.enhancement_id && self.rating == other.rating

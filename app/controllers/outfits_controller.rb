@@ -31,10 +31,7 @@ class OutfitsController < ApplicationController
   end
 
   def update
-    armors = params[:outfit].delete(:armors)
-
     @outfit = Outfit.find(params[:id])
-    @outfit.armors = armors.map! { |armor| Armor.find(armor[:id]) } unless armors.blank?
     @outfit.update_attributes(params[:outfit])
 
     respond_with @outfit

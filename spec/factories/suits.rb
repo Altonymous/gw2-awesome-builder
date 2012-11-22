@@ -2,6 +2,8 @@
 
 FactoryGirl.define do
   factory :suit do
+    weight_id 1
+
     ignore do
       gear { create(:armor) }
     end

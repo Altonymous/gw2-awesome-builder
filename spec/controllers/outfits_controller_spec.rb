@@ -10,6 +10,7 @@ describe OutfitsController do
 
   def valid_attributes
     {
+      weight_id: 1,
       suit_id: suit.id,
       jewelry_id: jewelry.id
     }
@@ -95,7 +96,7 @@ describe OutfitsController do
 
       it 'redirects to the created outfit' do
         post :create, { outfit: (valid_attributes) }
-        response.should redirect_to(Outfit.last)
+        response.should redirect_to(outfit_url(Outfit.last))
       end
     end
 
@@ -119,19 +120,19 @@ describe OutfitsController do
       it 'updates the requested outfit' do
         outfit = create(:outfit)
         Outfit.any_instance.should_receive(:update_attributes).with({'these' => 'params'})
-        put :update, {id: outfit.to_param, outfit: {'these' => 'params'}}
+        put :update, { id: outfit.to_param, outfit: {'these' => 'params'}}
       end
 
       it 'assigns the requested outfit as @outfit' do
         outfit = create(:outfit)
-        put :update, {:id => outfit.to_param, :outfit =>(valid_attributes)}
+        put :update, { id: outfit.to_param, outfit: valid_attributes }
         assigns(:outfit).should eq(outfit)
       end
 
-      it 'redirects to the outfit' do
+      it 'redirects to the "outfit#show" action' do
         outfit = create(:outfit)
-        put :update, {:id => outfit.to_param, :outfit =>(valid_attributes)}
-        response.should redirect_to(outfit)
+        put :update, { id: outfit.to_param, outfit: valid_attributes }
+        response.should redirect_to(outfit_url(outfit.to_param))
       end
     end
 
@@ -139,15 +140,15 @@ describe OutfitsController do
       it 'assigns the outfit as @outfit' do
         outfit = create(:outfit)
         Outfit.any_instance.stub(:save).and_return(false)
-        put :update, {:id => outfit.to_param, :outfit => {}}
+        put :update, {id: outfit.to_param, outfit: {}}
         assigns(:outfit).should eq(outfit)
       end
 
       it 'redirects to the "outfits#show" action' do
         outfit = create(:outfit)
         Outfit.any_instance.stub(:save).and_return(false)
-        put :update, {:id => outfit.to_param, :outfit => {}}
-        response.should redirect_to(controller: :outfits, action: :show)
+        put :update, {id: outfit.to_param, outfit: {}}
+        response.should redirect_to(outfit_url(outfit.to_param))
       end
     end
   end
@@ -156,15 +157,14 @@ describe OutfitsController do
     it 'destroys the requested outfit' do
       outfit = create(:outfit)
       expect {
-        delete :destroy, {:id => outfit.to_param}
+        delete :destroy, {id: outfit.to_param}
       }.to change(Outfit, :count).by(-1)
     end
 
     it 'redirects to the outfits list' do
       outfit = create(:outfit)
-      delete :destroy, {:id => outfit.to_param}
+      delete :destroy, {id: outfit.to_param}
       response.should redirect_to(outfits_url)
     end
   end
-
 end

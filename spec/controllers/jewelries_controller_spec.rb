@@ -91,7 +91,7 @@ describe JewelriesController do
 
       it "redirects to the created jewelry" do
         post :create, {:jewelry => valid_attributes}, valid_session
-        response.should redirect_to(Jewelry.last)
+        response.should redirect_to(jewelry_url(Jewelry.last))
       end
     end
 
@@ -127,13 +127,16 @@ describe JewelriesController do
       it "assigns the requested jewelry as @jewelry" do
         jewelry = create(:jewelry)
         put :update, {:id => jewelry.to_param, :jewelry => valid_attributes}, valid_session
+        # Have to add 3 attack power because stats get regenerated
+        jewelry.attack_power = jewelry.attack_power + 3
+        
         assigns(:jewelry).should eq(jewelry)
       end
 
       it "redirects to the jewelry" do
         jewelry = create(:jewelry)
         put :update, {:id => jewelry.to_param, :jewelry => valid_attributes}, valid_session
-        response.should redirect_to(jewelry)
+        response.should redirect_to(jewelry_url(jewelry))
       end
     end
 
@@ -151,7 +154,7 @@ describe JewelriesController do
         # Trigger the behavior that occurs when invalid params are submitted
         Jewelry.any_instance.stub(:save).and_return(false)
         put :update, {:id => jewelry.to_param, :jewelry => {}}, valid_session
-        response.should redirect_to(controller: :jewelries, action: :show)
+        response.should redirect_to(jewelry_url(jewelry))
       end
     end
   end

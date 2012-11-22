@@ -97,7 +97,7 @@ describe SuitsController do
 
       it "redirects to the created suit" do
         post :create, {:suit => valid_attributes}, valid_session
-        response.should redirect_to(Suit.last)
+        response.should redirect_to(suit_path(Suit.last))
       end
     end
 
@@ -133,13 +133,16 @@ describe SuitsController do
       it "assigns the requested suit as @suit" do
         suit = create(:suit)
         put :update, {:id => suit.to_param, :suit => valid_attributes}, valid_session
+        # Have to add 6 attack power because stats get regenerated
+        suit.attack_power = suit.attack_power + 6
+
         assigns(:suit).should eq(suit)
       end
 
       it "redirects to the suit" do
         suit = create(:suit)
         put :update, {:id => suit.to_param, :suit => valid_attributes}, valid_session
-        response.should redirect_to(suit)
+        response.should redirect_to(suit_url(suit))
       end
     end
 
@@ -157,7 +160,7 @@ describe SuitsController do
         # Trigger the behavior that occurs when invalid params are submitted
         Suit.any_instance.stub(:save).and_return(false)
         put :update, {:id => suit.to_param, :suit => {}}, valid_session
-        response.should redirect_to(controller: :suits, action: :show)
+        response.should redirect_to(suit_url(suit))
       end
     end
   end

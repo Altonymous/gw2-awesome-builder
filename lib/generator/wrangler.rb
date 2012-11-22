@@ -18,11 +18,11 @@ module Generator
       puts "Creating outfits..."
       start = Time.now
 
-      generate_suits
       generate_jewelries
+      generate_suits
       generate_outfits
 
-      puts "Took #{(Time.now - start).round(4)} seconds to create all outfits.\n\n"
+      puts "Took #{(Time.now - start).round(3)} seconds to create all outfits.\n\n"
     end
 
     def scrape_gear
@@ -46,21 +46,21 @@ module Generator
 
               putc '.'
               puts " #{i}/#{pieces}" if (i % 100).eql?(0) || i == pieces.to_i
-              i = i + 1
+              i = i.next
             end
           when 'Trinket'
             generate_trinket("#{slot[:name]} Piece ##{instance}", slot[:id])
 
             putc '.'
             puts " #{i}/#{pieces}" if (i % 100).eql?(0) || i == pieces.to_i
-            i = i + 1
+            i = i.next
           end
         end
       end
     end
 
     def generate_outfits
-      puts "Generating outfits..."
+      puts "  Generating outfits..."
       start = Time.now
 
       # Iterate over the Jewelry pages to combine with the suits
@@ -83,22 +83,22 @@ module Generator
         jewelries = Jewelry.order(&:id).page(jewelries_page).per(5)
       end
 
-      puts "Took #{(Time.now - start).round(4)} seconds to generate outfits.\n\n"
+      puts "  Took #{(Time.now - start).round(3)} seconds to generate outfits.\n\n"
     end
 
     # private
     # BEGIN OUTFIT CREATION
     def generate_suits
-      puts "Generating suits..."
+      puts "  Generating suits..."
       start = Time.now
 
       generate_suits_by_weight
 
-      puts "Took #{(Time.now - start).round(4)} seconds to generate suits.\n\n"
+      puts "  Took #{(Time.now - start).round(3)} seconds to generate suits.\n\n"
     end
 
     def generate_jewelries
-      puts "Generating jewelry sets...\n\n"
+      puts "  Generating jewelries..."
       start = Time.now
 
       # Collecting the gear
@@ -108,12 +108,13 @@ module Generator
       create_jewelries_sets(jewelry)
 
       # Completing jewelry set generation
-      puts "Took #{(Time.now - start).round(4)} seconds to generate jewelry sets.\n\n"
+      puts "  Took #{(Time.now - start).round(3)} seconds to generate jewelry sets.\n\n"
     end
 
     # Delete
     def delete_outfits
-      puts "Deleting Outfits"
+      print "Deleting Outfits... "
+      $stdout.flush
       Outfit.delete_all
       puts "Done\n\n"
 
@@ -127,32 +128,40 @@ module Generator
     end
 
     def delete_suits
-      puts "Deleting Suits"
+      print "Deleting Suits... "
+      $stdout.flush
+      ArmorsSuit.delete_all
       Suit.delete_all
       puts "Done\n\n"
     end
 
     def delete_jewelries
-      puts "Deleting Jewelries"
+      print "Deleting Jewelries... "
+      $stdout.flush
+      JewelriesTrinket.delete_all
       Jewelry.delete_all
       puts "Done\n\n"
     end
 
     def delete_armors
-      puts "Deleting Armors"
+      print "Deleting Armors... "
+      $stdout.flush
+      GearEnhancement.armors.delete_all
       Armor.delete_all
       puts "Done\n\n"
     end
 
     def delete_trinkets
-      puts "Deleting Trinkets"
+      print "Deleting Trinkets... "
+      $stdout.flush
+      GearEnhancement.trinkets.delete_all
       Trinket.delete_all
       puts "Done\n\n"
     end
 
     def generate_suits_by_weight
       WeightModule::weights.each do |weight|
-        puts "Generating #{weight.to_s.camelize} armor sets...\n\n"
+        puts "    Generating #{weight.to_s.camelize} armor sets...\n\n"
         start = Time.now
 
         # Collecting the gear
@@ -162,12 +171,12 @@ module Generator
         create_suits_sets(armor)
 
         # Completing armor set generation
-        puts "Took #{(Time.now - start).round(4)} seconds to generate #{weight.to_s.camelize} armor sets.\n\n"
+        puts "    Took #{(Time.now - start).round(3)} seconds to generate #{weight.to_s.camelize} armor sets.\n\n"
       end
     end
 
     def collect_armor(weight)
-      puts "Collecting #{weight.to_s.camelize} armor pieces..."
+      puts "      Collecting #{weight.to_s.camelize} armor pieces..."
       start = Time.now
       armor_possibilities = {}
 
@@ -193,19 +202,19 @@ module Generator
         armor_possibilities[slot] = approved_armor_pieces
       end
 
-      # puts "#{armor_possibilities.values.inject(:*)} combinations found."
-      puts "Took #{(Time.now - start).round(4)} seconds to collect.\n\n"
-
       # Show the possible combinations
       armor_possibilities.each do |key, values|
-        puts "#{key} - #{values.map(&:id)}"
+        puts "        #{key} - #{values.map(&:id)}"
       end
+
+      # puts "#{armor_possibilities.values.inject(:*)} combinations found."
+      puts "    Took #{(Time.now - start).round(3)} seconds to collect.\n\n"
 
       armor_possibilities
     end
 
     def collect_trinkets()
-      puts "Collecting trinkets pieces..."
+      puts "    Collecting trinkets pieces..."
       start = Time.now
       trinket_possibilities = {}
 
@@ -238,13 +247,13 @@ module Generator
         end
       end
 
-      # puts "#{trinket_possibilities.values.inject(:*)} combinations found."
-      puts "Took #{(Time.now - start).round(4)} seconds to collect.\n\n"
-
       #  Show the possible combinations
       trinket_possibilities.each do |key, values|
-        puts "#{key} - #{values.map(&:id)}"
+        puts "      #{key} - #{values.map(&:id)}"
       end
+
+      # puts "#{trinket_possibilities.values.inject(:*)} combinations found."
+      puts "    Took #{(Time.now - start).round(3)} seconds to collect.\n\n"
 
       trinket_possibilities
     end
@@ -268,122 +277,151 @@ module Generator
       digits = gear_ids.keys.map!{ |key| gear_ids[key] }
 
       i = 1
+      tablename = ''
       shifted = digits.shift
       shifted.each do |item|
-        puts "Generating sets #{i} of #{shifted.length}..."
+        puts "    Generating group #{i} of #{shifted.length}..."
         permutations_start = Time.now
         sets = [item].product(*digits)
-        puts "# of generated sets in set number - #{i}: #{sets.length}"
-        puts "Took #{(Time.now - permutations_start).round(4)} seconds to generate.\n\n"
+        puts "      # of generated sets in group number - #{i}: #{sets.length}"
+        puts "    Took #{(Time.now - permutations_start).round(3)} seconds to generate.\n\n"
 
         # Storing the sets
         case set_type
         when :outfit
           store_outfits(sets, gear)
+          tablename = 'outfits'
         when :suit
           store_suits(sets, gear)
+          tablename = 'suits'
         when :jewelry
           store_jewelries(sets, gear)
+          tablename = 'jewelries'
         end
 
-        i = i + 1
+        i = i.next
       end
+
+      duplicate_columns = 'armor, hit_points, critical_damage, critical_chance, condition_damage, condition_duration, healing_power, boon_duration, magic_find'
+      remove_duplicates(tablename, duplicate_columns)
     end
 
-    def store_outfits(outfits, gear)
+    def store_outfits(potential_outfits, gear)
       # Storing the outfits
-      puts "Storing Outfits..."
+      puts "    Storing Outfits..."
       start = Time.now
       last_time = start
 
-      j = 1
-      outfits.each do |item|
-        reduced_item = item.reduce({}, :update)
+      total_time = 0
+      processed = 0
+      potential_outfits.each do |item|
+        # Reduce & Flatten Hash
+        reduced_item = reduce_item(item, gear)
 
-        # TODO: Map the reduced_item to the gear to reduce database queries
-        reduced_item.each do |key, value|
-          piece = gear.values.flatten.find { |item| item.id == value; }
-          reduced_item[key] = piece
+        Outfit.new do |outfit|
+          outfit.weight_id = reduced_item[:suit].weight_id
+          outfit.suit = reduced_item[:suit]
+          outfit.jewelry = reduced_item[:jewelry]
+          outfit.save(validate: false)
         end
 
-        outfit = Outfit.new
-        outfit.suit = reduced_item[:suit]
-        outfit.jewelry = reduced_item[:jewelry]
-        outfit.save(validate: false)
-
-        j = j + 1
-        if j % 5000 == 0 || j == outfits.length
-          current_count = j < outfits.length ? 5000 : outfits.length % 5000
-          puts "#{current_count} items took #{(Time.now - last_time).round(4)} seconds to store"
+        processed = processed.next
+        if processed % 2500 == 0 || processed == potential_outfits.length
+          total_time = total_time + (Time.now - last_time)
+          puts "      Took #{(Time.now - last_time).round(3)} seconds to process 2500 outfits, Took #{total_time.round(3)} to process #{processed} outfits in total."
           last_time = Time.now
         end
       end
 
-      puts "Took #{(Time.now - start).round(4)} seconds to store.\n\n"
+      puts "    Took #{(Time.now - start).round(3)} seconds to store.\n\n"
     end
 
-    def store_suits(suits, gear)
+    def store_suits(potential_suits, gear)
       # Storing the suits
-      puts "Storing Suits..."
+      puts "    Storing Suits..."
       start = Time.now
-      last_time = start
+      last_time = Time.now
 
-      j = 1
-      suits.each do |item|
-        reduced_item = item.reduce({}, :update)
-
-        # TODO: Map the reduced_item to the gear to reduce database queries
-        reduced_item.each do |key, value|
-          piece = gear.values.flatten.find { |item| item.id == value; }
-          reduced_item[key] = piece
-        end
+      total_time = 0
+      processed = 0
+      potential_suits.each do |item|
+        # Reduce & Flatten Hash
+        reduced_item = reduce_item(item, gear)
 
         Suit.new do |suit|
+          suit.weight_id = reduced_item.values.first.weight_id
           suit.armors = reduced_item.values
           suit.save(validate: false)
         end
 
-        j = j + 1
-        if j % 5000 == 0 || j == suits.length
-          current_count = j < suits.length ? 5000 : suits.length % 5000
-          puts "#{current_count} items took #{(Time.now - last_time).round(4)} seconds to store"
+        processed = processed.next
+        if processed % 2500 == 0 || processed == potential_suits.length
+          total_time = total_time + (Time.now - last_time)
+          puts "        Took #{(Time.now - last_time).round(3)} seconds to process 2500 suits, Took #{total_time.round(3)} to process #{processed} suits in total."
           last_time = Time.now
         end
       end
 
-      puts "Took #{(Time.now - start).round(4)} seconds to store.\n\n"
+      puts "    Took #{(Time.now - start).round(3)} seconds to process & store.\n\n"
     end
 
-    def store_jewelries(jewelries, gear)
+    def store_jewelries(potential_jewelries, gear)
       # Storing jewelries
-      puts "Storing Jewelries..."
+      puts "    Storing Jewelries..."
       start = Time.now
       last_time = start
 
-      j = 1
-      jewelries.each do |item|
-        reduced_item = item.reduce({}, :update)
-
-        # TODO: Map the reduced_item to the gear to reduce database queries
-        reduced_item.each do |key, value|
-          piece = gear.values.flatten.find { |item| item.id == value; }
-          reduced_item[key] = piece
-        end
+      total_time = 0
+      processed = 0
+      potential_jewelries.each do |item|
+        # Reduce & Flatten Hash
+        reduced_item = reduce_item(item, gear)
 
         Jewelry.new do |jewelry|
           jewelry.trinkets = reduced_item.values
           jewelry.save(validate: false)
         end
 
-        j = j + 1
-        if j % 5000 == 0 || j == jewelries.length
-          current_count = j < jewelries.length ? 5000 : jewelries.length % 5000
-          puts "#{current_count} items took #{(Time.now - last_time).round(4)} seconds to store"
+        processed = processed.next
+        if processed % 2500 == 0 || processed == potential_jewelries.length
+          total_time = total_time + (Time.now - last_time)
+          puts "      Took #{(Time.now - last_time).round(3)} seconds to process 2500 jewelries, Took #{total_time.round(3)} to process #{processed} jewelries in total."
           last_time = Time.now
         end
       end
 
-      puts "Took #{(Time.now - start).round(4)} seconds to store.\n\n"
+      puts "    Took #{(Time.now - start).round(3)} seconds to store.\n\n"
+    end
+
+    def reduce_item(item, gear)
+      reduced_item = item.reduce({}, :update)
+
+      # TODO: Map the reduced_item to the gear to reduce database queries
+      reduced_item.each do |key, value|
+        piece = gear.values.flatten.find { |item| item.id == value; }
+        reduced_item[key] = piece
+      end
+
+      reduced_item
+    end
+
+    def duplicate?(items, possible_item)
+      items.include?(possible_item)
+    end
+
+    def remove_duplicates(tablename, duplicate_columns)
+      # Removing Duplicate records directly from the database
+      puts "    Removing Duplicates..."
+      start = Time.now
+
+      ActiveRecord::Base.transaction do
+        ActiveRecord::Base.connection.execute ("CREATE TEMPORARY TABLE _DISTINCT_#{tablename} AS (SELECT DISTINCT #{duplicate_columns} FROM #{tablename});")
+        ActiveRecord::Base.connection.execute ("TRUNCATE #{tablename};")
+        ActiveRecord::Base.connection.execute ("INSERT INTO #{tablename}(#{duplicate_columns}, created_at, updated_at) (SELECT *, '#{Time.now}', '#{Time.now}' FROM _DISTINCT_#{tablename});")
+        ActiveRecord::Base.connection.execute ("DROP TABLE _DISTINCT_#{tablename};")
+      end
+
+      puts "    Took #{(Time.now - start).round(3)} seconds to remove duplicates.\n\n"
     end
     # END OUTFIT GENERATION
 
@@ -396,7 +434,7 @@ module Generator
         armor.level = rand(1..80)
         armor.gear_enhancements.build({rating: rand(1..102)}).enhancement = Enhancement.find_by_name(:Defense)
 
-        old_offset = []
+        old_offset = Set.new
         (1..3).each do |j|
           begin
             offset = rand(Enhancement.count)
@@ -415,7 +453,7 @@ module Generator
         trinket.level = rand(1..80)
         trinket.gear_enhancements.build({rating: rand(1..102)}).enhancement = Enhancement.find_by_name(:Defense)
 
-        old_offset = []
+        old_offset = Set.new
         (1..3).each do |j|
           begin
             offset = rand(Enhancement.count)
